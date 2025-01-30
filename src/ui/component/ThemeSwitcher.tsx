@@ -8,9 +8,9 @@ import { Light, Moon, Screen } from '@ricons/carbon';
 
 /**
  * 主题切换工具
- * @constructor
+ * @param size 按钮大小 ['md', 'sm']，默认 'sm'
  */
-export function ThemeSwitcher() {
+export function ThemeSwitcher({ size }: { size?: 'md' | 'sm' }) {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
 
@@ -37,9 +37,9 @@ export function ThemeSwitcher() {
   return (
     <div>
       <Button
-        variant="ghost"
+        variant="light"
         radius="full"
-        size="sm"
+        size={size ?? 'sm'}
         isIconOnly
         onPress={() => changeTheme(theme)}
       >

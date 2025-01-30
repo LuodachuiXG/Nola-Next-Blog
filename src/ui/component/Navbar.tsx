@@ -1,7 +1,7 @@
 import { BlogInfo } from '@/models/BlogInfo';
-import { Avatar } from '@heroui/avatar';
 import { Tooltip } from '@heroui/tooltip';
 import { ThemeSwitcher } from '@/ui/component/ThemeSwitcher';
+import ShadowAvatar from '@/ui/component/ShadowAvatar';
 
 /**
  * Navbar 在窄屏显示在顶部
@@ -9,17 +9,15 @@ import { ThemeSwitcher } from '@/ui/component/ThemeSwitcher';
  */
 export default function Navbar({ blogInfo }: { blogInfo: BlogInfo | null }) {
   return (
-    <div className="size-full flex items-center px-4">
+    <div className="h-14 w-full flex items-center px-4 shadow-lg dark:shadow-none">
       {blogInfo && (
         <div className="flex items-center gap-3">
-
           {/*Favicon*/}
           {blogInfo.favicon && (
-            <Avatar
+            <ShadowAvatar
               src={blogInfo.favicon}
-              size="sm"
-              isBordered
               alt={blogInfo.title}
+              size="sm"
             />
           )}
 
