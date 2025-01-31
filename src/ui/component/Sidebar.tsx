@@ -1,8 +1,12 @@
+'use client'
 import { BlogInfo } from '@/models/BlogInfo';
 import { Tooltip } from '@heroui/tooltip';
 import { ThemeSwitcher } from '@/ui/component/ThemeSwitcher';
 import ShadowAvatar from '@/ui/component/ShadowAvatar';
-import { Menu } from '@/models/Menu';
+import { Menu, menuTargetToString } from '@/models/Menu';
+import { Link } from '@heroui/link';
+import { usePathname } from 'next/navigation';
+import { clsx } from 'clsx';
 
 /**
  * 宽屏显示在左侧的侧边栏
@@ -16,8 +20,9 @@ export default function Sidebar({
   blogInfo: BlogInfo | null;
   menuItems: Array<Menu> | null;
 }) {
+  const pathname = usePathname()
   return (
-    <div className="h-dvh transition-all md:w-auto lg:w-72 flex flex-col gap-4 p-4 lg:p-6 shadow-xl dark:shadow-none ">
+    <div className="h-dvh transition-all md:w-auto lg:w-72 flex flex-col gap-4 p-4 lg:p-6 shadow-xl dark:shadow-none">
       {blogInfo && (
         <div>
           {/*头像和标题*/}
@@ -34,6 +39,7 @@ export default function Sidebar({
                 (blogInfo.subtitle ? ` | ${blogInfo.subtitle}` : '')
               }
               showArrow={true}
+              placement="right"
             >
               <p className="font-black text-2xl cursor-default hidden lg:block">
                 {blogInfo.title}
@@ -48,10 +54,41 @@ export default function Sidebar({
         <div className="flex flex-col gap-6 py-6">
           {menuItems.map((menu) => (
             <div
-              className="transition-colors text-xl no-underline decoration-wavy cursor-default select-none font-semibold hover:text-primary hover:underline uppercase"
+              className="transition-colors no-underline decoration-wavy decoration-primary hover:underline uppercase"
               key={menu.menuItemId}
             >
-              {menu.displayName}
+              <Link
+                href={menu.href ?? ''}
+                className={clsx(
+                  "hidden lg:block text-lg hover:text-primary",
+                  {
+                    'text-primary': pathname === menu.href,
+                  }
+                )}
+                color="foreground"
+                target={menuTargetToString(menu.target)}
+              >
+                {menu.displayName}
+              </Link>
+              <Tooltip
+                content={menu.displayName}
+                showArrow={true}
+                placement="right"
+              >
+                <Link
+                  href={menu.href ?? ''}
+                  className={clsx(
+                    "lg:hidden text-sm hover:text-primary flex justify-center",
+                    {
+                      'text-primary': pathname === menu.href,
+                    }
+                  )}
+                  color="foreground"
+                  target={menuTargetToString(menu.target)}
+                >
+                  {menu.displayName.length >= 2 ? menu.displayName.slice(0, 2) : menu.displayName}
+                </Link>
+              </Tooltip>
             </div>
           ))}
         </div>

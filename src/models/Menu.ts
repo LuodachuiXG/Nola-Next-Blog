@@ -33,3 +33,21 @@ export enum MenuTarget {
   PARENT = "PARENT",
   TOP = "TOP"
 }
+
+/**
+ * 菜单打开方式枚举类转字符串
+ * @param target MenuTarget 枚举类
+ * @return 返回 HTML target 属性值
+ */
+export const menuTargetToString = (target: MenuTarget) => {
+  switch (target) {
+    case MenuTarget.BLANK:
+      return "_blank";
+    case MenuTarget.SELF:
+      return "_self";
+    case MenuTarget.PARENT:
+      return "_parent";
+    case MenuTarget.TOP:
+      return "_top";
+  }
+}

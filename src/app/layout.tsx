@@ -2,35 +2,28 @@ import './globals.css';
 import { Providers } from './providers';
 import Navbar from '@/ui/component/Navbar';
 import { apiConfigGetBlogInfo } from '@/api/apiConfig';
-import { Metadata } from 'next';
 import { Icon } from 'next/dist/lib/metadata/types/metadata-types';
 import Sidebar from '@/ui/component/Sidebar';
 import BlurColorBackground from '@/ui/component/BlurColorBackground';
 import { apiMenuGetMenuItem } from '@/api/apiMenu';
 
-export let metadata: Metadata;
-
-export default async function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  // 博客信息响应、菜单项响应
-  const [blogInfoRes, menuItemRes] = await Promise.all([
-    apiConfigGetBlogInfo(),
-    apiMenuGetMenuItem()
-  ]);
-
-  // 博客信息
+/**
+ * 根据博客信息动态生成 Metadata 数据
+ */
+export async function generateMetadata() {
+  const blogInfoRes = await apiConfigGetBlogInfo();
   const blogInfo = blogInfoRes.data;
-  // 菜单项
-  const menuItems = menuItemRes.data;
 
+  // 博客标题
+  const blogTitle = blogInfo
+    ? `${blogInfo.title + (blogInfo.subtitle ? ` | ${blogInfo.subtitle}` : '')}`
+    : 'Nola Blog';
 
-  metadata = {
-    title: blogInfo
-      ? `${blogInfo.title + (blogInfo.subtitle ? ` | ${blogInfo.subtitle}` : '')}`
-      : 'Nola Blog',
+  return {
+    title: {
+      template: `%s - ${blogTitle}`,
+      default: `首页 - ${blogTitle}`,
+    },
     openGraph: {
       images: [blogInfo?.logo ?? ''],
     },
@@ -43,13 +36,29 @@ export default async function RootLayout({
       },
     ] as Array<Icon>,
   };
+}
+
+export default async function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  // 博客信息响应、菜单项响应
+  const [blogInfoRes, menuItemRes] = await Promise.all([
+    apiConfigGetBlogInfo(),
+    apiMenuGetMenuItem(),
+  ]);
+
+  // 博客信息
+  const blogInfo = blogInfoRes.data;
+  // 菜单项
+  const menuItems = menuItemRes.data;
 
   return (
     <html lang="zh">
       <body className="antialiased bg-background text-foreground">
         <Providers>
           <div className="w-dvw h-dvh flex flex-col md:flex-row relative overflow-clip">
-
             {/*暗色模式时的彩色背景组件*/}
             <BlurColorBackground />
 
@@ -60,11 +69,11 @@ export default async function RootLayout({
               </div>
               {/*宽屏 NavBar*/}
               <div className="hidden md:block">
-                <Sidebar blogInfo={blogInfo} menuItems={menuItems}/>
+                <Sidebar blogInfo={blogInfo} menuItems={menuItems} />
               </div>
             </aside>
             <div className="flex flex-col flex-grow z-10">
-              <main className="flex-grow">{children}</main>
+              <main className="flex-grow p-4">{children}</main>
               <footer className="hidden md:block">footer</footer>
             </div>
           </div>

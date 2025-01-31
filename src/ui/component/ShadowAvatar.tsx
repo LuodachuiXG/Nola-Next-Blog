@@ -19,7 +19,7 @@ export default function ShadowAvatar({
   return (
     <div className="relative">
       <Avatar
-        className="absolute blur-md opacity-50 z-10"
+        className="absolute blur-md opacity-50 z-10 backdrop-blur"
         src={src}
         size={size ?? 'md'}
         alt={alt}

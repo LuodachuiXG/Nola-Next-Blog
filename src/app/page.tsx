@@ -6,7 +6,7 @@ import { Card, CardBody, CardHeader } from '@heroui/card';
  */
 export default async function PostPage() {
   return (
-    <div className="p-4">
+    <div>
       <Card
         className="transition-all cursor-pointer hover:backdrop-filter-none"
         isBlurred
