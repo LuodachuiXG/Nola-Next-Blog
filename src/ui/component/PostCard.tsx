@@ -27,7 +27,7 @@ export default function PostCard({ post }: { post: Post }) {
       )}
 
       <Card
-        className="transition-all cursor-pointer hover:backdrop-filter-none hover:text-primary"
+        className="transition-all cursor-pointer hover:text-primary"
         isBlurred
         shadow="sm"
         isHoverable
