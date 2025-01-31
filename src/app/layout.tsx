@@ -73,8 +73,8 @@ export default async function RootLayout({
               </div>
             </aside>
             <div className="flex flex-col flex-grow z-10">
-              <main className="flex-grow p-4">{children}</main>
-              <footer className="hidden md:block">footer</footer>
+              <main className="flex-grow">{children}</main>
+              <footer className="hidden md:block h-6">footer</footer>
             </div>
           </div>
         </Providers>

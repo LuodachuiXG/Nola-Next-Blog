@@ -7,6 +7,7 @@ import { Menu, menuTargetToString } from '@/models/Menu';
 import { Link } from '@heroui/link';
 import { usePathname } from 'next/navigation';
 import { clsx } from 'clsx';
+import {ScrollShadow} from "@heroui/scroll-shadow";
 
 /**
  * 宽屏显示在左侧的侧边栏
@@ -22,7 +23,7 @@ export default function Sidebar({
 }) {
   const pathname = usePathname()
   return (
-    <div className="h-dvh transition-all md:w-auto lg:w-72 flex flex-col gap-4 p-4 lg:p-6 shadow-xl dark:shadow-none">
+    <div className="h-dvh md:w-auto lg:w-72 flex flex-col gap-4 p-4 lg:p-6 shadow-xl dark:shadow-none">
       {blogInfo && (
         <div>
           {/*头像和标题*/}
@@ -50,35 +51,18 @@ export default function Sidebar({
       )}
 
       {/*菜单项列表*/}
-      {menuItems && (
-        <div className="flex flex-col gap-6 py-6">
-          {menuItems.map((menu) => (
-            <div
-              className="transition-colors no-underline decoration-wavy decoration-primary hover:underline uppercase"
-              key={menu.menuItemId}
-            >
-              <Link
-                href={menu.href ?? ''}
-                className={clsx(
-                  "hidden lg:block text-lg hover:text-primary",
-                  {
-                    'text-primary': pathname === menu.href,
-                  }
-                )}
-                color="foreground"
-                target={menuTargetToString(menu.target)}
-              >
-                {menu.displayName}
-              </Link>
-              <Tooltip
-                content={menu.displayName}
-                showArrow={true}
-                placement="right"
+      <ScrollShadow hideScrollBar>
+        {menuItems && (
+          <div className="flex flex-col gap-6 py-6">
+            {menuItems.map((menu) => (
+              <div
+                className="transition-colors no-underline decoration-wavy decoration-primary hover:underline uppercase"
+                key={menu.menuItemId}
               >
                 <Link
                   href={menu.href ?? ''}
                   className={clsx(
-                    "lg:hidden text-sm hover:text-primary flex justify-center",
+                    "hidden lg:block text-lg hover:text-primary",
                     {
                       'text-primary': pathname === menu.href,
                     }
@@ -86,13 +70,32 @@ export default function Sidebar({
                   color="foreground"
                   target={menuTargetToString(menu.target)}
                 >
-                  {menu.displayName.length >= 2 ? menu.displayName.slice(0, 2) : menu.displayName}
+                  {menu.displayName}
                 </Link>
-              </Tooltip>
-            </div>
-          ))}
-        </div>
-      )}
+                <Tooltip
+                  content={menu.displayName}
+                  showArrow={true}
+                  placement="right"
+                >
+                  <Link
+                    href={menu.href ?? ''}
+                    className={clsx(
+                      "lg:hidden text-sm hover:text-primary flex justify-center",
+                      {
+                        'text-primary': pathname === menu.href,
+                      }
+                    )}
+                    color="foreground"
+                    target={menuTargetToString(menu.target)}
+                  >
+                    {menu.displayName.length >= 2 ? menu.displayName.slice(0, 2) : menu.displayName}
+                  </Link>
+                </Tooltip>
+              </div>
+            ))}
+          </div>
+        )}
+      </ScrollShadow>
 
       {/*主题颜色切换按钮*/}
       <div className="w-full flex justify-center items-end flex-grow">
