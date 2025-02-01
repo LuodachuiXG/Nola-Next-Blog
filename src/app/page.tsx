@@ -2,6 +2,9 @@ import { ScrollShadow } from '@heroui/scroll-shadow';
 import PostCard from '@/ui/component/PostCard';
 import { apiPostGetPosts } from '@/api/apiPost';
 
+// 缓存过期时间（秒）
+export const revalidate = 300;
+
 /**
  * 博客文章页面
  * @constructor
