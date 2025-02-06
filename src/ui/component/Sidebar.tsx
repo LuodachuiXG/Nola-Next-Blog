@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { BlogInfo } from '@/models/BlogInfo';
 import { Tooltip } from '@heroui/tooltip';
 import { ThemeSwitcher } from '@/ui/component/ThemeSwitcher';
@@ -7,7 +7,7 @@ import { Menu, menuTargetToString } from '@/models/Menu';
 import { Link } from '@heroui/link';
 import { usePathname } from 'next/navigation';
 import { clsx } from 'clsx';
-import {ScrollShadow} from "@heroui/scroll-shadow";
+import { ScrollShadow } from '@heroui/scroll-shadow';
 
 /**
  * 宽屏显示在左侧的侧边栏
@@ -21,7 +21,7 @@ export default function Sidebar({
   blogInfo: BlogInfo | null;
   menuItems: Array<Menu> | null;
 }) {
-  const pathname = usePathname()
+  const pathname = usePathname();
   return (
     <div className="h-dvh md:w-auto lg:w-72 flex flex-col gap-4 p-4 lg:p-6 shadow-xl dark:shadow-none">
       {blogInfo && (
@@ -62,10 +62,10 @@ export default function Sidebar({
                 <Link
                   href={menu.href ?? ''}
                   className={clsx(
-                    "hidden lg:block text-lg hover:text-primary",
+                    'hidden lg:block text-lg hover:text-primary',
                     {
                       'text-primary': pathname === menu.href,
-                    }
+                    },
                   )}
                   color="foreground"
                   target={menuTargetToString(menu.target)}
@@ -80,15 +80,17 @@ export default function Sidebar({
                   <Link
                     href={menu.href ?? ''}
                     className={clsx(
-                      "lg:hidden text-sm hover:text-primary flex justify-center",
+                      'lg:hidden text-sm hover:text-primary flex justify-center',
                       {
                         'text-primary': pathname === menu.href,
-                      }
+                      },
                     )}
                     color="foreground"
                     target={menuTargetToString(menu.target)}
                   >
-                    {menu.displayName.length >= 2 ? menu.displayName.slice(0, 2) : menu.displayName}
+                    {menu.displayName.length >= 2
+                      ? menu.displayName.slice(0, 2)
+                      : menu.displayName}
                   </Link>
                 </Tooltip>
               </div>
