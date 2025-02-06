@@ -2,6 +2,7 @@ import { Card, CardFooter } from '@heroui/card';
 import { Post } from '@/models/Post';
 import { Image } from '@heroui/image';
 import { clsx } from 'clsx';
+import { getImageRealUrl } from '@/util/UrlUtil';
 
 /**
  * 文章卡片
@@ -11,6 +12,8 @@ export default function PostCard({ post }: { post: Post }) {
 
   // 当前文章是否有封面图
   const hasCover = post.cover || (post.category?.cover && post.category.unifiedCover)
+  // 封面地址
+  const coverUrl = post.cover ? post.cover : (post.category?.cover ? post.category.cover : '')
   return (
     <div className="relative">
       {/*如果当前文章显示了封面，则在文章卡片周围以封面图为底图，做发光效果*/}
@@ -18,19 +21,13 @@ export default function PostCard({ post }: { post: Post }) {
         <Image
           removeWrapper
           alt={post.title}
-          className="z-0 w-full h-full absolute opacity-50 blur backdrop-blur"
-          src={
-            post.cover
-              ? post.cover
-              : post.category?.cover
-                ? post.category.cover
-                : ''
-          }
+          className="z-0 w-full h-full absolute opacity-50 blur backdrop-blur-sm"
+          src={coverUrl ? getImageRealUrl(coverUrl) : ''}
         />
       )}
 
       <Card
-        className="group transition-all cursor-pointer h-full"
+        className="group transition-all cursor-pointer h-full overflow-hidden hover:-translate-y-0.5"
         isBlurred
         shadow="sm"
         isHoverable
@@ -41,17 +38,16 @@ export default function PostCard({ post }: { post: Post }) {
           <Image
             removeWrapper
             alt={post.title}
-            className="z-0 w-full h-full object-cover absolute blur-md"
-            src={
-              post.cover
-                ? post.cover
-                : post.category?.cover
-                  ? post.category.cover
-                  : ''
-            }
+            className="z-0 w-[101%] h-full object-cover absolute"
+            src={coverUrl ? getImageRealUrl(coverUrl) : ''}
           />
         )}
-        <CardFooter className="flex items-start h-full">
+        <CardFooter className={clsx(
+          "flex items-start h-full",
+          {
+            "transition-background bg-gradient-to-r from-black/30 to-transparent hover:bg-black/15": hasCover
+          }
+        )}>
           <div className="flex flex-col gap-1 p-1 overflow-auto">
             <p
               className={clsx('font-semibold transition-all group-hover:text-primary', {
