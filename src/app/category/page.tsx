@@ -5,6 +5,7 @@ import { isInPageSizeList, PAGE_SIZE_LIST } from '@/util/ConstData';
 import * as sea from 'node:sea';
 import { redirect } from 'next/navigation';
 import { stringToNumber } from '@/util/NumberUtil';
+import CategoryCard from '@/ui/component/CategoryCard';
 
 export const metadata: Metadata = {
   title: '分类',
@@ -41,6 +42,7 @@ export default async function CategoryPage(props: {
   const categoryList = categoryRes.data;
   // 标签总数
   const totalData = categoryList?.totalData ?? 0;
+
   return (
     <div className="p-6 flex flex-col gap-4 h-full">
       <div className="text-3xl font-semibold text-primary select-none dark:text-white ">
@@ -50,7 +52,7 @@ export default async function CategoryPage(props: {
         {categoryList?.data ? (
           <div className="flex gap-4 flex-wrap">
             {categoryList.data.map((category) => (
-              <div key={category.categoryId}>{category.displayName}</div>
+              <CategoryCard category={category} key={category.categoryId} />
             ))}
           </div>
         ) : null}

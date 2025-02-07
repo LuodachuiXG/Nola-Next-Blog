@@ -25,8 +25,6 @@ export default async function PostPage(props: {
   if (searchParams?.size && !isInPageSizeList(searchParams?.size)) {
     // 当前传进来的是非法页码（不在 PAGE_SIZE_LIST 中）
     // 使用默认第一个页码
-    console.log(searchParams?.size);
-    console.log(false);
     redirect(
       `/?page=${stringToNumber(searchParams?.page, 1)}&size=${PAGE_SIZE_LIST[0]}`,
     );
