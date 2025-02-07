@@ -3,6 +3,8 @@ import { apiTagGetTag } from '@/api/apiTag';
 import TagChip from '@/ui/component/TagChip';
 import PaginationContainer from '@/ui/component/PaginationContainer';
 import { stringToNumber } from '@/util/NumberUtil';
+import { isInPageSizeList, PAGE_SIZE_LIST } from '@/util/ConstData';
+import { redirect } from 'next/navigation';
 
 export const metadata: Metadata = {
   title: '标签',
@@ -21,6 +23,14 @@ export default async function TagPage(props: {
   }>;
 }) {
   const searchParams = await props.searchParams;
+
+  if (searchParams?.size && !isInPageSizeList(searchParams?.size)) {
+    // 当前传进来的是非法页码（不在 PAGE_SIZE_LIST 中）
+    // 使用默认第一个页码
+    redirect(
+      `/tag?page=${stringToNumber(searchParams?.page, 1)}&size=${PAGE_SIZE_LIST[0]}`,
+    );
+  }
 
   const [tagRes] = await Promise.all([
     apiTagGetTag(

@@ -9,7 +9,6 @@ import { PAGE_SIZE_LIST } from '@/util/ConstData';
 import { useOverlayTriggerState } from '@react-stately/overlays';
 import { useEffect, useState } from 'react';
 import { redirect } from 'next/navigation';
-import { revalidatePath } from 'next/cache';
 
 /**
  * 分页组件
@@ -87,8 +86,10 @@ export default function PaginationContainer<T>({
                     onPress={() => {
                       // 关闭 popover
                       popoverState.close();
+                      // 改变每页大小后，将当前页改为第一页
+                      setCurrentPage(1);
                       setCurrentPageSize(size);
-                      change(currentPage, size);
+                      change(1, size);
                     }}
                   >
                     {size} / 页
