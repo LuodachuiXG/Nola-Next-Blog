@@ -16,7 +16,7 @@ export default function TagChip({ tag }: { tag: Tag }) {
       <Chip
         className={clsx(
           'relative cursor-pointer transition-all hover:-translate-y-0.5',
-          { 'pl-2': tag.color },
+          { 'pl-2.5': tag.color },
         )}
         variant="flat"
         key={tag.tagId}
