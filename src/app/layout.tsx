@@ -6,6 +6,7 @@ import { Icon } from 'next/dist/lib/metadata/types/metadata-types';
 import Sidebar from '@/ui/component/Sidebar';
 import BlurColorBackground from '@/ui/component/BlurColorBackground';
 import { apiMenuGetMenuItem } from '@/api/apiMenu';
+import AlertModal from '@/ui/component/AlertModal';
 
 /**
  * 根据博客信息动态生成 Metadata 数据
@@ -73,6 +74,16 @@ export default async function RootLayout({
               </div>
             </aside>
             <div className="flex flex-col flex-grow z-10">
+              <AlertModal
+                title="正在开发中"
+                content={
+                  <>
+                    <p>新版博客 UI 仍在不断开发中，目前仅完成部分功能</p>
+                    <br />
+                    <p>2025 年 2 月 7 日 </p>
+                  </>
+                }
+              />
               <main className="flex-grow">{children}</main>
               <footer className="hidden md:block h-6">footer</footer>
             </div>

@@ -2,16 +2,16 @@ import { Metadata } from 'next';
 import { apiCategoryGetCategory } from '@/api/apiCategory';
 import PaginationContainer from '@/ui/component/PaginationContainer';
 import { isInPageSizeList, PAGE_SIZE_LIST } from '@/util/ConstData';
-import * as sea from 'node:sea';
 import { redirect } from 'next/navigation';
 import { stringToNumber } from '@/util/NumberUtil';
 import CategoryCard from '@/ui/component/CategoryCard';
+import { ScrollShadow } from '@heroui/scroll-shadow';
 
 export const metadata: Metadata = {
   title: '分类',
 };
 
-export const revalidate = 60;
+export const revalidate = 0;
 
 /**
  * 分类页面
@@ -45,16 +45,18 @@ export default async function CategoryPage(props: {
 
   return (
     <div className="p-6 flex flex-col gap-4 h-full">
-      <div className="text-3xl font-semibold text-primary select-none dark:text-white ">
+      <div className="text-3xl font-semibold text-gray-600 select-none dark:text-white ">
         <p>{totalData > 0 ? `& ${totalData} 个分类` : '暂无分类'}</p>
       </div>
       <div className="flex-grow">
         {categoryList?.data ? (
-          <div className="flex gap-4 flex-wrap">
-            {categoryList.data.map((category) => (
-              <CategoryCard category={category} key={category.categoryId} />
-            ))}
-          </div>
+            <ScrollShadow className="p-4 max-h-[calc(100dvh-215px)]">
+              <div className="flex gap-4 flex-wrap">
+                {categoryList.data.map((category) => (
+                  <CategoryCard category={category} key={category.categoryId} />
+                ))}
+              </div>
+            </ScrollShadow>
         ) : null}
       </div>
 

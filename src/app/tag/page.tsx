@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title: '标签',
 };
 
-export const revalidate = 60;
+export const revalidate = 0;
 
 /**
  * 标签页面
@@ -44,7 +44,7 @@ export default async function TagPage(props: {
 
   return (
     <div className="p-6 flex flex-col gap-4 h-full">
-      <div className="text-3xl font-semibold text-primary select-none dark:text-white ">
+      <div className="text-3xl font-semibold text-gray-600 select-none dark:text-white ">
         <p>{totalData > 0 ? `# ${totalData} 个标签` : '暂无标签'}</p>
       </div>
       <div className="flex-grow">

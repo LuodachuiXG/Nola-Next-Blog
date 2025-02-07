@@ -15,7 +15,7 @@ export default function PostCard({ post }: { post: Post }) {
   // 封面地址
   const coverUrl = post.cover ? post.cover : (post.category?.cover ? post.category.cover : '')
   return (
-    <div className="relative">
+    <div className="relative fadeIn-container">
       {/*如果当前文章显示了封面，则在文章卡片周围以封面图为底图，做发光效果*/}
       {hasCover && (
         <Image

@@ -5,10 +5,9 @@ import PaginationContainer from '@/ui/component/PaginationContainer';
 import { stringToNumber } from '@/util/NumberUtil';
 import { isInPageSizeList, PAGE_SIZE_LIST } from '@/util/ConstData';
 import { redirect } from 'next/navigation';
-import { serialize } from 'node:v8';
 
 // 文章缓存过期时间（秒）
-export const revalidate = 60;
+export const revalidate = 0;
 
 /**
  * 博客文章页面
@@ -44,7 +43,7 @@ export default async function PostPage(props: {
       <div className="flex-grow">
         {/*文章列表*/}
         {postList && (
-          <ScrollShadow className="p-4 max-h-[calc(100dvh-145px)] md:max-h-[calc(100dvh - 100px)]">
+          <ScrollShadow className="p-4 max-h-[calc(100dvh-145px)]">
             <div className="grid grid-flow-row-dense gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
               {postList.data.map((post) => (
                 <PostCard key={post.postId} post={post} />
