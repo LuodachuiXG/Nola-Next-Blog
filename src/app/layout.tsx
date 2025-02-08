@@ -65,7 +65,7 @@ export default async function RootLayout({
             <aside className="flex-shrink-0 z-10">
               {/*窄屏 NavBar*/}
               <div className="md:hidden">
-                <Navbar blogInfo={blogInfo} />
+                <Navbar blogInfo={blogInfo} menuItems={menuItems}/>
               </div>
               {/*宽屏 NavBar*/}
               <div className="hidden md:block">
@@ -84,7 +84,7 @@ export default async function RootLayout({
               {/*  }*/}
               {/*/>*/}
               <main className="flex-grow">{children}</main>
-              <footer className="hidden md:block h-6 text-sm px-4 text-center text-foreground/40">Powered by Nola</footer>
+              <footer className="hidden md:block h-6 text-sm px-4 text-center text-foreground/40 dark:text-white/70">Powered by Nola</footer>
             </div>
           </div>
         </Providers>

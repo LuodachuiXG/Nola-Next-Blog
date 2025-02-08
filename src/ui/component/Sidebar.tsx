@@ -20,8 +20,10 @@ export default function Sidebar({
 }: {
   blogInfo: BlogInfo | null;
   menuItems: Array<Menu> | null;
+  autoWidth?: boolean;
 }) {
   const pathname = usePathname();
+
   return (
     <div className="h-dvh md:w-auto lg:w-72 flex flex-col gap-4 p-4 lg:p-6 shadow-xl dark:shadow-none">
       {blogInfo && (
