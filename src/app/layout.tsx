@@ -6,7 +6,6 @@ import { Icon } from 'next/dist/lib/metadata/types/metadata-types';
 import Sidebar from '@/ui/component/Sidebar';
 import BlurColorBackground from '@/ui/component/BlurColorBackground';
 import { apiMenuGetMenuItem } from '@/api/apiMenu';
-import AlertModal from '@/ui/component/AlertModal';
 
 /**
  * 根据博客信息动态生成 Metadata 数据

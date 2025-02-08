@@ -3,9 +3,9 @@
 
 import { useEffect, useState } from 'react';
 import { Button } from '@heroui/button';
-import { Light, Moon, Screen } from '@ricons/carbon';
+import { Light, Moon } from '@ricons/carbon';
 
-type Theme = 'system' | 'light' | 'dark';
+type Theme = 'light' | 'dark';
 
 /**
  * 主题切换工具
@@ -35,14 +35,11 @@ export function ThemeSwitcher({ size }: { size?: 'md' | 'sm' }) {
   function changeTheme(theme: Theme) {
     let target: Theme;
     switch (theme) {
-      case 'system':
-        target = 'light';
-        break;
       case 'light':
         target = 'dark';
         break;
       default:
-        target = 'system';
+        target = 'light';
         break;
     }
 
@@ -63,10 +60,8 @@ export function ThemeSwitcher({ size }: { size?: 'md' | 'sm' }) {
         >
           {theme === 'light' ? (
             <Light className="size-4" />
-          ) : theme === 'dark' ? (
-            <Moon className="size-4" />
           ) : (
-            <Screen className="size-4" />
+            <Moon className="size-4" />
           )}
         </Button>
       )}
@@ -76,14 +71,12 @@ export function ThemeSwitcher({ size }: { size?: 'md' | 'sm' }) {
 
 /**
  * 将 string 转为 Theme
- * @param str 字符串（'system' | 'dark' | 'light'）
+ * @param str 字符串（'dark' | 'light'）
  */
 function stringAsTheme(str: string): Theme {
   if (str === 'light') {
     return 'light';
-  } else if (str === 'dark') {
-    return 'dark';
   } else {
-    return 'system';
+    return 'dark';
   }
 }
