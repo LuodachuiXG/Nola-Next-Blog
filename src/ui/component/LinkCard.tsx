@@ -17,12 +17,12 @@ export default function LinkCard({ link }: { link: Link }) {
           {/*图片*/}
           <Image
             alt={link.displayName}
-            className="object-cover w-24 h-24 md:w-36 md:h-36 lg:w-44 lg:h-44 transition-transform group-hover:scale-125"
+            className="object-cover w-24 h-24 md:w-36 md:h-36 lg:w-44 lg:h-44 transition-transform"
             src={getImageRealUrl(link.logo)}
           />
 
           {/*代替图片显示的文字*/}
-          <div className="transition-transform group-hover:scale-125 absolute top-0 left-0 size-full z-0 text-[3.75rem] md:text-[8rem] font-bold bg-gray-400/10 dark:bg-transparent rounded-xl">
+          <div className="absolute top-0 left-0 size-full z-0 text-[3.75rem] md:text-[8rem] font-bold bg-gray-400/10 dark:bg-transparent rounded-xl">
             <div className="blur-sm hidden dark:block dark:opacity-50 absolute -bottom-5 md:-bottom-10 left-2">
               {firstChar}
             </div>
