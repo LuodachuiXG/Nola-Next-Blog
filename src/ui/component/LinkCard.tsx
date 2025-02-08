@@ -33,8 +33,8 @@ export default function LinkCard({ link }: { link: Link }) {
 
           {/*hover 时显示的描述*/}
           {link.description && link.description.length > 0 && (
-            <div className="absolute hidden group-hover:block top-0 left-0 w-full h-full z-20 p-1 overflow-hidden">
-              <div className="fadeIn-container max-h-[3.32rem] line-clamp-2 md:max-h-[4.55rem] md:line-clamp-3 lg:max-h-[7.25rem] lg:line-clamp-6 break-words w-full rounded-xl text-sm bg-black/20 p-2 backdrop-blur shadow-small border-1 border-white/20 text-white">
+            <div className="absolute top-0 left-0 w-full h-full z-20 p-1 overflow-hidden">
+              <div className="opacity-0 group-hover:opacity-100 transition-opacity max-h-[3.32rem] line-clamp-2 md:max-h-[4.55rem] md:line-clamp-3 lg:max-h-[7.25rem] lg:line-clamp-6 break-words w-full rounded-xl text-sm bg-black/20 p-2 backdrop-blur shadow-small border-1 border-white/20 text-white">
                 {link.description}
               </div>
             </div>

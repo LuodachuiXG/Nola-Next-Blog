@@ -43,7 +43,7 @@ export default async function TagPage(props: {
   const totalData = tagList?.totalData ?? 0;
 
   return (
-    <div className="p-6 flex flex-col gap-4 h-full">
+    <div className="pt-6 pl-6 pb-6 pr-1 flex flex-col gap-4 h-full">
       <div className="text-3xl font-semibold text-gray-600 select-none dark:text-white ">
         <p>{totalData > 0 ? `# ${totalData} 个标签` : '暂无标签'}</p>
       </div>

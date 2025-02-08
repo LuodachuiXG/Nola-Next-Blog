@@ -56,7 +56,7 @@ export default async function RootLayout({
   const menuItems = menuItemRes.data;
 
   return (
-    <html lang="zh">
+    <html lang="zh" className="dark">
       <body className="antialiased bg-background text-foreground">
         <Providers>
           <div className="w-dvw h-dvh flex flex-col md:flex-row relative overflow-clip">

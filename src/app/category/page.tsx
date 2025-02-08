@@ -44,7 +44,7 @@ export default async function CategoryPage(props: {
   const totalData = categoryList?.totalData ?? 0;
 
   return (
-    <div className="p-6 flex flex-col gap-4 h-full">
+    <div className="pt-6 pl-6 pb-6 pr-1 flex flex-col gap-4 h-full">
       <div className="text-3xl font-semibold text-gray-600 select-none dark:text-white ">
         <p>{totalData > 0 ? `& ${totalData} 个分类` : '暂无分类'}</p>
       </div>
