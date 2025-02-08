@@ -20,14 +20,14 @@ export default async function LinkPage() {
   // 总友情链接数量
   const totalData = linkList?.totalData ?? 0;
   return (
-    <div className="pt-6 pl-6 pb-6 pr-1 flex flex-col gap-4 h-full">
-      <div className="text-3xl font-semibold text-gray-600 select-none dark:text-white ">
+    <div className="pt-6 pl-6 pr-1 flex flex-col gap-4 h-full">
+      <div className="text-3xl font-semibold text-gray-600 select-none dark:text-white">
         <p>{totalData > 0 ? `@ ${totalData} 个友联` : '暂无友联'}</p>
       </div>
 
       <div className="flex-grow">
         {linkList?.data ? (
-          <ScrollShadow className="p-4 max-h-[calc(100dvh-135px)]">
+          <ScrollShadow className="p-4 h-[calc(100dvh-135px)] md:h-[calc(100dvh-100px)]">
             <div className="flex gap-4 flex-wrap">
               {linkList.data.map((link, i) => (
                 <LinkCard link={link} key={i} />

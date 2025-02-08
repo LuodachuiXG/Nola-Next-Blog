@@ -32,7 +32,7 @@ export default function PaginationContainer<T>({
   const [currentPage, setCurrentPage] = useState(1);
 
   // 当前每页条数
-  const [currentPageSize, setCurrentPageSize] = useState(10);
+  const [currentPageSize, setCurrentPageSize] = useState(40);
   useEffect(() => {
     // 如果当前每页条数是一个合理的条数（在每页条数列表中），则设为当前条数
     if (PAGE_SIZE_LIST.includes(pager.size)) {

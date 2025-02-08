@@ -15,11 +15,11 @@ export default function CategoryCard({ category }: { category: Category }) {
       src={getImageRealUrl(category.cover)}
     />
   ) : (
-    <div className="relative text-[3.75rem] md:text-[8rem] font-bold flex items-start size-full overflow-hidden">
-      <div className="blur-sm absolute hidden dark:block dark:opacity-50">
+    <div className="relative text-[3.75rem] md:text-[8rem] font-bold  size-full overflow-hidden">
+      <div className="blur-sm absolute hidden dark:block dark:opacity-50 left-1 -bottom-4 md:-bottom-10">
         {firstChar}
       </div>
-      <div className="text-gray-500 dark:text-foreground dark:opacity-60">
+      <div className="text-gray-500 dark:text-foreground dark:opacity-60 absolute left-1 -bottom-4 md:-bottom-10">
         {firstChar}
       </div>
     </div>

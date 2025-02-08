@@ -25,7 +25,7 @@ export default async function PostPage(props: {
     // 当前传进来的是非法页码（不在 PAGE_SIZE_LIST 中）
     // 使用默认第一个页码
     redirect(
-      `/?page=${stringToNumber(searchParams?.page, 1)}&size=${PAGE_SIZE_LIST[0]}`,
+      `/?page=${stringToNumber(searchParams?.page, 1)}&size=${PAGE_SIZE_LIST[2]}`,
     );
   }
 
@@ -33,7 +33,7 @@ export default async function PostPage(props: {
   const [postRes] = await Promise.all([
     apiPostGetPosts(
       stringToNumber(searchParams?.page, 1),
-      stringToNumber(searchParams?.size, 10),
+      stringToNumber(searchParams?.size, 40),
     ),
   ]);
   const postList = postRes.data;
@@ -43,7 +43,7 @@ export default async function PostPage(props: {
       <div className="flex-grow">
         {/*文章列表*/}
         {postList && (
-          <ScrollShadow className="p-4 max-h-[calc(100dvh-145px)]">
+          <ScrollShadow className="p-4 max-h-[calc(100dvh-115px)] md:max-h-[calc(100dvh-80px)]">
             <div className="grid grid-flow-row-dense gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
               {postList.data.map((post) => (
                 <PostCard key={post.postId} post={post} />
@@ -57,7 +57,7 @@ export default async function PostPage(props: {
 
       {/*分页组件*/}
       {postList && (
-        <div className="flex justify-center py-6">
+        <div className="flex justify-center py-2">
           <PaginationContainer pager={postList} route="/" />
         </div>
       )}
