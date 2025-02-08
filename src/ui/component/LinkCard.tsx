@@ -1,8 +1,6 @@
 import { Link } from '@/models/Link';
-import { Card, CardBody, CardHeader } from '@heroui/card';
 import { Image } from '@heroui/image';
 import { getImageRealUrl } from '@/util/UrlUtil';
-import { Link as LinkIcon } from '@ricons/carbon';
 
 /**
  * 友情链接卡片
@@ -11,54 +9,45 @@ import { Link as LinkIcon } from '@ricons/carbon';
  */
 export default function LinkCard({ link }: { link: Link }) {
   const firstChar = link.displayName.length > 0 ? link.displayName[0] : '';
-  const background = link.logo ? (
-    <Image
-      alt="Card background"
-      className="object-cover rounded-xl w-24 h-24 md:w-36 md:h-36 lg:w-44 lg:h-44"
-      src={getImageRealUrl(link.logo)}
-    />
-  ) : (
-    <div className="relative border-1 border-foreground/5 text-[3.75rem] md:text-[8rem] font-bold rounded-xl w-24 h-24 md:w-36 md:h-36 lg:w-44 lg:h-44">
-      <div className="blur-sm hidden dark:block dark:opacity-50 absolute -bottom-5 md:-bottom-10 left-2">
-        {firstChar}
-      </div>
-      <div className="text-gray-500 dark:text-foreground dark:opacity-60 absolute -bottom-5 md:-bottom-10 left-2">
-        {firstChar}
-      </div>
-    </div>
-  );
 
   return (
-    <div className="fadeIn-container">
-      <a href={link.url} target="_blank">
-        <Card
-          className="group transition-all cursor-pointer py-1 bg-transparent hover:-translate-y-0.5"
-          isHoverable
-          shadow="sm"
-        >
-          <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
-            <div className="text-tiny uppercase font-bold flex gap-2 items-center">
-              <LinkIcon className="w-4 h-4" />
-              LINK
-            </div>
-            <h4 className="font-bold text-large">{link.displayName}</h4>
-          </CardHeader>
-          <CardBody className="overflow-visible py-2">
-            <div className="relative">
-              {background}
+    <a href={link.url} target="_blank">
+      <div className="group shadow-small fadeIn-container transition-transform cursor-pointer hover:-translate-y-0.5 w-24 md:w-36 lg:w-44 flex flex-col rounded-xl overflow-hidden">
+        <div className="relative rounded-xl shadow-small shadow-black/5 overflow-hidden w-24 h-24 md:w-36 md:h-36 lg:w-44 lg:h-44">
+          {/*图片*/}
+          <Image
+            alt={link.displayName}
+            className="object-cover w-24 h-24 md:w-36 md:h-36 lg:w-44 lg:h-44 transition-transform group-hover:scale-125"
+            src={getImageRealUrl(link.logo)}
+          />
 
-              {/*半透明链接描述*/}
-              {link.description && (
-                <div className="transition-all absolute rounded-xl bottom-0 left-0 m-1 p-2 bg-black/10 group-hover:bg-black/30 w-[calc(100%-0.5rem)] z-20 backdrop-blur shadow-small border-1 border-white/20 overflow-hidden">
-                  <p className="text-small text-white/80 w-full line-clamp-4">
-                    {link.description}
-                  </p>
-                </div>
-              )}
+          {/*代替图片显示的文字*/}
+          <div className="transition-transform group-hover:scale-125 absolute top-0 left-0 size-full z-0 text-[3.75rem] md:text-[8rem] font-bold bg-gray-400/10 dark:bg-transparent rounded-xl">
+            <div className="blur-sm hidden dark:block dark:opacity-50 absolute -bottom-5 md:-bottom-10 left-2">
+              {firstChar}
             </div>
-          </CardBody>
-        </Card>
-      </a>
-    </div>
+            <div className="text-gray-500 dark:text-foreground dark:opacity-60 absolute -bottom-5 md:-bottom-10 left-2">
+              {firstChar}
+            </div>
+          </div>
+
+          {/*hover 时显示的描述*/}
+          {link.description && link.description.length > 0 && (
+            <div className="absolute hidden group-hover:block top-0 left-0 w-full h-full z-20 p-1 overflow-hidden">
+              <div className="fadeIn-container max-h-[3.32rem] line-clamp-2 md:max-h-[4.55rem] md:line-clamp-3 lg:max-h-[7.25rem] lg:line-clamp-6 break-words w-full rounded-xl text-sm bg-black/20 p-2 backdrop-blur shadow-small border-1 border-white/20 text-white">
+                {link.description}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/*链接详情*/}
+        <div className="p-1 md:p-2">
+          <p className="line-clamp-1 break-words font-semibold">
+            {link.displayName}
+          </p>
+        </div>
+      </div>
+    </a>
   );
 }

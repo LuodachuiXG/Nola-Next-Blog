@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import { apiLinkGetLinks } from '@/api/apiLink';
 import { ScrollShadow } from '@heroui/scroll-shadow';
-import CategoryCard from '@/ui/component/CategoryCard';
 import LinkCard from '@/ui/component/LinkCard';
 
 export const metadata: Metadata = {

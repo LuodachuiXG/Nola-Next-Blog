@@ -1,5 +1,5 @@
 import { Category } from '@/models/Category';
-import { Card, CardFooter } from '@heroui/card';
+import { Card, CardBody } from '@heroui/card';
 import { Image } from '@heroui/image';
 import { getImageRealUrl } from '@/util/UrlUtil';
 
@@ -28,15 +28,17 @@ export default function CategoryCard({ category }: { category: Category }) {
       className="bg-transparent fadeIn-container group w-24 h-24 md:w-40 md:h-40 transition-all border-none cursor-pointer hover:-translate-y-0.5"
       radius="lg"
     >
-      {/*背景板*/}
-      <div className="w-24 h-24 md:w-40 md:h-40">
-        {background}
-      </div>
-      <CardFooter className="py-2 bg-black/10 group-hover:bg-black/30 before:bg-white/10 border-white/20 border-1 overflow-hidden absolute rounded-large bottom-1 w-[calc(100%_-_8px)] shadow-small ml-1 z-10">
-        <p className="text-small font-semibold text-white/80 w-full text-center">
-          {category.displayName}
-        </p>
-      </CardFooter>
+      <CardBody className="relative m-0 p-0">
+        {/*背景板*/}
+        <div className="w-24 h-24 md:w-40 md:h-40">
+          {background}
+        </div>
+        <div className="transition-all absolute rounded-xl bottom-0 left-0 m-1 p-2 bg-black/10 group-hover:bg-black/30 w-[calc(100%-0.5rem)] z-20 backdrop-blur shadow-small border-1 border-white/20 overflow-hidden">
+          <p className="text-small font-semibold text-white/80 w-full text-center">
+            {category.displayName}
+          </p>
+        </div>
+      </CardBody>
     </Card>
   );
 }
