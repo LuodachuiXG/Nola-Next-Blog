@@ -6,6 +6,7 @@ import { getImageRealUrl } from '@/util/UrlUtil';
 import { formatDate } from '@/util/DateUtil';
 import { Tooltip } from '@heroui/tooltip';
 import { Link } from '@heroui/link';
+import NextLink from 'next/link';
 
 /**
  * 文章卡片
@@ -90,30 +91,32 @@ export default function PostCard({ post }: { post: Post }) {
         >
           <div className="flex flex-col gap-1 p-1 overflow-auto w-full justify-between h-full">
             {/*文章标题摘要*/}
-            <div className="cursor-pointer group">
-              <p
-                className={clsx(
-                  'font-semibold transition-all group-hover:text-primary',
-                  {
-                    // 如果当前文章有封面，则把文字固定为白色，否则看不清
-                    'text-white': hasCover,
-                  },
-                )}
-              >
-                {post.title}
-              </p>
-              <p
-                className={clsx(
-                  'font-normal text-sm text-foreground/70 line-clamp-2 md:line-clamp-3 xl:line-clamp-4',
-                  {
-                    // 如果当前文章有封面，则把文字固定为白色，否则看不清
-                    'text-white/70': hasCover,
-                  },
-                )}
-              >
-                {post.excerpt}
-              </p>
-            </div>
+            <NextLink href={`/post?slug=${post.slug}`}>
+              <div className="cursor-pointer group">
+                <p
+                  className={clsx(
+                    'font-semibold transition-all group-hover:text-primary',
+                    {
+                      // 如果当前文章有封面，则把文字固定为白色，否则看不清
+                      'text-white': hasCover,
+                    },
+                  )}
+                >
+                  {post.title}
+                </p>
+                <p
+                  className={clsx(
+                    'font-normal text-sm text-foreground/70 line-clamp-2 md:line-clamp-3 xl:line-clamp-4',
+                    {
+                      // 如果当前文章有封面，则把文字固定为白色，否则看不清
+                      'text-white/70': hasCover,
+                    },
+                  )}
+                >
+                  {post.excerpt}
+                </p>
+              </div>
+            </NextLink>
 
             {/*文章时间、分类、标签等信息*/}
             <div className="flex gap-1 justify-between w-full text-tiny mt-1 overflow-hidden">
