@@ -82,6 +82,7 @@ export default function PaginationContainer<T>({
                 {PAGE_SIZE_LIST.map((size) => (
                   <Button
                     key={size}
+                    color={currentPageSize === size ? 'primary' : 'default'}
                     variant="light"
                     onPress={() => {
                       // 关闭 popover
