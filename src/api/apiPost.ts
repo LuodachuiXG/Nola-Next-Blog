@@ -1,6 +1,7 @@
 import { ApiResponse } from '@/models/ApiResponse';
 import { Pager } from '@/models/Pager';
 import { Post } from '@/models/Post';
+import { PostContent } from '@/models/PostContent';
 
 const serverUrl = process.env.SERVER_URL;
 
@@ -52,6 +53,36 @@ export async function apiPostGetPostBySlug(
   slug: string
 ): Promise<ApiResponse<Post>> {
   const info = await fetch(`${serverUrl}/api/post/slug/${slug}`);
+  return info.json();
+}
+
+/**
+ * 获取文章内容
+ * @param id 文章 ID（文章 ID 和文章别名至少提供一个）
+ * @param slug 文章别名（文章 ID 和文章别名至少提供一个）
+ * @param password 文章密码（如果有）
+ */
+export async function apiPostGetPostContent(
+  id?: number,
+  slug?: string,
+  password?: string
+): Promise<ApiResponse<PostContent>> {
+  if (!id && !slug) {
+    throw new Error('文章 ID 和文章别名至少提供一个');
+  }
+
+  let url = `${serverUrl}/api/post/content`
+  if (id) {
+    url += `?id=${id}`
+  } else {
+    url += `?slug=${slug}`
+  }
+
+  if (password) {
+    url += `&password=${password}`
+  }
+
+  const info = await fetch(url);
   return info.json();
 }
 

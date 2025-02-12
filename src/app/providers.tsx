@@ -7,7 +7,6 @@ import { useRouter } from 'next/navigation';
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const router = useRouter()
-
   return (
     <HeroUIProvider navigate={router.push}>
       {/* 用于控制暗色亮色主题（默认跟随系统）*/}

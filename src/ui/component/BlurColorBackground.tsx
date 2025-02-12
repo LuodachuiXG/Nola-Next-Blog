@@ -3,7 +3,7 @@
  */
 export default function BlurColorBackground() {
   return (
-    <div className="absolute transition-opacity duration-[1600ms] ease-out left-0 top-0 size-full z-0 opacity-0 dark:opacity-35">
+    <div className="w-full h-full absolute transition-opacity duration-[1600ms] ease-out left-0 top-0 z-0 opacity-0 dark:opacity-35">
       {/*右上角*/}
       <div
         className="absolute top-48 -left-48 w-[200%] h-1/2 bg-gradient-to-br from-sky-500 to-indigo-500 rounded-2xl rotate-[20deg] blur-3xl"></div>

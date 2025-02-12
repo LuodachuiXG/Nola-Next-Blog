@@ -50,7 +50,7 @@ export default async function TagPage(props: {
         </div>
         <div className="flex-grow">
           {tagList?.data ? (
-            <ScrollShadow className="p-4 max-h-[calc(100dvh-170px)] md:max-h-[calc(100dvh-140px)]">
+            <ScrollShadow className="py-2 max-h-[calc(100dvh-170px)] md:max-h-[calc(100dvh-140px)]">
               <div className="flex gap-4 flex-wrap">
                 {tagList.data.length > 0 ? (
                   tagList.data.map((tag) => (

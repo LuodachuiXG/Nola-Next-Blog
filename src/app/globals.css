@@ -19,6 +19,7 @@ body {
     background: var(--background);
     font-family: Arial, Helvetica, sans-serif;
     transition: background-color .4s ease;
+    scroll-behavior: smooth;
 }
 
 .fadeIn-container {

@@ -4,6 +4,8 @@ import { Image } from '@heroui/image';
 import { clsx } from 'clsx';
 import { getImageRealUrl } from '@/util/UrlUtil';
 import { formatDate } from '@/util/DateUtil';
+import { Tooltip } from '@heroui/tooltip';
+import { Link } from '@heroui/link';
 
 /**
  * 文章卡片
@@ -12,13 +14,46 @@ import { formatDate } from '@/util/DateUtil';
 export default function PostCard({ post }: { post: Post }) {
   // 当前文章是否有封面图
   const hasCover =
-    post.cover || (post.category?.cover && post.category.unifiedCover);
+    !!post.cover || (!!post.category?.cover && post.category.unifiedCover);
   // 封面地址
   const coverUrl = post.cover
     ? post.cover
     : post.category?.cover
       ? post.category.cover
       : '';
+
+  // 文章标签内容
+  const tagContent =
+    post.tags.length === 0 ? null : post.tags.length === 1 ? (
+      // 只有一个标签
+      <ClickLink
+        displayName={'#' + post.tags[0].displayName}
+        href="/"
+        showOnImgCard={hasCover}
+      />
+    ) : (
+      // 有多个标签
+      <Tooltip
+        delay={500}
+        showArrow
+        content={
+          <div className="flex gap-2">
+            {post.tags.map((tag) => (
+              <ClickLink
+                displayName={'#' + tag.displayName}
+                href="/?page=2&size=10"
+                key={tag.tagId}
+              />
+            ))}
+          </div>
+        }
+      >
+        <p className="cursor-default line-clamp-1">
+          #{post.tags[0].displayName} 等 {post.tags.length} 个标签
+        </p>
+      </Tooltip>
+    );
+
   return (
     <div className="relative fadeIn-container">
       {/*如果当前文章显示了封面，则在文章卡片周围以封面图为底图，做发光效果*/}
@@ -81,30 +116,28 @@ export default function PostCard({ post }: { post: Post }) {
             </div>
 
             {/*文章时间、分类、标签等信息*/}
-            <div className="flex gap-1 justify-between w-full text-tiny mt-1">
+            <div className="flex gap-1 justify-between w-full text-tiny mt-1 overflow-hidden">
               {/*分类标签*/}
               <div
-                className={clsx('flex gap-2 font-semibold overflow-ellipsis', {
-                  'text-default-500': !hasCover,
-                  'text-white': hasCover,
-                })}
+                className={clsx(
+                  'flex gap-2 font-semibold overflow-ellipsis line-clamp-1',
+                  {
+                    'text-default-500': !hasCover,
+                    'text-white': hasCover,
+                  },
+                )}
               >
                 {/*分类*/}
                 {post.category && (
-                  <a className="cursor-pointer hover:text-primary transition-colors">
-                    {'&' + post.category.displayName}
-                  </a>
+                  <ClickLink
+                    displayName={'&' + post.category.displayName}
+                    href="/"
+                    showOnImgCard={hasCover}
+                  />
                 )}
 
                 {/*标签*/}
-                {post.tags.map((tag) => (
-                  <a
-                    className="cursor-pointer hover:text-primary transition-colors"
-                    key={tag.tagId}
-                  >
-                    {'#' + tag.displayName}
-                  </a>
-                ))}
+                {tagContent}
               </div>
 
               {/*时间*/}
@@ -123,5 +156,36 @@ export default function PostCard({ post }: { post: Post }) {
         </CardFooter>
       </Card>
     </div>
+  );
+}
+
+/**
+ * 可点击的 Link
+ * @param displayName 显示名1
+ * @param href 链接
+ * @param showOnCard 当前标签是否显示在图片卡片上（在图片上的话颜色会有变化，防止看不清文字）
+ */
+function ClickLink({
+  displayName,
+  href,
+  showOnImgCard,
+}: {
+  displayName: string;
+  href: string;
+  showOnImgCard?: boolean;
+}) {
+  return (
+    <Link
+      className={clsx(
+        'cursor-pointer hover:text-primary transition-colors text-tiny font-semibold',
+        {
+          'text-default-500': !showOnImgCard,
+          'text-white': showOnImgCard,
+        },
+      )}
+      href={href}
+    >
+      {displayName}
+    </Link>
   );
 }
