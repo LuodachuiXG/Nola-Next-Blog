@@ -44,9 +44,12 @@ export default function Sidebar({
               showArrow={true}
               placement="right"
             >
-              <p className="font-black text-2xl cursor-default hidden lg:block">
-                {blogInfo.title}
-              </p>
+              <Link
+                className="font-black text-2xl cursor-pointer hidden lg:block text-black dark:text-white"
+                href="/"
+              >
+                <p>{blogInfo.title}</p>
+              </Link>
             </Tooltip>
           </div>
         </div>

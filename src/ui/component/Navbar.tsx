@@ -10,6 +10,7 @@ import { Menu, MenuTarget } from '@/models/Menu';
 import { clsx } from 'clsx';
 import { redirect, usePathname } from 'next/navigation';
 import { useDisclosure } from '@heroui/react';
+import { Link } from '@heroui/link';
 
 /**
  * Navbar 在窄屏显示在顶部
@@ -113,9 +114,12 @@ export default function Navbar({
             }
             showArrow={true}
           >
-            <p className="font-black text-xl cursor-default">
-              {blogInfo.title}
-            </p>
+            <Link
+              className="font-black text-xl text-black dark:text-white cursor-pointer"
+              href="/"
+            >
+              <p>{blogInfo.title}</p>
+            </Link>
           </Tooltip>
         </div>
       )}

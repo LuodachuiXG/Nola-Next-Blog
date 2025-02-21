@@ -121,14 +121,14 @@ export default async function PostPage(props: {
   return (
     <>
       <div className="fadeIn-container">
-        <ScrollShadow className="pr-6 max-h-[calc(100dvh-55px)] md:max-h-[calc(100dvh-25px)]">
-          <div className="flex flex-col items-center">
+        <ScrollShadow className="max-h-[calc(100dvh-55px)] md:max-h-[calc(100dvh-25px)]">
+          <div className="flex flex-col items-center overflow-hidden w-dvw md:w-auto">
             <PostInfoHead post={postContent.post} />
             <article
               id="article"
-              className="w-dvw md:max-w-[70ch] lg:max-w-[80ch] 2xl:max-w-[110ch] pl-6 dark:prose-pre:border-1 dark:prose-pre:border-foreground/20 prose md:prose-base dark:prose-invert"
+              className="w-dvw md:max-w-[70ch] lg:max-w-[80ch] 2xl:max-w-[110ch] px-5 dark:prose-pre:border-1 dark:prose-pre:border-foreground/20 prose md:prose-base dark:prose-invert"
             >
-              <PostPreview markdown={content} />
+              <PostPreview className="" markdown={content} />
             </article>
           </div>
         </ScrollShadow>
