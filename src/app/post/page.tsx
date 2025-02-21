@@ -4,6 +4,7 @@ import { ScrollShadow } from '@heroui/scroll-shadow';
 import { stringToNumber } from '@/util/NumberUtil';
 import { Icon } from 'next/dist/lib/metadata/types/metadata-types';
 import { getImageRealUrl } from '@/util/UrlUtil';
+import PostInfoHead from '@/ui/component/PostInfoHead';
 
 type Props = {
   id?: string;
@@ -110,16 +111,21 @@ export default async function PostPage(props: {
   ]);
   const postContent = postContentRes.data;
 
+  if (!postContent) {
+    return Promise.reject('文章不存在')
+  }
+
   // Markdown 文章内容
   const content = postContent?.content ?? '';
 
   return (
     <>
       <div className="fadeIn-container">
-        <ScrollShadow className="flex justify-center pr-6 max-h-[calc(100dvh-55px)] md:max-h-[calc(100dvh-25px)] w-full">
+        <ScrollShadow className="flex flex-col  items-center pr-6 max-h-[calc(100dvh-55px)] md:max-h-[calc(100dvh-25px)] w-full">
+          <PostInfoHead post={postContent.post} />
           <article
             id="article"
-            className="transition-width max-w-full md:max-w-[70ch] lg:max-w-[80ch] 2xl:max-w-[110ch] pt-6 pl-6 dark:prose-pre:border-1 dark:prose-pre:border-foreground/20 prose md:prose-base dark:prose-invert"
+            className="transition-width max-w-full md:max-w-[70ch] lg:max-w-[80ch] 2xl:max-w-[110ch] pl-6 dark:prose-pre:border-1 dark:prose-pre:border-foreground/20 prose md:prose-base dark:prose-invert"
           >
             <PostPreview markdown={content} />
           </article>

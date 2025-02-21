@@ -5,8 +5,8 @@ import { clsx } from 'clsx';
 import { getImageRealUrl } from '@/util/UrlUtil';
 import { formatDate } from '@/util/DateUtil';
 import { Tooltip } from '@heroui/tooltip';
-import { Link } from '@heroui/link';
 import NextLink from 'next/link';
+import ClickLink from '@/ui/component/ClickLink';
 
 /**
  * 文章卡片
@@ -58,17 +58,8 @@ export default function PostCard({ post }: { post: Post }) {
   return (
     <div className="relative fadeIn-container">
       {/*如果当前文章显示了封面，则在文章卡片周围以封面图为底图，做发光效果*/}
-      {hasCover && (
-        <Image
-          removeWrapper
-          alt={post.title}
-          className="z-0 w-full h-full absolute opacity-50 blur backdrop-blur-sm"
-          src={coverUrl ? getImageRealUrl(coverUrl) : ''}
-        />
-      )}
-
       <Card
-        className="transition-all h-full overflow-hidden hover:-translate-y-0.5"
+        className="transition-all h-full overflow-clip hover:-translate-y-0.5 rounded-xl"
         isBlurred
         shadow="sm"
         isHoverable
@@ -159,36 +150,5 @@ export default function PostCard({ post }: { post: Post }) {
         </CardFooter>
       </Card>
     </div>
-  );
-}
-
-/**
- * 可点击的 Link
- * @param displayName 显示名1
- * @param href 链接
- * @param showOnCard 当前标签是否显示在图片卡片上（在图片上的话颜色会有变化，防止看不清文字）
- */
-function ClickLink({
-  displayName,
-  href,
-  showOnImgCard,
-}: {
-  displayName: string;
-  href: string;
-  showOnImgCard?: boolean;
-}) {
-  return (
-    <Link
-      className={clsx(
-        'cursor-pointer hover:text-primary transition-colors text-tiny font-semibold',
-        {
-          'text-default-500': !showOnImgCard,
-          'text-white': showOnImgCard,
-        },
-      )}
-      href={href}
-    >
-      {displayName}
-    </Link>
   );
 }

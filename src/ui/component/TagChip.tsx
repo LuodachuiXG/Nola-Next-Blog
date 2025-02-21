@@ -31,7 +31,6 @@ export default function TagChip({ tag }: { tag: Tag }) {
 /**
  * 卡片颜色点
  * @param color
- * @constructor
  */
 function TagColorDot(color: string) {
   return (

@@ -7,6 +7,8 @@ import Sidebar from '@/ui/component/Sidebar';
 import BlurColorBackground from '@/ui/component/BlurColorBackground';
 import { apiMenuGetMenuItem } from '@/api/apiMenu';
 
+// import AlertModal from '@/ui/component/AlertModal';
+
 /**
  * 根据博客信息动态生成 Metadata 数据
  */
@@ -79,13 +81,18 @@ export default async function RootLayout({
               {/*    <>*/}
               {/*      <p>新版博客 UI 目前仍在开发中，仅完成部分功能。</p>*/}
               {/*      <br />*/}
-              {/*      <p>2025 年 2 月 8 日 </p>*/}
+              {/*      <p>2025 年 2 月 12 日 </p>*/}
               {/*    </>*/}
               {/*  }*/}
               {/*/>*/}
               <main className="flex-grow">{children}</main>
               <footer className="hidden md:block h-6 text-tiny px-4 text-center text-foreground/40 dark:text-white/70">
-                Powered by Nola
+                Powered by
+                <a href="https://github.com/LuodachuiXG/Nola" target="_blank">
+                  <span className="font-semibold ml-1 italic hover:text-primary transition-colors">
+                    Nola
+                  </span>
+                </a>
               </footer>
             </div>
           </div>
