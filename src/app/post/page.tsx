@@ -275,7 +275,7 @@ function CommentItem({ comment }: { comment: Comment }) {
 
         {/*评论内容*/}
         <div className="w-full text-base text-foreground break-all">
-          {comment.content.repeat(20)}
+          {comment.content}
         </div>
       </div>
     </div>
