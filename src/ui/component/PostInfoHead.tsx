@@ -67,10 +67,6 @@ export default function PostInfoHead({ post }: { post: Post }) {
 
           {/*其他文章信息*/}
           <div className="flex gap-2 text-tiny text-default-500 h-fit items-center">
-            {/*是否允许评论*/}
-            <p>{post.allowComment ? '允许评论' : '禁止评论'}</p>
-            <VerticalDivider />
-
             {/*是否置顶*/}
             {post.pinned && (
               <>
@@ -78,6 +74,10 @@ export default function PostInfoHead({ post }: { post: Post }) {
                 <VerticalDivider />
               </>
             )}
+
+            {/*是否允许评论*/}
+            <p>{post.allowComment ? '允许评论' : '禁止评论'}</p>
+            <VerticalDivider />
 
             {/*发布时间或修改时间*/}
             <p>

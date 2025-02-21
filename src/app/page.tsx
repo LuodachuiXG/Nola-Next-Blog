@@ -21,21 +21,18 @@ export default async function PostPage(props: {
 }) {
   const searchParams = await props.searchParams;
 
+  const page = stringToNumber(searchParams?.page, 1);
+  const size = stringToNumber(searchParams?.size, 40);
+
   if (searchParams?.size && !isInPageSizeList(searchParams?.size)) {
     // 当前传进来的是非法页码（不在 PAGE_SIZE_LIST 中）
     // 使用默认第一个页码
-    redirect(
-      `/?page=${stringToNumber(searchParams?.page, 1)}&size=${PAGE_SIZE_LIST[2]}`,
-    );
+    redirect(`/?page=${page}&size=${PAGE_SIZE_LIST[2]}`);
   }
 
   // 获取文章列表
-  const [postRes] = await Promise.all([
-    apiPostGetPosts(
-      stringToNumber(searchParams?.page, 1),
-      stringToNumber(searchParams?.size, 40),
-    ),
-  ]);
+  const [postRes] = await Promise.all([apiPostGetPosts(page, size)]);
+
   const postList = postRes.data;
 
   return (

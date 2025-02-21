@@ -6,7 +6,7 @@ const serverUrl = process.env.SERVER_URL;
 
 /**
  * 获取标签
- * @param page 当前页（留 0 获取所有文章）
+ * @param page 当前页（留 0 获取所有标签）
  * @param size 每页条数
  */
 export async function apiTagGetTag(

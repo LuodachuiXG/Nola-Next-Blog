@@ -14,15 +14,18 @@ import { redirect } from 'next/navigation';
  * 分页组件
  * @param pager 分页接口
  * @param route 调用该组件的路由页面地址（如果设置了路由地址，在页码和每页条数改变时，会自动跳转到该路由，并附带 page 和 size 参数）
+ * @param jumpId 跳转到指定 ID 的位置（在页码改变自动跳转到 route 时是否指定跳转到某个 ID）
  * @param onChange 改变事件（当前页数，每页条数）
  */
 export default function PaginationContainer<T>({
   pager,
   route,
+  jumpId,
   onChange,
 }: {
   pager: Pager<T>;
   route?: string;
+  jumpId?: string;
   onChange?: (page: number, size: number) => void;
 }) {
   // popover 的状态
@@ -38,7 +41,17 @@ export default function PaginationContainer<T>({
     if (PAGE_SIZE_LIST.includes(pager.size)) {
       setCurrentPageSize(pager.size);
     }
-  }, [pager.size]);
+
+    setCurrentPage(pager.page);
+  }, [pager.size, pager.page]);
+
+  // 总页数
+  const totalPages = Math.ceil(pager.totalData / pager.size);
+
+  if (pager.page > totalPages) {
+    // 当前页大于总页数，用户可能从地址栏输入了错误的页码，跳转到第一页
+    change(1, currentPageSize);
+  }
 
   /**
    * 改变事件
@@ -49,12 +62,19 @@ export default function PaginationContainer<T>({
     onChange?.(page, size);
     if (route) {
       // 跳转路由并附带页码信息
-      redirect(`${route}?page=${page}&size=${size}`);
+      let url = `${route}${route.includes('?') ? '&' : '?'}page=${page}&size=${size}`;
+      if (jumpId) {
+        url += `#${jumpId}`;
+      }
+      redirect(url);
     }
   }
 
   return (
-    <div className="flex items-center flex-wrap justify-center">
+    <div className="flex items-center flex-wrap justify-center gap-5">
+      <p className="text-sm text-foreground/85 hidden md:block">
+        Total {pager.totalData}
+      </p>
       <Pagination
         showControls
         showShadow
