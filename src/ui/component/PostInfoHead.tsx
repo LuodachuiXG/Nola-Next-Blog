@@ -23,7 +23,7 @@ export default function PostInfoHead({ post }: { post: Post }) {
   }
 
   return (
-    <div className="md:w-[70ch] lg:w-[80ch] 2xl:w-[110ch] mt-3 px-6">
+    <div className="md:w-[70ch] lg:w-[80ch] 2xl:w-[110ch] mt-6 px-6 w-full">
       <div className="h-fit relative flex flex-col gap-4">
         {/*封面，如果有*/}
         {cover && (
