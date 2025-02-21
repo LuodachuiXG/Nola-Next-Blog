@@ -7,6 +7,7 @@ import { formatDate } from '@/util/DateUtil';
 import { Tooltip } from '@heroui/tooltip';
 import NextLink from 'next/link';
 import ClickLink from '@/ui/component/ClickLink';
+import { PinFilled as PinnedIcon } from '@ricons/carbon';
 
 /**
  * 文章卡片
@@ -35,7 +36,7 @@ export default function PostCard({ post }: { post: Post }) {
     ) : (
       // 有多个标签
       <Tooltip
-        delay={500}
+        delay={300}
         showArrow
         content={
           <div className="flex gap-2">
@@ -56,10 +57,16 @@ export default function PostCard({ post }: { post: Post }) {
     );
 
   return (
-    <div className="relative fadeIn-container">
-      {/*如果当前文章显示了封面，则在文章卡片周围以封面图为底图，做发光效果*/}
+    <div className="relative fadeIn-container transition-all hover:-translate-y-0.5">
+      {/*文章置顶时显示图钉图标*/}
+      {post.pinned && (
+        <div className="absolute -top-2 -left-2 p-1.5 z-50 bg-red-500 rounded-full shadow-red-500">
+          <PinnedIcon className="w-3 h-3 text-white" />
+        </div>
+      )}
+
       <Card
-        className="transition-all h-full overflow-clip hover:-translate-y-0.5 rounded-xl"
+        className="h-full overflow-clip rounded-xl"
         isBlurred
         shadow="sm"
         isHoverable
