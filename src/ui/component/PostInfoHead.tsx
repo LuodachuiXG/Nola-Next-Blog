@@ -2,7 +2,7 @@ import { Post } from '@/models/Post';
 import { Image } from '@heroui/image';
 import { getImageRealUrl } from '@/util/UrlUtil';
 import ClickLink from '@/ui/component/ClickLink';
-import { formatDate } from '@/util/DateUtil';
+import { formatDate, formatDateDesc } from '@/util/DateUtil';
 
 /**
  * 文章信息头组件
@@ -22,8 +22,11 @@ export default function PostInfoHead({ post }: { post: Post }) {
     }
   }
 
+  // 发布时间或修改时间
+  const time = post.lastModifyTime ? post.lastModifyTime : post.createTime
+
   return (
-    <div className="md:w-[70ch] lg:w-[80ch] 2xl:w-[110ch] mt-6 px-6 w-full">
+    <div className="mt-6 px-6 w-full">
       <div className="h-fit relative flex flex-col gap-4">
         {/*封面，如果有*/}
         {cover && (
@@ -81,10 +84,10 @@ export default function PostInfoHead({ post }: { post: Post }) {
 
             {/*发布时间或修改时间*/}
             <p>
-              {formatDate(
-                post.lastModifyTime ? post.lastModifyTime : post.createTime,
-                true,
-              )}
+              {formatDateDesc(time)}
+            </p>
+            <p>
+              {formatDate(time, true)}
             </p>
           </div>
         </div>

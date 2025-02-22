@@ -13,7 +13,7 @@ import { toast } from '@/util/ToastUtil';
  */
 export default function AddCommentContainer({ post }: { post: Post }) {
   return (
-    <div className="w-dvw md:max-w-[70ch] lg:max-w-[80ch] 2xl:max-w-[110ch] px-5 py-6">
+    <div className="w-full px-5 py-6">
       {/*添加评论表单*/}
       <CommentForm post={post} />
     </div>

@@ -3,7 +3,7 @@ import { Post } from '@/models/Post';
 import { Image } from '@heroui/image';
 import { clsx } from 'clsx';
 import { getImageRealUrl } from '@/util/UrlUtil';
-import { formatDate } from '@/util/DateUtil';
+import { formatDate, formatDateDesc } from '@/util/DateUtil';
 import { Tooltip } from '@heroui/tooltip';
 import NextLink from 'next/link';
 import ClickLink from '@/ui/component/ClickLink';
@@ -148,7 +148,7 @@ export default function PostCard({ post }: { post: Post }) {
                   'text-white/70': hasCover,
                 })}
               >
-                {formatDate(
+                {formatDateDesc(
                   post.lastModifyTime ? post.lastModifyTime : post.createTime,
                 )}
               </div>
