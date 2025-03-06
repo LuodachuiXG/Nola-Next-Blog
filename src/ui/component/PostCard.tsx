@@ -3,11 +3,11 @@ import { Post } from '@/models/Post';
 import { Image } from '@heroui/image';
 import { clsx } from 'clsx';
 import { getImageRealUrl } from '@/util/UrlUtil';
-import { formatDate, formatDateDesc } from '@/util/DateUtil';
 import { Tooltip } from '@heroui/tooltip';
 import NextLink from 'next/link';
 import ClickLink from '@/ui/component/ClickLink';
 import { PinFilled as PinnedIcon } from '@ricons/carbon';
+import TimeFormatLabel from '@/ui/component/TimeFormatLabel';
 
 /**
  * 文章卡片
@@ -148,9 +148,11 @@ export default function PostCard({ post }: { post: Post }) {
                   'text-white/70': hasCover,
                 })}
               >
-                {formatDateDesc(
-                  post.lastModifyTime ? post.lastModifyTime : post.createTime,
-                )}
+                <TimeFormatLabel
+                  time={
+                    post.lastModifyTime ? post.lastModifyTime : post.createTime
+                  }
+                />
               </div>
             </div>
           </div>

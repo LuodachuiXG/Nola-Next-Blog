@@ -6,8 +6,17 @@ import { Icon } from 'next/dist/lib/metadata/types/metadata-types';
 import Sidebar from '@/ui/component/Sidebar';
 import BlurColorBackground from '@/ui/component/BlurColorBackground';
 import { apiMenuGetMenuItem } from '@/api/apiMenu';
+import { Metadata, Viewport } from 'next';
 
 // import AlertModal from '@/ui/component/AlertModal';
+
+export const viewport: Viewport = {
+  initialScale: 1,
+  width: 'device-width',
+  userScalable: false,
+  maximumScale: 1,
+  minimumScale:  1
+}
 
 /**
  * 根据博客信息动态生成 Metadata 数据
@@ -36,8 +45,8 @@ export async function generateMetadata() {
         rel: 'icon',
         type: 'image/png',
       },
-    ] as Array<Icon>,
-  };
+    ] as Array<Icon>
+  } as Metadata;
 }
 
 export default async function RootLayout({

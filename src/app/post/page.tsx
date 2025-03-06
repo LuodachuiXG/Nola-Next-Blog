@@ -1,4 +1,8 @@
-import { apiPostGetPostContent } from '@/api/apiPost';
+import {
+  apiPostGetPostById,
+  apiPostGetPostBySlug,
+  apiPostGetPostContent,
+} from '@/api/apiPost';
 import PostPreview from '@/ui/component/PostPreview';
 import { ScrollShadow } from '@heroui/scroll-shadow';
 import { stringToNumber } from '@/util/NumberUtil';
@@ -14,6 +18,10 @@ import { Post } from '@/models/Post';
 import { isInPageSizeList } from '@/util/ConstData';
 import { redirect } from 'next/navigation';
 import CommentItem from '@/ui/component/CommentItem';
+import { Suspense } from 'react';
+import CardSkeleton from '@/ui/component/CardSkeleton';
+import { ApiResponse } from '@/models/ApiResponse';
+import { clsx } from 'clsx';
 
 type Props = {
   // 文章 ID
@@ -43,12 +51,19 @@ export async function generateMetadata(props: {
       title: '文章不存在',
     };
   } else {
-    const [postContentRes] = await Promise.all([
-      apiPostGetPostContent(
-        searchParams?.id ? stringToNumber(searchParams?.id) : undefined,
-        searchParams?.slug,
-      ),
-    ]);
+    let postContentRes = {} as ApiResponse<Post>;
+
+    if (searchParams.id) {
+      const [res] = await Promise.all([
+        apiPostGetPostById(stringToNumber(searchParams.id)),
+      ]);
+      postContentRes = res;
+    } else if (searchParams.slug) {
+      const [res] = await Promise.all([
+        apiPostGetPostBySlug(searchParams.slug),
+      ]);
+      postContentRes = res;
+    }
 
     const post = postContentRes.data;
 
@@ -57,25 +72,25 @@ export async function generateMetadata(props: {
       // 文章封面
       let cover = '';
 
-      if (post.post.cover) {
+      if (post.cover) {
         // 文章自己有封面
-        cover = post.post.cover;
+        cover = post.cover;
       } else {
         // 文章自己没封面，查看是否分类封面，以及分类是否设置了统一封面
         if (
-          post.post.category &&
-          post.post.category.cover &&
-          post.post.category.unifiedCover
+          post.category &&
+          post.category.cover &&
+          post.category.unifiedCover
         ) {
           // 分类有封面，并且设置了统一封面
-          cover = post.post.category.cover;
+          cover = post.category.cover;
         }
       }
 
       if (cover.length > 0) {
         /* 有封面 */
         return {
-          title: post.post.title,
+          title: post.title,
           openGraph: {
             images: [getImageRealUrl(cover) ?? ''],
           },
@@ -91,7 +106,7 @@ export async function generateMetadata(props: {
       } else {
         /* 没封面 */
         return {
-          title: post.post.title,
+          title: post.title,
         };
       }
     } else {
@@ -151,8 +166,8 @@ export default async function PostPage(props: {
 
   const comments = commentRes.data;
 
-  if (!postContent) {
-    return Promise.reject('文章不存在');
+  if (postContentRes.errMsg || !postContent) {
+    return Promise.reject(postContentRes.errMsg);
   }
 
   // Markdown 文章内容
@@ -173,8 +188,7 @@ export default async function PostPage(props: {
               >
                 <PostPreview markdown={content} />
               </article>
-
-              <DotDivider />
+              <PostDivider />
 
               {/*添加评论组件*/}
               {postContent && postContent.post.allowComment && (
@@ -192,13 +206,23 @@ export default async function PostPage(props: {
 }
 
 /**
- * 带点的分割线（水平）
+ * 分割线（水平）
+ * @param className
+ * @param hasMargin 是否有默认的边距（默认有 true）
  */
-function DotDivider() {
+export function PostDivider({
+  className,
+  hasMargin,
+}: {
+  className?: string;
+  hasMargin?: boolean;
+}) {
   return (
-    <div className="w-full my-16 px-5 flex flex-col items-center gap-4">
-      {/*点*/}
-      <div className="size-[2.5px] bg-divider rounded-full"></div>
+    <div
+      className={clsx(className, 'w-full flex flex-col items-center gap-4', {
+        'my-16 px-5': hasMargin ?? true,
+      })}
+    >
       {/*线*/}
       <div className="w-full h-divider bg-divider"></div>
     </div>
@@ -228,7 +252,11 @@ function CommentList({
    * 暂无评论
    */
   function NoComment() {
-    return <div className="py-24 text-lg w-full text-center">暂无评论</div>;
+    return (
+      <div className="py-24 text-base w-full text-center text-default-500">
+        暂无评论
+      </div>
+    );
   }
 
   return (

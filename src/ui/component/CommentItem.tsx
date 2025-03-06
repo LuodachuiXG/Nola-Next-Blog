@@ -1,6 +1,7 @@
 import { Comment } from '@/models/Comment';
 import { formatDateDesc } from '@/util/DateUtil';
 import { stringToNumber } from '@/util/NumberUtil';
+import TimeFormatLabel from '@/ui/component/TimeFormatLabel';
 
 /**
  * 评论项
@@ -21,7 +22,7 @@ export default function CommentItem({ comment }: { comment: Comment }) {
   }
 
   return (
-    <div className="w-full flex gap-2 items-start rounded-xl p-2 hover:shadow-lg transition-all border-1 border-transparent hover:border-divider hover:-translate-y-0.5">
+    <div className="w-full flex gap-2 items-start rounded-xl p-2 hover:shadow-lg transition-all border-1 border-transparent hover:border-divider hover:-translate-y-0.5 dark:hover:border-white/50">
       {/*左侧头像*/}
       <Avatar c={comment} />
       {/*右侧评论内容及信息*/}
@@ -34,7 +35,7 @@ export default function CommentItem({ comment }: { comment: Comment }) {
             </p>
           </a>
           <p className="text-sm text-default-500">
-            {formatDateDesc(stringToNumber(comment.createTime))}
+            <TimeFormatLabel time={stringToNumber(comment.createTime)} />
           </p>
         </div>
 

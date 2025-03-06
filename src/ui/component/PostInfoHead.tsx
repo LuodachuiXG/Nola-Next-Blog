@@ -2,7 +2,7 @@ import { Post } from '@/models/Post';
 import { Image } from '@heroui/image';
 import { getImageRealUrl } from '@/util/UrlUtil';
 import ClickLink from '@/ui/component/ClickLink';
-import { formatDate, formatDateDesc } from '@/util/DateUtil';
+import TimeFormatLabel from '@/ui/component/TimeFormatLabel';
 
 /**
  * 文章信息头组件
@@ -83,12 +83,7 @@ export default function PostInfoHead({ post }: { post: Post }) {
             <VerticalDivider />
 
             {/*发布时间或修改时间*/}
-            <p>
-              {formatDateDesc(time)}
-            </p>
-            <p>
-              {formatDate(time, true)}
-            </p>
+            <TimeFormatLabel time={time} />
           </div>
         </div>
       </div>
@@ -96,9 +91,6 @@ export default function PostInfoHead({ post }: { post: Post }) {
   );
 }
 
-/**
- * 垂直分割线
- */
 function VerticalDivider() {
   return <div className="w-divider h-3 bg-divider"></div>;
 }
