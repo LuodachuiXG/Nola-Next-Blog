@@ -1,5 +1,4 @@
 import { Comment } from '@/models/Comment';
-import { formatDateDesc } from '@/util/DateUtil';
 import { stringToNumber } from '@/util/NumberUtil';
 import TimeFormatLabel from '@/ui/component/TimeFormatLabel';
 

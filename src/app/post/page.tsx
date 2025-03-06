@@ -18,8 +18,6 @@ import { Post } from '@/models/Post';
 import { isInPageSizeList } from '@/util/ConstData';
 import { redirect } from 'next/navigation';
 import CommentItem from '@/ui/component/CommentItem';
-import { Suspense } from 'react';
-import CardSkeleton from '@/ui/component/CardSkeleton';
 import { ApiResponse } from '@/models/ApiResponse';
 import { clsx } from 'clsx';
 
@@ -210,7 +208,7 @@ export default async function PostPage(props: {
  * @param className
  * @param hasMargin 是否有默认的边距（默认有 true）
  */
-export function PostDivider({
+function PostDivider({
   className,
   hasMargin,
 }: {
