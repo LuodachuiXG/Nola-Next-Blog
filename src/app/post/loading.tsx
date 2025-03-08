@@ -16,7 +16,7 @@ export default function Loading() {
               <Skeleton className="w-24 h-4"></Skeleton>
             </div>
 
-            <div className="w-full flex flex-col gap-2">
+            <div className="w-full flex flex-col gap-3">
               {Array.from({ length: 11 }).map((_, i) => (
                 <Skeleton className="w-full h-5" key={i}></Skeleton>
               ))}

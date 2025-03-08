@@ -38,7 +38,7 @@ export default async function PostPage(props: {
   return (
     <div className="flex flex-col h-full">
       <div className="flex-grow">
-        {/*文章列表*/}
+        {/* 文章列表 */}
         {postList && (
           <ScrollShadow className="p-4 max-h-[calc(100dvh-115px)] md:max-h-[calc(100dvh-80px)]">
             <div className="grid grid-flow-row-dense gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">

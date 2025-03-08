@@ -57,7 +57,8 @@ export default function PostCard({ post }: { post: Post }) {
     );
 
   return (
-    <div className="relative fadeIn-container transition-all hover:-translate-y-0.5">
+    <div
+      className="relative fadeIn-container transition-all hover:-translate-y-0.5">
       {/*文章置顶时显示图钉图标*/}
       {post.pinned && (
         <div className="absolute -top-2 -left-2 p-1.5 z-50 bg-red-500 rounded-full shadow-red-500">

@@ -33,9 +33,9 @@ export default function CommentItem({ comment }: { comment: Comment }) {
               {comment.displayName}
             </p>
           </a>
-          <p className="text-sm text-default-500">
+          <div className="text-sm text-default-500">
             <TimeFormatLabel time={stringToNumber(comment.createTime)} />
-          </p>
+          </div>
         </div>
 
         {/*评论内容*/}
