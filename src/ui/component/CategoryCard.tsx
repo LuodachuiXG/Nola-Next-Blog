@@ -28,7 +28,7 @@ export default function CategoryCard({ category }: { category: Category }) {
     <Card
       isHoverable
       isFooterBlurred
-      className="bg-transparent fadeIn-container group w-24 h-24 md:w-40 md:h-40 transition-all border-none cursor-pointer hover:-translate-y-0.5"
+      className="scaleIn-container bg-transparent fadeIn-container group w-24 h-24 md:w-40 md:h-40 transition-all border-none cursor-pointer hover:-translate-y-0.5"
       radius="lg"
     >
       <CardBody className="relative m-0 p-0 overflow-hidden">

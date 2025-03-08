@@ -174,7 +174,7 @@ export default async function PostPage(props: {
   return (
     <>
       <div className="fadeIn-container flex justify-center">
-        <ScrollShadow className="w-full max-h-[calc(100dvh-55px)] md:max-h-[calc(100dvh-25px)]">
+        <ScrollShadow className="w-full max-h-[calc(100dvh-55px)] md:max-h-[calc(100dvh-25px)] overflow-x-hidden">
           <div className="flex flex-col items-center overflow-hidden w-dvw md:w-auto">
             <div className="w-dvw md:max-w-[70ch] lg:max-w-[80ch] 2xl:max-w-[110ch]">
               {/*文章信息头*/}

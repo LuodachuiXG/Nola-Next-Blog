@@ -12,7 +12,7 @@ export default function LinkCard({ link }: { link: Link }) {
 
   return (
     <a href={link.url} target="_blank">
-      <div className="group shadow-small fadeIn-container transition-transform cursor-pointer hover:-translate-y-0.5 w-24 md:w-36 lg:w-44 flex flex-col rounded-xl overflow-hidden">
+      <div className="scaleIn-container group shadow-small transition-transform cursor-pointer hover:-translate-y-0.5 w-24 md:w-36 lg:w-44 flex flex-col rounded-xl overflow-hidden">
         <div className="relative rounded-xl shadow-small shadow-black/5 overflow-hidden w-24 h-24 md:w-36 md:h-36 lg:w-44 lg:h-44">
           {/*图片*/}
           <Image

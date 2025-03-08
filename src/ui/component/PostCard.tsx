@@ -1,3 +1,4 @@
+'use client'
 import { Card, CardFooter } from '@heroui/card';
 import { Post } from '@/models/Post';
 import { Image } from '@heroui/image';
@@ -8,6 +9,7 @@ import NextLink from 'next/link';
 import ClickLink from '@/ui/component/ClickLink';
 import { PinFilled as PinnedIcon } from '@ricons/carbon';
 import TimeFormatLabel from '@/ui/component/TimeFormatLabel';
+import {motion} from 'motion/react'
 
 /**
  * 文章卡片
@@ -57,8 +59,9 @@ export default function PostCard({ post }: { post: Post }) {
     );
 
   return (
-    <div
-      className="relative fadeIn-container transition-all hover:-translate-y-0.5">
+    <motion.div
+      drag
+      className="relative scaleIn-container">
       {/*文章置顶时显示图钉图标*/}
       {post.pinned && (
         <div className="absolute -top-2 -left-2 p-1.5 z-50 bg-red-500 rounded-full shadow-red-500">
@@ -67,7 +70,7 @@ export default function PostCard({ post }: { post: Post }) {
       )}
 
       <Card
-        className="h-full overflow-clip rounded-xl"
+        className="h-full overflow-clip rounded-xl transition-all hover:-translate-y-0.5 "
         isBlurred
         shadow="sm"
         isHoverable
@@ -159,6 +162,6 @@ export default function PostCard({ post }: { post: Post }) {
           </div>
         </CardFooter>
       </Card>
-    </div>
+    </motion.div>
   );
 }

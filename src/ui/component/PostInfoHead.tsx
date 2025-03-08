@@ -31,7 +31,7 @@ export default function PostInfoHead({ post }: { post: Post }) {
         {/*封面，如果有*/}
         {cover && (
           <Image
-            className="object-cover shadow-lg"
+            className="object-cover shadow-lg blurIn-container"
             radius="sm"
             src={getImageRealUrl(cover)}
             alt={post.title}
