@@ -2,7 +2,7 @@
 import { Post } from '@/models/Post';
 import { Form } from '@heroui/form';
 import { Input, Textarea } from '@heroui/react';
-import { useActionState, useEffect } from 'react';
+import { useActionState, useEffect, useState } from 'react';
 import { Button } from '@heroui/button';
 import { commentActionAddComment } from '@/lib/commentActions';
 import { toast } from '@/util/ToastUtil';
@@ -13,6 +13,7 @@ import { Comment } from '@/models/Comment';
 import TimeFormatLabel from '@/ui/component/TimeFormatLabel';
 import { stringToNumber } from '@/util/NumberUtil';
 import { AddComment as AddCommentIcon } from '@ricons/carbon';
+import { motion, AnimatePresence } from 'motion/react';
 
 /**
  * 评论容器组件
@@ -163,7 +164,11 @@ function CommentList({
       ) : (
         <div className="w-full flex flex-col gap-6">
           {commentList.data.map((comment) => (
-            <CommentItem comment={comment} key={comment.commentId} />
+            <CommentItem
+              comment={comment}
+              key={comment.commentId}
+              post={post}
+            />
           ))}
 
           <PaginationContainer
@@ -180,13 +185,19 @@ function CommentList({
  * 评论项
  * @param comment 评论接口
  */
-export function CommentItem({ comment }: { comment: Comment }) {
+export function CommentItem({
+  comment,
+  post,
+}: {
+  comment: Comment;
+  post: Post;
+}) {
+  // 是否在当前评论项下面显示添加评论的组件
+  const [showAddComment, setShowAddComment] = useState(false);
+
   function onReplyClick() {
     // 跳转到 ID 为 comment-container 的位置
-    window.scrollTo({
-      top: document.getElementById(`comment-container`)?.offsetTop,
-      behavior: 'smooth',
-    });
+    setShowAddComment(!showAddComment);
   }
 
   /**
@@ -203,34 +214,56 @@ export function CommentItem({ comment }: { comment: Comment }) {
   }
 
   return (
-    <div className="group w-full flex gap-2 items-start rounded-xl p-2 hover:shadow-lg transition-all border-1 border-transparent hover:border-divider dark:hover:border-white/50">
-      {/*左侧头像*/}
-      <Avatar c={comment} />
-      {/*右侧评论内容及信息*/}
-      <div className="flex-grow flex flex-col">
-        {/*昵称和时间*/}
-        <div className="flex justify-between items-center">
-          <a href={comment.site ?? ''} target="_blank">
-            <p id={`comment_${comment.commentId}`} className="text-sm">
-              {comment.displayName}
-            </p>
-          </a>
-          <div className="text-sm text-default-500 flex gap-2">
-            <TimeFormatLabel time={stringToNumber(comment.createTime)} />
-            <div
-              className="cursor-pointer group-hover:text-primary"
-              onClick={onReplyClick}
-            >
-              <AddCommentIcon className="size-5" />
+    <div className="group w-full max-h-fit overflow-clip flex flex-col rounded-xl hover:shadow-lg transition-all border-1 border-transparent hover:border-divider dark:hover:border-white/50">
+      <div className="w-full flex gap-2 items-start p-2">
+        {/*左侧头像*/}
+        <Avatar c={comment} />
+        {/*右侧评论内容及信息*/}
+        <div className="flex-grow flex flex-col">
+          {/*昵称和时间*/}
+          <div className="flex justify-between items-center">
+            <a href={comment.site ?? ''} target="_blank">
+              <p id={`comment_${comment.commentId}`} className="text-sm">
+                {comment.displayName}
+              </p>
+            </a>
+            <div className="text-sm text-default-500 flex gap-2">
+              <TimeFormatLabel time={stringToNumber(comment.createTime)} />
+              <div
+                className="cursor-pointer group-hover:text-primary"
+                onClick={onReplyClick}
+              >
+                <AddCommentIcon className="size-5" />
+              </div>
             </div>
           </div>
-        </div>
 
-        {/*评论内容*/}
-        <div className="w-full text-base text-foreground break-all">
-          {comment.content}
+          {/*评论内容*/}
+          <div className="w-full text-base text-foreground break-all">
+            {comment.content}
+          </div>
         </div>
       </div>
+
+      <AnimatePresence>
+        {showAddComment && (
+          <motion.div
+            className="p-2 flex flex-col gap-2 overflow-clip"
+            key="modal"
+            initial={{ opacity: 0, translateY: -50}}
+            animate={{ opacity: 1, translateY: 0}}
+            exit={{ opacity: 0, height: 0, translateY: -50 }}
+          >
+            <div className="text-default-500">
+              回复：
+              <span className="text-primary font-semibold">
+                {comment.displayName}
+              </span>
+            </div>
+            <CommentForm post={post} />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
