@@ -85,14 +85,14 @@ export default async function RootLayout({
               </div>
             </aside>
             <div className="flex flex-col flex-grow z-10">
-              {/* <AlertModal
-                title="正在开发中"
-                content={
-                  <>
-                    <p>新版博客 UI 目前仍在开发中，仅完成部分功能。</p>
-                  </>
-                }
-              /> */}
+              {/*<AlertModal*/}
+              {/*  title="正在开发中"*/}
+              {/*  content={*/}
+              {/*    <>*/}
+              {/*      <p>新版博客 UI 目前仍在开发中，仅完成部分功能。</p>*/}
+              {/*    </>*/}
+              {/*  }*/}
+              {/*/>*/}
               <main className="flex-grow">{children}</main>
               <footer className="hidden md:block h-6 text-tiny px-4 text-center text-foreground/40 dark:text-white/70">
                 Powered by

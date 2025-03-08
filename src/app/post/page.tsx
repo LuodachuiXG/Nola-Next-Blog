@@ -9,15 +9,11 @@ import { stringToNumber } from '@/util/NumberUtil';
 import { Icon } from 'next/dist/lib/metadata/types/metadata-types';
 import { getImageRealUrl } from '@/util/UrlUtil';
 import PostInfoHead from '@/ui/component/PostInfoHead';
-import AddCommentContainer from '@/ui/component/AddCommentContainer';
+import CommentContainer from '@/ui/component/CommentContainer';
 import { apiCommentGetComment } from '@/api/apiComment';
-import { Comment } from '@/models/Comment';
-import { Pager } from '@/models/Pager';
-import PaginationContainer from '@/ui/component/PaginationContainer';
 import { Post } from '@/models/Post';
 import { isInPageSizeList } from '@/util/ConstData';
 import { redirect } from 'next/navigation';
-import CommentItem from '@/ui/component/CommentItem';
 import { ApiResponse } from '@/models/ApiResponse';
 import { clsx } from 'clsx';
 
@@ -188,13 +184,8 @@ export default async function PostPage(props: {
               </article>
               <PostDivider />
 
-              {/*添加评论组件*/}
-              {postContent && postContent.post.allowComment && (
-                <AddCommentContainer post={postContent.post} />
-              )}
-
-              {/*评论列表*/}
-              <CommentList commentList={comments} post={postContent.post} />
+              {/*评论组件*/}
+              <CommentContainer post={postContent.post} commentList={comments}/>
             </div>
           </div>
         </ScrollShadow>
@@ -223,59 +214,6 @@ function PostDivider({
     >
       {/*线*/}
       <div className="w-full h-divider bg-divider"></div>
-    </div>
-  );
-}
-
-/**
- * 评论列表
- * @param commentList 评论列表数据
- * @param post 文章接口
- */
-function CommentList({
-  commentList,
-  post,
-}: {
-  commentList: Pager<Comment> | null;
-  post: Post;
-}) {
-  // 判断用户是否手动输入了错误的页码，在分页组件中已经有了类似判断
-  // 这里再加一次是因为下面的页码组件只有在有数据的时候才会调用，所有分页组件中的判断无法触发，所以这里再加一次
-  if (!commentList || (commentList.data.length <= 0 && commentList.page > 1)) {
-    // 评论列表为空，并且当前评论页码大于 1，可能是用户在地址栏输入了错误的页码，跳转到第一页
-    redirect(`/post?slug=${post.slug}`);
-  }
-
-  /**
-   * 暂无评论
-   */
-  function NoComment() {
-    return (
-      <div className="py-24 text-base w-full text-center text-default-500">
-        暂无评论
-      </div>
-    );
-  }
-
-  return (
-    <div
-      id="comment-container"
-      className="w-dvw md:max-w-[70ch] lg:max-w-[80ch] 2xl:max-w-[110ch] px-5 my-6"
-    >
-      {!commentList || commentList.data.length <= 0 ? (
-        <NoComment />
-      ) : (
-        <div className="w-full flex flex-col gap-6">
-          {commentList.data.map((comment) => (
-            <CommentItem comment={comment} key={comment.commentId} />
-          ))}
-
-          <PaginationContainer
-            pager={commentList}
-            route={`/post?slug=${post.slug}`}
-          />
-        </div>
-      )}
     </div>
   );
 }
