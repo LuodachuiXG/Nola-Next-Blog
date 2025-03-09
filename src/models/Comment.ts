@@ -9,9 +9,9 @@ export interface Comment {
   // 父评论 ID
   parentCommentId: number | null;
   // 回复评论 ID
-  replayCommentId: number | null;
+  replyCommentId: number | null;
   // 回复评论名称
-  replayDisplayName: string | null;
+  replyDisplayName: string | null;
   // 评论内容
   content: string;
   // 站点地址

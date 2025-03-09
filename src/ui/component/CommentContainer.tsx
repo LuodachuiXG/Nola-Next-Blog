@@ -2,7 +2,7 @@
 import { Post } from '@/models/Post';
 import { Form } from '@heroui/form';
 import { Input, Textarea } from '@heroui/react';
-import { useActionState, useEffect, useState } from 'react';
+import { useActionState, useEffect, useMemo, useState } from 'react';
 import { Button } from '@heroui/button';
 import { commentActionAddComment } from '@/lib/commentActions';
 import { toast } from '@/util/ToastUtil';
@@ -12,8 +12,14 @@ import PaginationContainer from '@/ui/component/PaginationContainer';
 import { Comment } from '@/models/Comment';
 import TimeFormatLabel from '@/ui/component/TimeFormatLabel';
 import { stringToNumber } from '@/util/NumberUtil';
-import { AddComment as AddCommentIcon } from '@ricons/carbon';
+import {
+  AddComment as AddCommentIcon,
+  Reply as ReplayIcon,
+  ArrowDown as ArrowDownIcon,
+} from '@ricons/carbon';
 import { motion, AnimatePresence } from 'motion/react';
+import { clsx } from 'clsx';
+import { Chip } from '@heroui/chip';
 
 /**
  * 评论容器组件
@@ -42,9 +48,28 @@ export default function CommentContainer({
 
 /**
  * 评论表单组件
+ * @param post 当前评论表单所在的文章
+ * @param placeholder 评论内容框占位符（可空）
+ * @param parentCommentId 父评论 ID（可空）
+ * @param replyCommentId 回复评论 ID（可空）
  */
-function CommentForm({ post }: { post: Post }) {
-  const addComment = commentActionAddComment.bind(null, post.postId);
+function CommentForm({
+  post,
+  placeholder,
+  parentCommentId,
+  replyCommentId,
+}: {
+  post: Post;
+  placeholder?: string;
+  parentCommentId?: number | null;
+  replyCommentId?: number | null;
+}) {
+  const addComment = commentActionAddComment.bind(
+    null,
+    post.postId,
+    parentCommentId ?? null,
+    replyCommentId ?? null,
+  );
   const [state, fromAction, isPending] = useActionState(addComment, {
     code: -1,
     errMsg: null,
@@ -105,7 +130,7 @@ function CommentForm({ post }: { post: Post }) {
           label="内容"
           type="text"
           name="content"
-          placeholder="请输入评论内容"
+          placeholder={placeholder ?? '请输入评论内容'}
           isClearable
           isRequired
           maxRows={16}
@@ -182,8 +207,93 @@ function CommentList({
 }
 
 /**
+ * 评论头像
+ */
+function Avatar({ comment }: { comment: Comment }) {
+  return (
+    <a href={comment.site ?? undefined} target="_blank">
+      <motion.div
+        className="bg-primary size-10 rounded-full flex justify-center items-center text-white select-none"
+        initial={{ rotate: 0 }}
+        whileHover={{
+          rotate: 360,
+          scale: 1.1,
+          transition: { duration: 0.4, type: 'spring' },
+        }}
+      >
+        {comment.displayName.at(0)?.toUpperCase() ?? 'A'}
+      </motion.div>
+    </a>
+  );
+}
+
+/**
+ * 回复评论表单
+ * @param post 当前评论所在的文章
+ * @param showAddComment 是否显示表单
+ * @param replyDisplayName 回复的人显示名
+ * @param parentCommentId 父评论 ID
+ * @param replyCommentId 回复评论 ID（可空）
+ */
+function ReplyForm({
+  post,
+  showAddComment,
+  replyDisplayName,
+  parentCommentId,
+  replyCommentId,
+}: {
+  post: Post;
+  showAddComment: boolean;
+  replyDisplayName: string;
+  parentCommentId: number;
+  replyCommentId?: number | null;
+}) {
+  return (
+    <AnimatePresence>
+      {showAddComment && (
+        <motion.div
+          key="modal"
+          initial={{ opacity: 0, height: 0 }}
+          animate={{
+            opacity: 1,
+            height: "auto", // 使用测量高度
+            transition: {
+              height: { duration: 0.2 },
+              opacity: { duration: 0.1 }
+            }
+          }}
+          exit={{
+            opacity: 0,
+            height: 0,
+            transition: {
+              height: { duration: 0.2 },
+              opacity: { duration: 0.1 },
+            }
+          }}
+          className="p-2 flex flex-col gap-2 overflow-hidden"
+        >
+          <div className="text-default-500">
+            回复&nbsp;
+            <span className="text-primary font-semibold">
+              {replyDisplayName}
+            </span>
+          </div>
+          <CommentForm
+            post={post}
+            parentCommentId={parentCommentId}
+            placeholder={`回复 ${replyDisplayName}：`}
+            replyCommentId={replyCommentId}
+          />
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
+/**
  * 评论项
  * @param comment 评论接口
+ * @param post 文章接口
  */
 export function CommentItem({
   comment,
@@ -192,78 +302,184 @@ export function CommentItem({
   comment: Comment;
   post: Post;
 }) {
-  // 是否在当前评论项下面显示添加评论的组件
-  const [showAddComment, setShowAddComment] = useState(false);
+  // 子评论楼层和实际评论 ID 映射
+  const floorMap = useMemo(() => {
+    const map = new Map<number, number>();
+    if (comment.children && comment.children.length > 0) {
+      comment.children.forEach((c, i) => {
+        const floor = comment.children!.length - i;
+        map.set(c.commentId, floor);
+      });
+    }
+    return map;
+  }, [comment]);
 
-  function onReplyClick() {
-    // 跳转到 ID 为 comment-container 的位置
-    setShowAddComment(!showAddComment);
-  }
+  // 是否显示子评论列表
+  const [showChildren, setShowChildren] = useState(false);
 
   /**
-   * 评论头像
+   * 评论项内容
+   * @param comment 评论接口
+   * @param floor 评论楼层，用于在二层评论中显示楼层（可空）
+   * @param isChild 当前评论是否是子评论（可空，默认顶层非子评论）
    */
-  function Avatar({ c }: { c: Comment }) {
+  function Comment({
+    mComment,
+    floor,
+    isChild,
+  }: {
+    mComment: Comment;
+    floor?: number;
+    isChild?: boolean;
+  }) {
+    // 是否在当前评论项下面显示添加评论的组件
+    const [showAddComment, setShowAddComment] = useState(false);
+
+    // 当前评论 Element ID（如果当前是子评论，就是父评论的 ID + 楼层，否则就是当前评论的 ID）
+    let elementId = `comment_${mComment.parentCommentId ? mComment.parentCommentId : mComment.commentId}`;
+    if (isChild) {
+      // 当前评论是子评论，再在 ID 后加上楼层
+      elementId += `_${floor}`;
+    }
+
+    /**
+     * 楼层链接（仅出现在子评论上），点击跳转
+     * @param mFloor 显示的楼层
+     * @param actualTpFloor 实际要跳转的楼层（可空，默认为当前评论不加加楼层，即跳转父评论）
+     */
+    function FloorLink({
+      mFloor,
+      actualTpFloor,
+    }: {
+      mFloor: number;
+      actualTpFloor?: number | null;
+    }) {
+      return (
+        <a
+          target="_self"
+          href={
+            actualTpFloor
+              ? `#comment_${mComment.parentCommentId}_${actualTpFloor}`
+              : `#${elementId}`
+          }
+        >
+          <span className="text-primary font-semibold">#{mFloor}</span>
+        </a>
+      );
+    }
+
     return (
-      <a href={c.site ?? ''} target="_blank">
-        <div className="bg-primary size-10 rounded-full flex justify-center items-center text-white shadow-lg select-none">
-          {c.displayName.at(0)}
+      <div id={elementId}>
+        <div className="w-full flex gap-2 items-start p-2">
+          {/*左侧头像*/}
+          <Avatar comment={mComment} />
+          {/*右侧评论内容及信息*/}
+          <div className="flex-grow flex flex-col">
+            {/*昵称和时间*/}
+            <div className="flex justify-between items-center">
+              <div className="flex gap-2 items-center">
+                {floor && <FloorLink mFloor={floor} />}
+                <a href={mComment.site ?? undefined} target="_blank">
+                  <p id={`comment_${mComment.commentId}`} className="text-sm">
+                    {mComment.displayName}
+                  </p>
+                </a>
+              </div>
+              <div className="text-sm text-default-500 flex gap-2">
+                <TimeFormatLabel time={stringToNumber(mComment.createTime)} />
+                <div
+                  className={clsx('cursor-pointer', {
+                    'text-primary': showAddComment,
+                  })}
+                  onClick={() => setShowAddComment(!showAddComment)}
+                >
+                  <AddCommentIcon className="size-5" />
+                </div>
+              </div>
+            </div>
+
+            {/*评论内容*/}
+            <div className="w-full text-base text-foreground break-all flex gap-2 relative">
+              {/*如果当前评论是回复的某一个评论，则显示回复楼层*/}
+              {mComment.replyCommentId && (
+                <Chip size="sm" className="absolute">
+                  <div className="flex gap-1 items-center">
+                    <ReplayIcon className="size-3" />
+                    <div>
+                      回复：
+                      <FloorLink
+                        mFloor={floorMap.get(mComment.replyCommentId)!}
+                        actualTpFloor={floorMap.get(mComment.replyCommentId)!}
+                      />
+                    </div>
+                  </div>
+                </Chip>
+              )}
+              <div
+                className={clsx({
+                  'indent-[5.5rem]': mComment.replyCommentId,
+                })}
+              >
+                {mComment.content}
+              </div>
+            </div>
+          </div>
         </div>
-      </a>
+
+        <ReplyForm
+          post={post}
+          showAddComment={showAddComment}
+          parentCommentId={
+            isChild ? mComment.parentCommentId! : comment.commentId
+          }
+          replyDisplayName={(floor ? `#${floor} ` : '') + mComment.displayName}
+          replyCommentId={isChild ? mComment.commentId : null}
+        />
+      </div>
     );
   }
 
   return (
-    <div className="group w-full max-h-fit overflow-clip flex flex-col rounded-xl hover:shadow-lg transition-all border-1 border-transparent hover:border-divider dark:hover:border-white/50">
-      <div className="w-full flex gap-2 items-start p-2">
-        {/*左侧头像*/}
-        <Avatar c={comment} />
-        {/*右侧评论内容及信息*/}
-        <div className="flex-grow flex flex-col">
-          {/*昵称和时间*/}
-          <div className="flex justify-between items-center">
-            <a href={comment.site ?? ''} target="_blank">
-              <p id={`comment_${comment.commentId}`} className="text-sm">
-                {comment.displayName}
-              </p>
-            </a>
-            <div className="text-sm text-default-500 flex gap-2">
-              <TimeFormatLabel time={stringToNumber(comment.createTime)} />
-              <div
-                className="cursor-pointer group-hover:text-primary"
-                onClick={onReplyClick}
-              >
-                <AddCommentIcon className="size-5" />
-              </div>
-            </div>
-          </div>
+    <div className="w-full max-h-fit overflow-clip flex flex-col rounded-xl hover:shadow-lg transition-all border-1 border-transparent hover:border-divider dark:hover:border-white/50">
+      <Comment mComment={comment} />
 
-          {/*评论内容*/}
-          <div className="w-full text-base text-foreground break-all">
-            {comment.content}
-          </div>
-        </div>
-      </div>
+      {/*子评论列表*/}
+      <motion.div
+        className="ml-12 overflow-hidden"
+        initial={{ opacity: 0, height: 0 }}
+        animate={{
+          opacity: showChildren ? 1 : 0,
+          height: showChildren ? 'auto' : 0,
+        }}
+      >
+        {comment.children?.map((child, i) => (
+          <Comment
+            mComment={child}
+            key={child.commentId}
+            floor={comment!.children!.length - i}
+            isChild
+          />
+        ))}
+      </motion.div>
 
-      <AnimatePresence>
-        {showAddComment && (
+      {comment.children && comment.children.length > 0 && (
+        <div
+          className="pl-14 pb-2 text-default-500 text-sm flex items-center cursor-pointer select-none"
+          onClick={() => setShowChildren(!showChildren)}
+        >
+          <p>
+            {showChildren
+              ? '收起回复'
+              : `展开 ${comment.children.length} 条回复`}
+          </p>
           <motion.div
-            className="p-2 flex flex-col gap-2 overflow-clip"
-            key="modal"
-            initial={{ opacity: 0, translateY: -50}}
-            animate={{ opacity: 1, translateY: 0}}
-            exit={{ opacity: 0, height: 0, translateY: -50 }}
+            initial={{ rotate: 0 }}
+            animate={{ rotate: showChildren ? 180 : 0 }}
           >
-            <div className="text-default-500">
-              回复：
-              <span className="text-primary font-semibold">
-                {comment.displayName}
-              </span>
-            </div>
-            <CommentForm post={post} />
+            <ArrowDownIcon className="size-4" />
           </motion.div>
-        )}
-      </AnimatePresence>
+        </div>
+      )}
     </div>
   );
 }

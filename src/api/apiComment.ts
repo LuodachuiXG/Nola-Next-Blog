@@ -36,7 +36,7 @@ export async function apiCommentGetComment(
  * @param content 评论内容
  * @param site 站点地址
  * @param parentCommentId 父评论 ID
- * @param replayCommentId 回复评论 ID
+ * @param replyCommentId 回复评论 ID
  */
 export async function apiCommentAddComment(
   postId: number,
@@ -45,20 +45,21 @@ export async function apiCommentAddComment(
   content: string,
   site: string | null,
   parentCommentId: number | null,
-  replayCommentId: number | null,
+  replyCommentId: number | null,
 ): Promise<ApiResponse<Comment>> {
   const url = `${serverUrl}/api/comment`;
+  const data = JSON.stringify({
+    postId: postId,
+    displayName: displayName,
+    email: email,
+    content: content,
+    site: site,
+    parentCommentId: parentCommentId,
+    replyCommentId: replyCommentId,
+  });
   const info = await fetch(url, {
     method: 'POST',
-    body: JSON.stringify({
-      postId: postId,
-      displayName: displayName,
-      email: email,
-      content: content,
-      site: site,
-      parentCommentId: parentCommentId,
-      replayCommentId: replayCommentId,
-    }),
+    body: data,
     headers: {
       'Content-Type': 'application/json',
     },

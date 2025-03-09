@@ -10,9 +10,7 @@ export default {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
     "./node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}"
   ],
-  theme: {
-
-  },
+  theme: {},
   darkMode: "class",
   plugins: [
     typography,
