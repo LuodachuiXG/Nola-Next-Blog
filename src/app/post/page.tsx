@@ -16,6 +16,7 @@ import { isInPageSizeList } from '@/util/ConstData';
 import { redirect } from 'next/navigation';
 import { ApiResponse } from '@/models/ApiResponse';
 import { clsx } from 'clsx';
+import ErrorContainer from '@/ui/component/ErrorContainer';
 
 type Props = {
   // 文章 ID
@@ -156,25 +157,16 @@ export default async function PostPage(props: {
     ),
   ]);
 
-  if (postContentRes.errMsg) {
-    return Promise.reject(postContentRes.errMsg)
-  }
-
-  if (commentRes.errMsg) {
-    return Promise.reject(commentRes.errMsg)
-  }
-
-
   const postContent = postContentRes.data;
 
   const comments = commentRes.data;
 
-  if (postContentRes.errMsg || !postContent) {
-    return Promise.reject(postContentRes.errMsg);
-  }
-
   // Markdown 文章内容
   const content = postContent?.content ?? '';
+
+  if (postContentRes.errMsg || !postContent) {
+    return <ErrorContainer msg={postContentRes.errMsg ?? '未知错误'} />;
+  }
 
   return (
     <>
@@ -194,7 +186,10 @@ export default async function PostPage(props: {
               <PostDivider />
 
               {/*评论组件*/}
-              <CommentContainer post={postContent.post} commentList={comments}/>
+              <CommentContainer
+                post={postContent.post}
+                commentList={comments}
+              />
             </div>
           </div>
         </ScrollShadow>

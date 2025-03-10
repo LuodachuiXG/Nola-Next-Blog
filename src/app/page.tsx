@@ -5,6 +5,7 @@ import PaginationContainer from '@/ui/component/PaginationContainer';
 import { stringToNumber } from '@/util/NumberUtil';
 import { isInPageSizeList, PAGE_SIZE_LIST } from '@/util/ConstData';
 import { redirect } from 'next/navigation';
+import ErrorContainer from '@/ui/component/ErrorContainer';
 
 // 文章缓存过期时间（秒）
 export const revalidate = 0;
@@ -32,6 +33,10 @@ export default async function PostPage(props: {
 
   // 获取文章列表
   const [postRes] = await Promise.all([apiPostGetPosts(page, size)]);
+
+  if (postRes.errMsg) {
+    return <ErrorContainer msg={postRes.errMsg} />
+  }
 
   const postList = postRes.data;
 

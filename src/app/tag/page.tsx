@@ -6,6 +6,7 @@ import { stringToNumber } from '@/util/NumberUtil';
 import { isInPageSizeList, PAGE_SIZE_LIST } from '@/util/ConstData';
 import { redirect } from 'next/navigation';
 import { ScrollShadow } from '@heroui/scroll-shadow';
+import ErrorContainer from '@/ui/component/ErrorContainer';
 
 export const metadata: Metadata = {
   title: '标签',
@@ -38,6 +39,11 @@ export default async function TagPage(props: {
       stringToNumber(searchParams?.size, 40),
     ),
   ]);
+
+  if (tagRes.errMsg) {
+    return <ErrorContainer msg={tagRes.errMsg} />
+  }
+
   const tagList = tagRes.data;
   // 标签总数
   const totalData = tagList?.totalData ?? 0;

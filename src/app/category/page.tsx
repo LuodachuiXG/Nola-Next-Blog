@@ -6,6 +6,7 @@ import { redirect } from 'next/navigation';
 import { stringToNumber } from '@/util/NumberUtil';
 import CategoryCard from '@/ui/component/CategoryCard';
 import { ScrollShadow } from '@heroui/scroll-shadow';
+import ErrorContainer from '@/ui/component/ErrorContainer';
 
 export const metadata: Metadata = {
   title: '分类',
@@ -39,6 +40,11 @@ export default async function CategoryPage(props: {
       stringToNumber(searchParams?.size, 40),
     ),
   ]);
+
+  if (categoryRes.errMsg) {
+    return <ErrorContainer msg={categoryRes.errMsg} />
+  }
+
   const categoryList = categoryRes.data;
   // 标签总数
   const totalData = categoryList?.totalData ?? 0;
