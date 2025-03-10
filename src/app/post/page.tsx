@@ -156,6 +156,13 @@ export default async function PostPage(props: {
     ),
   ]);
 
+  if (postContentRes.errMsg) {
+    return Promise.reject(postContentRes.errMsg)
+  }
+
+  if (commentRes.errMsg) {
+    return Promise.reject(commentRes.errMsg)
+  }
 
 
   const postContent = postContentRes.data;

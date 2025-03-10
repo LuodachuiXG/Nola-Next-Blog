@@ -21,7 +21,7 @@ export default function Error({
     <motion.div
       className="size-full flex justify-center items-center flex-col gap-4 select-none"
       initial={{ opacity: 0, scale: 0.5, y: -120 }}
-      animate={{ opacity: 1, scale: 1.0, y: 0 }}
+      animate={{ opacity: 1, scale: 1.0, y: 0, transition: { type: 'spring', duration: .6 } }}
       ref={constraintsRef}
     >
       <motion.div
@@ -40,14 +40,14 @@ export default function Error({
           transition: {
             // 无限循环
             repeat: Infinity,
-            duration: .1,
+            duration: 0.1,
           },
         }}
       >
         <p className="text-[2rem] font-bold text-white z-10">ERROR</p>
         <div className="absolute w-64 h-12 bg-red-500 top-0 left-0 z-5"></div>
       </motion.div>
-      <p className="font-semibold text-[2rem]">
+      <p className="text-medium">
         {typeof error === 'object' ? error.message : error}
       </p>
       <Button
