@@ -6,24 +6,28 @@ import { stringToNumber } from '@/util/NumberUtil';
 import { isInPageSizeList, PAGE_SIZE_LIST } from '@/util/ConstData';
 import { redirect } from 'next/navigation';
 import ErrorContainer from '@/ui/component/ErrorContainer';
+import PostFilterAlert from '@/ui/component/PostFilterAlert';
 
 // 文章缓存过期时间（秒）
 export const revalidate = 0;
 
 /**
  * 博客文章页面
- * @constructor
  */
 export default async function PostPage(props: {
   searchParams?: Promise<{
     page?: string;
     size?: string;
+    tag?: string;
+    category?: string;
   }>;
 }) {
   const searchParams = await props.searchParams;
 
   const page = stringToNumber(searchParams?.page, 1);
   const size = stringToNumber(searchParams?.size, 40);
+  const tagFilter = searchParams?.tag ?? null;
+  const categoryFilter = searchParams?.category ?? null;
 
   if (searchParams?.size && !isInPageSizeList(searchParams?.size)) {
     // 当前传进来的是非法页码（不在 PAGE_SIZE_LIST 中）
@@ -32,10 +36,12 @@ export default async function PostPage(props: {
   }
 
   // 获取文章列表
-  const [postRes] = await Promise.all([apiPostGetPosts(page, size)]);
+  const [postRes] = await Promise.all([
+    apiPostGetPosts(page, size, null, null, null, tagFilter, categoryFilter),
+  ]);
 
   if (postRes.errMsg) {
-    return <ErrorContainer msg={postRes.errMsg} />
+    return <ErrorContainer msg={postRes.errMsg} />;
   }
 
   const postList = postRes.data;
@@ -45,7 +51,13 @@ export default async function PostPage(props: {
       <div className="flex-grow">
         {/* 文章列表 */}
         {postList && (
-          <ScrollShadow className="p-4 max-h-[calc(100dvh-115px)] md:max-h-[calc(100dvh-80px)]">
+          <ScrollShadow className="p-4 max-h-[calc(100dvh-115px)] md:max-h-[calc(100dvh-80px)] flex flex-col">
+            {/*筛选条件显示*/}
+            <PostFilterAlert
+              tag={tagFilter}
+              category={categoryFilter}
+              count={postList.totalData}
+            />
             <div className="grid grid-flow-row-dense gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
               {postList.data.map((post) => (
                 <PostCard key={post.postId} post={post} />
@@ -54,7 +66,11 @@ export default async function PostPage(props: {
           </ScrollShadow>
         )}
         {/*暂无文章*/}
-        {!postList && <div className="p-4">暂无文章</div>}
+        {(!postList || postList.totalData <= 0) && (
+          <div className="w-full pl-4  text-3xl font-semibold text-gray-600 dark:text-white">
+            暂无文章
+          </div>
+        )}
       </div>
 
       {/*分页组件*/}

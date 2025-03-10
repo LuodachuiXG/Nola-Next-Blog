@@ -2,6 +2,7 @@ import { Tag } from '@/models/Tag';
 import { Chip } from '@heroui/chip';
 import { clsx } from 'clsx';
 import { Tooltip } from '@heroui/tooltip';
+import { Link } from '@heroui/link';
 
 /**
  * 标签 Chip
@@ -22,7 +23,7 @@ export default function TagChip({ tag }: { tag: Tag }) {
         key={tag.tagId}
         startContent={tag.color ? TagColorDot(tag.color) : null}
       >
-        {tag.displayName}
+        <Link href={`/?tag=${tag.displayName}`} className="text-foreground text-sm">{tag.displayName}</Link>
       </Chip>
     </Tooltip>
   );

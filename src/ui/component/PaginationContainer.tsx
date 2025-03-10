@@ -42,13 +42,14 @@ export default function PaginationContainer<T>({
       setCurrentPageSize(pager.size);
     }
 
-    setCurrentPage(pager.page);
+    // 当前页不能为 0
+    setCurrentPage(pager.page <= 0 ? 1 : pager.page);
   }, [pager.size, pager.page]);
 
   // 总页数
   const totalPages = Math.ceil(pager.totalData / pager.size);
 
-  if (pager.page > totalPages) {
+  if (pager.page > totalPages && totalPages > 0) {
     // 当前页大于总页数，用户可能从地址栏输入了错误的页码，跳转到第一页
     change(1, currentPageSize);
   }
@@ -79,7 +80,7 @@ export default function PaginationContainer<T>({
         showControls
         showShadow
         initialPage={1}
-        total={pager.totalPages}
+        total={pager.totalPages <= 0 ? 1 : pager.totalPages}
         page={currentPage}
         variant="light"
         onChange={(page) => {

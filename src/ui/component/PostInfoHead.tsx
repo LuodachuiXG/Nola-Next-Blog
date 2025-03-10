@@ -23,7 +23,7 @@ export default function PostInfoHead({ post }: { post: Post }) {
   }
 
   // 发布时间或修改时间
-  const time = post.lastModifyTime ? post.lastModifyTime : post.createTime
+  const time = post.lastModifyTime ? post.lastModifyTime : post.createTime;
 
   return (
     <div className="mt-6 px-6 w-full">
@@ -50,7 +50,7 @@ export default function PostInfoHead({ post }: { post: Post }) {
               {post.category && (
                 <ClickLink
                   displayName={'&' + post.category.displayName}
-                  href=""
+                  href={`/?category=${post.category.displayName}`}
                 />
               )}
 
@@ -59,7 +59,7 @@ export default function PostInfoHead({ post }: { post: Post }) {
                   {post.tags.map((tag) => (
                     <ClickLink
                       displayName={'#' + tag.displayName}
-                      href=""
+                      href={`/?tag=${tag.displayName}`}
                       key={tag.tagId}
                     />
                   ))}

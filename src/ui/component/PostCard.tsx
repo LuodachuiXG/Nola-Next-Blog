@@ -8,6 +8,7 @@ import NextLink from 'next/link';
 import ClickLink from '@/ui/component/ClickLink';
 import { PinFilled as PinnedIcon } from '@ricons/carbon';
 import TimeFormatLabel from '@/ui/component/TimeFormatLabel';
+
 /**
  * 文章卡片
  * @param post 文章接口
@@ -29,7 +30,7 @@ export default function PostCard({ post }: { post: Post }) {
       // 只有一个标签
       <ClickLink
         displayName={'#' + post.tags[0].displayName}
-        href="/"
+        href={`/?tag=${post.tags[0].displayName}`}
         showOnImgCard={hasCover}
       />
     ) : (
@@ -42,7 +43,7 @@ export default function PostCard({ post }: { post: Post }) {
             {post.tags.map((tag) => (
               <ClickLink
                 displayName={'#' + tag.displayName}
-                href="/?page=2&size=10"
+                href={`/?tag=${tag.displayName}`}
                 key={tag.tagId}
               />
             ))}
@@ -56,8 +57,7 @@ export default function PostCard({ post }: { post: Post }) {
     );
 
   return (
-    <div
-      className="relative scaleIn-container">
+    <div className="relative scaleIn-container">
       {/*文章置顶时显示图钉图标*/}
       {post.pinned && (
         <div className="absolute -top-2 -left-2 p-1.5 z-50 bg-red-500 rounded-full shadow-red-500">
@@ -132,7 +132,7 @@ export default function PostCard({ post }: { post: Post }) {
                 {post.category && (
                   <ClickLink
                     displayName={'&' + post.category.displayName}
-                    href="/"
+                    href={`/?category=${post.category.displayName}`}
                     showOnImgCard={hasCover}
                   />
                 )}

@@ -19,7 +19,7 @@ export default async function LinkPage() {
   const [linkRes] = await Promise.all([apiLinkGetLinks(0, 0)]);
 
   if (linkRes.errMsg) {
-    return <ErrorContainer msg={linkRes.errMsg} />
+    return <ErrorContainer msg={linkRes.errMsg} />;
   }
 
   const linkList = linkRes.data;
