@@ -36,7 +36,7 @@ export default function PostFilterAlert({
           variant="faded"
           description={
             <div className="flex gap-2">
-              {category && <div>#{category}</div>}
+              {category && <div>&{category}</div>}
               {tag && <div>#{tag}</div>}
             </div>
           }
