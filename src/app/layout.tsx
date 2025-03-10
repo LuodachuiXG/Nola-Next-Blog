@@ -9,8 +9,6 @@ import { apiMenuGetMenuItem } from '@/api/apiMenu';
 import { Metadata, Viewport } from 'next';
 import AlertModal from '@/ui/component/AlertModal';
 
-// import AlertModal from '@/ui/component/AlertModal';
-
 export const viewport: Viewport = {
   initialScale: 1,
   width: 'device-width',
@@ -94,7 +92,7 @@ export default async function RootLayout({
               {/*  }*/}
               {/*/>*/}
               <main className="flex-grow">{children}</main>
-              <footer className="hidden md:block h-6 text-tiny px-4 text-center text-foreground/40 dark:text-white/70">
+              <footer className="flex-col hidden md:block h-6 text-tiny px-4 text-center text-foreground/40 dark:text-white/70">
                 Powered by
                 <a href="https://github.com/LuodachuiXG/Nola" target="_blank">
                   <span className="font-semibold ml-1 italic hover:text-primary transition-colors">

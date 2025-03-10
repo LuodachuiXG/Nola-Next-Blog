@@ -156,6 +156,8 @@ export default async function PostPage(props: {
     ),
   ]);
 
+
+
   const postContent = postContentRes.data;
 
   const comments = commentRes.data;
