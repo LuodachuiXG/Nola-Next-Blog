@@ -1,5 +1,3 @@
-
-
 // 一分钟
 const minute = 60 * 1000;
 // 一个小时
@@ -40,7 +38,7 @@ export function formatDateDesc(timestamp: number): string {
   const now = Date.now();
   // 小于 10 分钟
   if (now - timestamp < 10 * minute) {
-    return "刚刚";
+    return '刚刚';
   }
 
   // 小于 1 小时
@@ -70,5 +68,61 @@ export function formatDateDesc(timestamp: number): string {
   // 返回几年前
   const years = Math.floor((now - timestamp) / (month * 12));
   return `${years} 年前`;
+}
 
+/**
+ * 将时间戳格式为汉子日期
+ * @param timestamp 时间戳
+ * @param showYear 是否显示年份（默认 true），如果不是今年，就显示年份
+ * @return 格式：一月 2025，一月
+ */
+export function formatChineseDate(
+  timestamp: number,
+  showYear: boolean = true,
+): string {
+  const date = new Date(timestamp);
+  let month = '';
+  switch (date.getMonth()) {
+    case 0:
+      month = '一月';
+      break;
+    case 1:
+      month = '二月';
+      break;
+    case 2:
+      month = '三月';
+      break;
+    case 3:
+      month = '四月';
+      break;
+    case 4:
+      month = '五月';
+      break;
+    case 5:
+      month = '六月';
+      break;
+    case 6:
+      month = '七月';
+      break;
+    case 7:
+      month = '八月';
+      break;
+    case 8:
+      month = '九月';
+      break;
+    case 9:
+      month = '十月';
+      break;
+    case 10:
+      month = '十一月';
+      break;
+    case 11:
+      month = '十二月';
+      break;
+  }
+
+  if (showYear && date.getFullYear() !== new Date().getFullYear()) {
+    return `${month} ${date.getFullYear()}`;
+  }
+  return `${month}`;
 }

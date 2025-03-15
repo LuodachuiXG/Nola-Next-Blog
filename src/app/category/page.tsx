@@ -46,7 +46,7 @@ export default async function CategoryPage(props: {
   }
 
   const categoryList = categoryRes.data;
-  // 标签总数
+  // 分类总数
   const totalData = categoryList?.totalData ?? 0;
 
   return (
