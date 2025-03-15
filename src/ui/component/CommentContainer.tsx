@@ -38,7 +38,7 @@ export default function CommentContainer({
       {/*添加评论表单*/}
       {post && (
         <>
-          <CommentForm post={post} />
+          {post.allowComment && <CommentForm post={post} />}
           {commentList && <CommentList commentList={commentList} post={post} />}
         </>
       )}
@@ -256,11 +256,11 @@ function ReplyForm({
           initial={{ opacity: 0, height: 0 }}
           animate={{
             opacity: 1,
-            height: "auto", // 使用测量高度
+            height: 'auto', // 使用测量高度
             transition: {
               height: { duration: 0.2 },
-              opacity: { duration: 0.1 }
-            }
+              opacity: { duration: 0.1 },
+            },
           }}
           exit={{
             opacity: 0,
@@ -268,7 +268,7 @@ function ReplyForm({
             transition: {
               height: { duration: 0.2 },
               opacity: { duration: 0.1 },
-            }
+            },
           }}
           className="p-2 flex flex-col gap-2 overflow-hidden"
         >
@@ -393,7 +393,7 @@ export function CommentItem({
                   })}
                   onClick={() => setShowAddComment(!showAddComment)}
                 >
-                  <AddCommentIcon className="size-5" />
+                  {post.allowComment && <AddCommentIcon className="size-5" />}
                 </div>
               </div>
             </div>
