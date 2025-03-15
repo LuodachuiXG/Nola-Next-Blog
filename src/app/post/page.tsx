@@ -171,8 +171,8 @@ export default async function PostPage(props: {
   return (
     <>
       <div className="fadeIn-container flex justify-center">
-        <ScrollShadow className="w-full max-h-[calc(100dvh-55px)] md:max-h-[calc(100dvh-25px)] overflow-x-hidden">
-          <div className="flex flex-col items-center overflow-hidden w-dvw md:w-auto">
+        <ScrollShadow id="article-scroll" className="w-full max-h-[calc(100dvh-55px)] md:max-h-[calc(100dvh-25px)] overflow-x-hidden scroll-smooth">
+          <div className="flex flex-col items-center overflow-hidden w-dvw md:w-auto relative">
             <div className="w-dvw md:max-w-[70ch] lg:max-w-[80ch] 2xl:max-w-[110ch]">
               {/*文章信息头*/}
               <PostInfoHead post={postContent.post} />
@@ -181,7 +181,7 @@ export default async function PostPage(props: {
                 id="article"
                 className="max-w-full md:max-w-[70ch] lg:max-w-[80ch] 2xl:max-w-[110ch] px-5 dark:prose-pre:border-1 dark:prose-pre:border-foreground/20 prose md:prose-base dark:prose-invert"
               >
-                <PostPreview markdown={content} />
+                <PostPreview markdown={content}/>
               </article>
               <PostDivider />
 
