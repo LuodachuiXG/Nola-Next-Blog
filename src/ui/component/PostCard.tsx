@@ -66,25 +66,22 @@ export default function PostCard({ post }: { post: Post }) {
       )}
 
       <Card
-        className="h-full overflow-clip rounded-xl transition-all hover:-translate-y-0.5 "
-        isBlurred
+        className="group h-full overflow-clip rounded-xl transition-all hover:-translate-y-0.5 "
         shadow="sm"
         isHoverable
-        isFooterBlurred
       >
         {/*是否显示文章封面*/}
         {hasCover && (
           <Image
             removeWrapper
             alt={post.title}
-            className="z-0 w-[101%] h-full object-cover absolute"
+            className="z-0 w-[101%] h-full object-cover absolute group-hover:scale-125 group-hover:rotate-2"
             src={coverUrl ? getImageRealUrl(coverUrl) : ''}
           />
         )}
         <CardFooter
-          className={clsx('flex items-start h-full', {
-            'transition-background bg-gradient-to-r from-black/30 to-transparent hover:bg-black/15':
-              hasCover,
+          className={clsx('flex items-start h-full z-10', {
+            'bg-black/30': hasCover,
           })}
         >
           <div className="flex flex-col gap-1 p-1 overflow-auto w-full justify-between h-full">
