@@ -66,8 +66,7 @@ export default function PostCard({ post }: { post: Post }) {
       )}
 
       <Card
-        className="group h-full overflow-clip rounded-xl transition-all hover:-translate-y-0.5 "
-        shadow="sm"
+        className="group h-full overflow-clip rounded-xl transition-all hover:-translate-y-0.5 shadow-small"
         isHoverable
       >
         {/*是否显示文章封面*/}
