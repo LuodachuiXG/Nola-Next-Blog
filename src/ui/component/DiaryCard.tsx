@@ -39,7 +39,7 @@ export default function DiaryCard({ diary }: { diary: Diary }) {
           <ModalBody>
             <div>
               <ScrollShadow className="max-h-[75dvh]">
-                <div className="dark:prose-pre:border-1 dark:prose-pre:border-foreground/20 prose md:prose-base dark:prose-invert max-w-full -mt-6">
+                <div className="prose md:prose-base dark:prose-invert max-w-full -mt-6">
                   <div dangerouslySetInnerHTML={{ __html: md }}></div>
                 </div>
               </ScrollShadow>

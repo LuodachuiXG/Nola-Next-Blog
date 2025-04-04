@@ -17,6 +17,7 @@ import { redirect } from 'next/navigation';
 import { ApiResponse } from '@/models/ApiResponse';
 import { clsx } from 'clsx';
 import ErrorContainer from '@/ui/component/ErrorContainer';
+import PostCodeHighlight from '@/ui/component/PostCodeHighlight';
 
 type Props = {
   // 文章 ID
@@ -179,8 +180,9 @@ export default async function PostPage(props: {
               {/*文章*/}
               <article
                 id="article"
-                className="max-w-full md:max-w-[70ch] lg:max-w-[80ch] 2xl:max-w-[110ch] px-5 dark:prose-pre:border-1 dark:prose-pre:border-foreground/20 prose md:prose-base dark:prose-invert"
+                className="max-w-full md:max-w-[70ch] lg:max-w-[80ch] 2xl:max-w-[110ch] px-5 0 prose md:prose-base dark:prose-invert prose-pre:bg-transparent prose-pre:text-lg prose-code:font-['JetBrains_Mono'] prose-pre:p-0 prose-pre:m-0"
               >
+                <PostCodeHighlight />
                 <PostPreview markdown={content}/>
               </article>
               <PostDivider />
