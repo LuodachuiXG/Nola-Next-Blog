@@ -11,6 +11,13 @@
     src: url(../fonts/JetBrainsMono-Regular.woff2) format('woff2');
 }
 
+@layer base {
+    /* 设置文章中的小块代码的样式 */
+    code:not([class]) {
+        @apply font-['JetBrains_Mono'] rounded py-0.5 px-2 mx-1 dark:bg-[#282C34] dark:text-[#abb2bf] bg-[#F7F7F9] text-red-400 before:content-[''] after:content-[''];
+    }
+}
+
 :root {
     --background: #ffffff;
     --foreground: #171717;

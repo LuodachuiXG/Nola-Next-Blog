@@ -172,19 +172,23 @@ export default async function PostPage(props: {
   return (
     <>
       <div className="fadeIn-container flex justify-center">
-        <ScrollShadow id="article-scroll" className="w-full max-h-[calc(100dvh-55px)] md:max-h-[calc(100dvh-25px)] overflow-x-hidden scroll-smooth">
+        <ScrollShadow
+          id="article-scroll"
+          className="w-full max-h-[calc(100dvh-55px)] md:max-h-[calc(100dvh-25px)] overflow-x-hidden scroll-smooth"
+        >
           <div className="flex flex-col items-center overflow-hidden w-dvw md:w-auto relative">
-            <div className="w-dvw md:max-w-[70ch] lg:max-w-[80ch] 2xl:max-w-[110ch]">
+            <div className="w-dvw md:max-w-[70ch] lg:max-w-[80ch] 2xl:max-w-[110ch] my-0 md:my-5 rounded-none md:rounded-xl bg-white dark:bg-[#1B1C20] md:border-1 border-[#E3E8F7] dark:border-[#3D3D3F] shadow-lg">
               {/*文章信息头*/}
               <PostInfoHead post={postContent.post} />
               {/*文章*/}
               <article
                 id="article"
-                className="max-w-full md:max-w-[70ch] lg:max-w-[80ch] 2xl:max-w-[110ch] px-5 0 prose md:prose-base dark:prose-invert prose-pre:bg-transparent prose-pre:text-sm md:prose-pre:text-lg prose-code:font-['JetBrains_Mono'] prose-pre:p-0 prose-pre:m-0"
+                className=" max-w-full md:max-w-[70ch] lg:max-w-[80ch] 2xl:max-w-[110ch] px-5 0 prose md:prose-base dark:prose-invert prose-pre:bg-transparent prose-pre:text-sm md:prose-pre:text-lg prose-code:font-['JetBrains_Mono'] prose-pre:p-0 prose-pre:m-0 prose-pre:mb-5"
               >
                 <PostCodeHighlight />
-                <PostPreview markdown={content}/>
+                <PostPreview markdown={content} />
               </article>
+
               <PostDivider />
 
               {/*评论组件*/}
@@ -192,6 +196,7 @@ export default async function PostPage(props: {
                 post={postContent.post}
                 commentList={comments}
               />
+
             </div>
           </div>
         </ScrollShadow>

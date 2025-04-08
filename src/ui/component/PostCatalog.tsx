@@ -118,7 +118,7 @@ export function PostCatalog({ headings }: { headings: Array<PostHeading> }) {
       }}
     >
       <motion.div
-        className="m-5 bg-background dark:bg-transparent/95 rounded-xl shadow-lg overflow-hidden"
+        className="m-5 rounded-xl shadow-lx overflow-hidden bg-white dark:bg-[#1B1C20] border-1  border-[#E3E8F7] dark:border-[#3D3D3F]"
         initial={{
           height: '1rem',
           width: '1rem',
@@ -171,7 +171,7 @@ export function PostCatalog({ headings }: { headings: Array<PostHeading> }) {
         </ScrollShadow>
       </motion.div>
       <motion.div
-        className="absolute size-8 left-2 bottom-3 select-none bg-background cursor-pointer border-1 border-divider flex items-center justify-center rounded-full"
+        className="bg-white dark:bg-[#1B1C20] border-1  border-[#E3E8F7] dark:border-[#3D3D3F] absolute size-8 left-2 bottom-3 select-none cursor-pointer flex items-center justify-center rounded-full"
         whileHover={{
           scale: 1.1,
         }}

@@ -34,7 +34,7 @@ export default function CategoryCard({ category }: { category: Category }) {
         href={`/?category=${category.displayName}`}
         radius="lg"
       >
-        <CardBody className="relative m-0 p-0 overflow-hidden">
+        <CardBody className="relative m-0 p-0 overflow-hidden dark:dark:bg-[#1B1C20] bg-white">
           {/*背景板*/}
           <div className="w-24 h-24 md:w-40 md:h-40">{background}</div>
           {/*分类名*/}

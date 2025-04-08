@@ -55,12 +55,12 @@ export default function DiaryCard({ diary }: { diary: Diary }) {
 
       {/*日记卡片*/}
       <motion.div
-        className="transition-transform rounded-2xl shadow-small w-[calc(100dvw-2rem)] md:w-40 xl:w-80 h-40 cursor-pointer overflow-hidden hover:-translate-y-0.5"
+        className="dark:dark:bg-[#1B1C20] bg-white transition-transform rounded-xl shadow-small w-[calc(100dvw-2rem)] md:w-40 xl:w-80 h-40 cursor-pointer overflow-hidden hover:-translate-y-0.5"
         onClick={() => setShowDiary(!showDiary)}
       >
         <div className="flex flex-col">
           {/*日期*/}
-          <div className="text-xl px-4 py-2 bg-sky-700 text-white flex items-center gap-2">
+          <div className="text-xl px-4 py-2 bg-gradient-to-r from-sky-600 to-sky-400/70 text-white flex items-center gap-2">
             <NotebookIcon className="size-6" />
             <p>{formatChineseDate(diary.createTime)}</p>
           </div>
