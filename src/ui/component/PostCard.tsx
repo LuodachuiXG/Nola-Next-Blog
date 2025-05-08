@@ -80,8 +80,9 @@ export default function PostCard({ post }: { post: Post }) {
         )}
         <CardFooter
           className={clsx('flex items-start h-full z-10', {
-            'bg-black/30 group-hover:bg-black/20 transition-background': hasCover,
-            'dark:bg-[#1B1C20]': !hasCover
+            'bg-black/70 group-hover:bg-black/50 transition-background':
+              hasCover,
+            'dark:bg-[#1B1C20]': !hasCover,
           })}
         >
           <div className="flex flex-col gap-1 p-1 overflow-auto w-full justify-between h-full">
@@ -145,11 +146,7 @@ export default function PostCard({ post }: { post: Post }) {
                   'text-white/70': hasCover,
                 })}
               >
-                <TimeFormatLabel
-                  time={
-                    post.lastModifyTime ? post.lastModifyTime : post.createTime
-                  }
-                />
+                <TimeFormatLabel time={post.createTime} />
               </div>
             </div>
           </div>

@@ -23,7 +23,7 @@ export default function PostInfoHead({ post }: { post: Post }) {
   }
 
   // 发布时间或修改时间
-  const time = post.lastModifyTime ? post.lastModifyTime : post.createTime;
+  const time = post.createTime;
 
   return (
     <div className="mt-6 px-6 w-full">

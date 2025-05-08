@@ -10,4 +10,6 @@ export interface Link {
   logo: string | null;
   // 描述
   description: string | null;
+  // 是否已失联
+  isLost: boolean;
 }

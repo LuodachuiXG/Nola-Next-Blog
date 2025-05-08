@@ -43,7 +43,7 @@ export default function DiaryCard({ diary }: { diary: Diary }) {
                   <div dangerouslySetInnerHTML={{ __html: md }}></div>
                 </div>
               </ScrollShadow>
-              <div className="w-full h-0 border-t-1 border-dashed mb-5 border-default-300"></div>
+              <div className="w-full h-0 border-t-1 border-dashed mb-3 border-default-300"></div>
               <div className="flex justify-between text-sm text-default-300 pb-1 select-none">
                 <div>DIARY</div>
                 <div>{formatDate(diary.createTime)}</div>

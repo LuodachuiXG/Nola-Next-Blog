@@ -4,7 +4,6 @@ import Navbar from '@/ui/component/Navbar';
 import { apiConfigGetBlogInfo } from '@/api/apiConfig';
 import { Icon } from 'next/dist/lib/metadata/types/metadata-types';
 import Sidebar from '@/ui/component/Sidebar';
-import BlurColorBackground from '@/ui/component/BlurColorBackground';
 import { apiMenuGetMenuItem } from '@/api/apiMenu';
 import { Metadata, Viewport } from 'next';
 

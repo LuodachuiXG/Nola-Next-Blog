@@ -16,7 +16,16 @@ export default function LinkCard({ link }: { link: Link }) {
   const [imgError, setImgError] = useState(false);
 
   return (
-    <div className="transition-transform hover:-translate-y-0.5 group">
+    <div className="transition-transform hover:-translate-y-0.5 group relative">
+      {/*已失联链接标记*/}
+      {link.isLost && (
+        <div className="absolute h-5 md:h-6 w-10 bg-red-500 dark:bg-red-400 z-40 -left-2 -top-2 rounded-full text-center shadow select-none transition-all hover:scale-105">
+          <p className="text-sm md:text-base font-semibold text-white">
+            RIP
+          </p>
+        </div>
+      )}
+
       <a href={link.url} target="_blank">
         <div className="dark:dark:bg-[#1B1C20] bg-white scaleIn-container shadow-small cursor-pointer w-24 md:w-36 lg:w-44 flex flex-col rounded-xl overflow-hidden">
           <div className="relative rounded-xl shadow-sm shadow-black/5 overflow-hidden w-24 h-24 md:w-36 md:h-36 lg:w-44 lg:h-44">
