@@ -16,6 +16,8 @@ import {
   AddComment as AddCommentIcon,
   Reply as ReplayIcon,
   ArrowDown as ArrowDownIcon,
+  Checkmark as CheckIcon,
+  Add as AddIcon,
 } from '@ricons/carbon';
 import { motion, AnimatePresence } from 'motion/react';
 import { clsx } from 'clsx';
@@ -76,12 +78,29 @@ function CommentForm({
     data: null,
   });
 
+  // 昵称
+  const [displayName, setDisplayName] = useState<string>('');
+  // 邮箱
+  const [email, setEmail] = useState<string>('');
+  // 站点地址
+  const [site, setSite] = useState<string>('');
+  // 内容
+  const [content, setContent] = useState<string>('');
+
+  // 标记评论是否发送成功，并且设为 true 后 2 秒内恢复 false
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
+
   useEffect(() => {
     // -1 为初始状态，不处理
     if (state.code !== -1) {
       if (state.code === 200) {
         // 评论添加成功
         toast('评论已发送，审核通过后即可显示', 'success');
+        setIsSuccess(true);
+        // 2 秒后恢复发送成功状态
+        setTimeout(() => {
+          setIsSuccess(false);
+        }, 2000);
       } else {
         // 评论添加失败
         toast(state.errMsg ?? '未知错误，请稍后重试', 'danger');
@@ -101,6 +120,10 @@ function CommentForm({
             placeholder="请输入昵称"
             isRequired
             size="sm"
+            value={displayName}
+            onChange={(e) => {
+              setDisplayName(e.target.value);
+            }}
             disabled={isPending}
           />
 
@@ -112,6 +135,10 @@ function CommentForm({
             placeholder="请输入邮箱（非公开展示）"
             isRequired
             size="sm"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
             disabled={isPending}
           />
 
@@ -122,6 +149,10 @@ function CommentForm({
             type="url"
             placeholder="请输入站点"
             size="sm"
+            value={site}
+            onChange={(e) => {
+              setSite(e.target.value);
+            }}
             disabled={isPending}
           />
         </div>
@@ -134,17 +165,29 @@ function CommentForm({
           isClearable
           isRequired
           maxRows={16}
+          value={content}
+          onChange={(e) => {
+            setContent(e.target.value);
+          }}
           disabled={isPending}
         />
 
         <div className="text-right">
           <Button
             className="w-full md:w-fit"
-            color="primary"
+            color={isSuccess ? 'success' : 'primary'}
             type="submit"
             isLoading={isPending}
+            startContent={
+              isPending ? null : isSuccess ? (
+                <CheckIcon className="size-6" />
+              ) : (
+                <AddIcon className="size-6" />
+              )
+            }
+            disabled={isSuccess || isPending}
           >
-            {isPending ? '请稍等' : '发送'}
+            {isSuccess ? '发送成功' : isPending ? '请稍等' : '发送'}
           </Button>
         </div>
       </div>
