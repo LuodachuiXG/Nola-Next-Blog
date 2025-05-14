@@ -41,14 +41,6 @@ export default function ErrorContainer({
         whileHover={{
           scale: 1.1,
         }}
-        whileDrag={{
-          rotate: 720,
-          transition: {
-            // 无限循环
-            repeat: Infinity,
-            duration: 0.1,
-          },
-        }}
       >
         <p className="text-[2rem] font-bold text-white z-10">ERROR</p>
         <div className="absolute w-64 h-12 bg-red-500 top-0 left-0 z-5"></div>

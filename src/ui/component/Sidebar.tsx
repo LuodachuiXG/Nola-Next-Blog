@@ -8,6 +8,7 @@ import { Link } from '@heroui/link';
 import { usePathname } from 'next/navigation';
 import { clsx } from 'clsx';
 import { ScrollShadow } from '@heroui/scroll-shadow';
+import { Alert } from '@heroui/alert';
 
 /**
  * 宽屏显示在左侧的侧边栏
@@ -102,6 +103,13 @@ export default function Sidebar({
             ))}
           </div>
         )}
+
+        <Alert
+          className="hidden lg:flex"
+          description="博客仍在开发中，部分功能可能有 BUG。"
+          title="仍在开发中"
+          color="primary"
+        />
       </ScrollShadow>
 
       {/*主题颜色切换按钮*/}
