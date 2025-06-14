@@ -106,8 +106,8 @@ export default function Sidebar({
 
         <Alert
           className="hidden lg:flex"
-          description="博客仍在开发中，部分功能可能有 BUG。"
-          title="仍在开发中"
+          description="博客仍在开发中。"
+          title="开发中"
           color="primary"
         />
       </ScrollShadow>
