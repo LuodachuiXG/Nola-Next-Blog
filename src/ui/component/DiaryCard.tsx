@@ -4,12 +4,11 @@ import { formatChineseDate, formatDate } from '@/util/DateUtil';
 import { motion } from 'motion/react';
 import { marked } from 'marked';
 import { useEffect, useState } from 'react';
-import { Notebook as NotebookIcon } from '@ricons/carbon';
 import {
   Modal,
+  ModalBody,
   ModalContent,
   ModalHeader,
-  ModalBody,
   ScrollShadow,
 } from '@heroui/react';
 
