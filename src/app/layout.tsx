@@ -71,7 +71,7 @@ export default async function RootLayout({
             {/*<BlurColorBackground />*/}
             <aside className="flex-shrink-0 z-10">
               {/*窄屏 NavBar*/}
-              <div className="md:hidden bg-background/75 backdrop-blur-2xl">
+              <div className="md:hidden bg-background/90 dark:bg-background/75 backdrop-blur-2xl">
                 <Navbar blogInfo={blogInfo} menuItems={menuItems} />
               </div>
               {/*宽屏 NavBar*/}
@@ -79,7 +79,7 @@ export default async function RootLayout({
                 <Sidebar blogInfo={blogInfo} menuItems={menuItems} />
               </div>
             </aside>
-            <div className="absolute w-full h-full md:w-[calc(100dvw-4rem)] lg:w-[calc(100dvw-18rem)] left-0 md:left-16 lg:left-72 top-0 pt-[3.75rem] md:pt-0 flex flex-col flex-grow z-0 overflow-y-auto scroll-smooth dark:bg-[#18171D] bg-[#F7F9FF]">
+            <div className="absolute w-full h-full md:w-[calc(100dvw-4rem)] lg:w-[calc(100dvw-18rem)] left-0 md:left-16 lg:left-72 top-0 pt-14 md:pt-0 flex flex-col flex-grow z-0 overflow-y-auto scroll-smooth dark:bg-[#18171D] bg-[#F7F9FF]">
               <main className="flex-grow">
                 {children}
               </main>
