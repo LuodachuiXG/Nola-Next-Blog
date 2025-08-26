@@ -17,6 +17,7 @@ export default function TagChip({ tag }: { tag: Tag }) {
         )}
         key={tag.tagId}
         startContent={tag.color ? TagColorDot(tag.color) : null}
+        radius="sm"
       >
         <Link
           href={`/?tag=${tag.displayName}`}
@@ -35,6 +36,6 @@ export default function TagChip({ tag }: { tag: Tag }) {
  */
 function TagColorDot(color: string) {
   return (
-    <div className="size-2 rounded-full" style={{ background: color }}></div>
+    <div className="size-2 rounded-full shadow" style={{ background: color }}></div>
   );
 }

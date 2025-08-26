@@ -79,7 +79,7 @@ export default function Navbar({
   }
 
   return (
-    <div className="h-14 w-full flex items-center px-4 shadow-lg dark:shadow-none">
+    <div className="h-14 w-full flex items-center px-4 shadow-md dark:shadow-none">
       {menuItems && menuItems.length > 0 && (
         <div>
           <DrawerContainer />

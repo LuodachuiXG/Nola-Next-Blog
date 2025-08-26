@@ -29,7 +29,7 @@ export default function CategoryCard({ category }: { category: Category }) {
   return (
     <div className="transition-all hover:-translate-y-0.5 group">
       <Card
-        className="scaleIn-container bg-transparent w-24 h-24 md:w-40 md:h-40 cursor-pointer shadow-small"
+        className="scaleIn-container bg-transparent w-24 h-24 md:w-40 md:h-40 cursor-pointer shadow-small rounded-lg"
         as={Link}
         href={`/?category=${category.displayName}`}
         radius="lg"
@@ -40,7 +40,7 @@ export default function CategoryCard({ category }: { category: Category }) {
           {/*分类名*/}
           <div
             className={clsx(
-              'transition-all absolute rounded-xl bottom-0 left-0 m-1 p-0 md:p-2 bg-black/30 w-[calc(100%-0.5rem)] z-20 shadow-lg overflow-hidden',
+              'backdrop-blur transition-all absolute rounded-lg bottom-0 left-0 m-1 p-1 md:p-2 bg-black/30 w-[calc(100%-0.5rem)] z-20 shadow-lg overflow-hidden',
               {
                 'bg-black/60': category.cover,
               },

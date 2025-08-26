@@ -51,8 +51,8 @@ export default async function CategoryPage(props: {
 
   return (
     <div className="flex flex-col h-full">
-      <div className="pt-6 pl-6 pr-1 flex-grow">
-        <div className="text-3xl font-semibold text-gray-600 select-none dark:text-white">
+      <div className="flex-grow">
+        <div className="pt-6 pl-6 pr-1 text-3xl font-semibold text-gray-600 select-none dark:text-white">
           <p>{totalData > 0 ? `& ${totalData} 个分类` : '暂无分类'}</p>
         </div>
         <div className="flex-grow">

@@ -66,30 +66,32 @@ export default async function RootLayout({
     <html lang="zh" suppressHydrationWarning>
       <body className="antialiased bg-background text-foreground">
         <Providers>
-          <div className="w-dvw h-dvh flex flex-col md:flex-row relative overflow-clip">
+          <div className="w-dvw h-dvh flex flex-col md:flex-row overflow-clip relative">
             {/*暗色模式时的彩色背景组件*/}
             {/*<BlurColorBackground />*/}
-            <aside className="flex-shrink-0 z-10 dark:bg-[#1B1C20]">
+            <aside className="flex-shrink-0 z-10">
               {/*窄屏 NavBar*/}
-              <div className="md:hidden border-b-1 dark:border-[#3D3D3F] border-[#E3E8F7]">
+              <div className="md:hidden bg-background/75 backdrop-blur-2xl">
                 <Navbar blogInfo={blogInfo} menuItems={menuItems} />
               </div>
               {/*宽屏 NavBar*/}
-              <div className="hidden md:block border-r-1 dark:border-[#3D3D3F] border-[#E3E8F7]">
+              <div className="hidden md:block border-r-1 dark:bg-[#1B1C20] dark:border-[#3D3D3F] border-[#E3E8F7]">
                 <Sidebar blogInfo={blogInfo} menuItems={menuItems} />
               </div>
             </aside>
-            <div className="flex flex-col flex-grow z-10">
-              <main className="flex-grow dark:bg-[#18171D] bg-[#F7F9FF]">
+            <div className="absolute w-full h-full md:w-[calc(100dvw-4rem)] lg:w-[calc(100dvw-18rem)] left-0 md:left-16 lg:left-72 top-0 pt-[3.75rem] md:pt-0 flex flex-col flex-grow z-0 overflow-y-auto scroll-smooth dark:bg-[#18171D] bg-[#F7F9FF]">
+              <main className="flex-grow">
                 {children}
               </main>
-              <footer className="flex-col hidden md:block h-6 text-tiny px-4 text-center text-foreground/40 dark:text-white/70 dark:bg-[#18171D] bg-[#F7F9FF]">
-                Powered by
-                <a href="https://github.com/LuodachuiXG/Nola" target="_blank">
-                  <span className="font-semibold ml-1 italic hover:text-primary transition-colors">
-                    Nola
-                  </span>
-                </a>
+              <footer>
+                <div className="p-4 h-12 flex items-center text-foreground/40 dark:text-white/70 text-tiny">
+                  Powered by
+                  <a href="https://github.com/LuodachuiXG/Nola" target="_blank">
+                    <span className="font-semibold ml-1 italic hover:text-primary transition-colors">
+                      Nola
+                    </span>
+                  </a>
+                </div>
               </footer>
             </div>
           </div>

@@ -41,7 +41,7 @@ export default async function TagPage(props: {
   ]);
 
   if (tagRes.errMsg) {
-    return <ErrorContainer msg={tagRes.errMsg} />
+    return <ErrorContainer msg={tagRes.errMsg} />;
   }
 
   const tagList = tagRes.data;
@@ -50,13 +50,13 @@ export default async function TagPage(props: {
 
   return (
     <div className="flex flex-col h-full">
-      <div className="pt-6 pl-6 pr-1 flex-grow">
-        <div className="text-3xl font-semibold text-gray-600 select-none dark:text-white">
+      <div className="flex-grow">
+        <div className="pt-6 pl-6 pr-1 text-3xl font-semibold text-gray-600 select-none dark:text-white">
           <p>{totalData > 0 ? `# ${totalData} 个标签` : '暂无标签'}</p>
         </div>
         <div className="flex-grow">
           {tagList?.data ? (
-            <ScrollShadow className="py-2 max-h-[calc(100dvh-170px)] md:max-h-[calc(100dvh-140px)]">
+            <ScrollShadow className="p-3 max-h-[calc(100dvh-170px)] md:max-h-[calc(100dvh-140px)]">
               <div className="flex gap-4 flex-wrap p-1">
                 {tagList.data.length > 0 ? (
                   tagList.data.map((tag) => (

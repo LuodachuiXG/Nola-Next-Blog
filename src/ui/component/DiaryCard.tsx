@@ -43,7 +43,7 @@ export default function DiaryCard({ diary }: { diary: Diary }) {
                   <div dangerouslySetInnerHTML={{ __html: md }}></div>
                 </div>
               </ScrollShadow>
-              <div className="w-full h-0 border-t-1 border-dashed mb-3 border-default-300"></div>
+              <div className="w-full h-0 border-t-1 border-dashed mb-3 -mt-1 border-default-300"></div>
               <div className="flex justify-between text-sm text-default-300 pb-1 select-none">
                 <div>DIARY</div>
                 <div>{formatDate(diary.createTime)}</div>
@@ -55,13 +55,12 @@ export default function DiaryCard({ diary }: { diary: Diary }) {
 
       {/*日记卡片*/}
       <motion.div
-        className="dark:dark:bg-[#1B1C20] bg-white transition-transform rounded-xl shadow-small w-[calc(100dvw-2rem)] md:w-40 xl:w-80 h-40 cursor-pointer overflow-hidden hover:-translate-y-0.5"
+        className="dark:dark:bg-[#1B1C20] bg-white transition-transform rounded-lg shadow-small w-[calc(100dvw-2rem)] md:w-40 xl:w-80 h-40 cursor-pointer overflow-hidden hover:-translate-y-0.5"
         onClick={() => setShowDiary(!showDiary)}
       >
         <div className="flex flex-col">
           {/*日期*/}
-          <div className="text-xl px-4 py-2 bg-gradient-to-r from-sky-600 to-sky-400/70 text-white flex items-center gap-2">
-            <NotebookIcon className="size-6" />
+          <div className="text-xl px-4 py-2 text-foreground">
             <p>{formatChineseDate(diary.createTime)}</p>
           </div>
           <div className="w-full h-divider bg-divider"></div>

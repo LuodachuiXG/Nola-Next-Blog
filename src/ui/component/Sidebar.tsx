@@ -8,7 +8,6 @@ import { Link } from '@heroui/link';
 import { usePathname } from 'next/navigation';
 import { clsx } from 'clsx';
 import { ScrollShadow } from '@heroui/scroll-shadow';
-import { Alert } from '@heroui/alert';
 
 /**
  * 宽屏显示在左侧的侧边栏
@@ -26,11 +25,11 @@ export default function Sidebar({
   const pathname = usePathname();
 
   return (
-    <div className="h-dvh md:w-auto lg:w-72 flex flex-col gap-4 p-4 lg:p-6 shadow-xl dark:shadow-none">
+    <div className="h-dvh md:w-16 lg:w-72 flex flex-col gap-4 lg:p-6 shadow-xl dark:shadow-none">
       {blogInfo && (
         <div>
           {/*头像和标题*/}
-          <div className="flex gap-4 items-center">
+          <div className="flex gap-4 items-center md:pt-3 md:pl-3 lg:pt-0 lg:pl-0">
             {/*Favicon*/}
             {blogInfo.favicon && (
               <ShadowAvatar src={blogInfo.favicon} alt={blogInfo.title} />
@@ -103,13 +102,6 @@ export default function Sidebar({
             ))}
           </div>
         )}
-
-        <Alert
-          className="hidden lg:flex"
-          description="博客仍在开发中。"
-          title="开发中"
-          color="primary"
-        />
       </ScrollShadow>
 
       {/*主题颜色切换按钮*/}

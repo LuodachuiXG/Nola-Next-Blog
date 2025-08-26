@@ -1,13 +1,10 @@
-import { Card, CardFooter } from '@heroui/card';
 import { Post } from '@/models/Post';
-import { Image } from '@heroui/image';
-import { clsx } from 'clsx';
-import { getImageRealUrl } from '@/util/UrlUtil';
 import { Tooltip } from '@heroui/tooltip';
 import NextLink from 'next/link';
 import ClickLink from '@/ui/component/ClickLink';
 import { PinFilled as PinnedIcon } from '@ricons/carbon';
 import TimeFormatLabel from '@/ui/component/TimeFormatLabel';
+import { Image } from '@heroui/react';
 
 /**
  * 文章卡片
@@ -31,7 +28,6 @@ export default function PostCard({ post }: { post: Post }) {
       <ClickLink
         displayName={'#' + post.tags[0].displayName}
         href={`/?tag=${post.tags[0].displayName}`}
-        showOnImgCard={hasCover}
       />
     ) : (
       // 有多个标签
@@ -64,94 +60,56 @@ export default function PostCard({ post }: { post: Post }) {
           <PinnedIcon className="w-3 h-3 text-white" />
         </div>
       )}
-
-      <Card
-        className="group h-full overflow-clip rounded-xl transition-all hover:-translate-y-0.5 shadow-small"
-        isHoverable
-      >
-        {/*是否显示文章封面*/}
+      <div className="group min-h-40 h-40 max-h-40 flex gap-2 overflow-clip rounded-lg transition-all active:ring-2 shadow-small bg-background dark:bg-content2">
         {hasCover && (
-          <Image
-            removeWrapper
-            alt={post.title}
-            className="z-0 w-[101%] h-full object-cover absolute group-hover:scale-125 group-hover:rotate-2"
-            src={coverUrl ? getImageRealUrl(coverUrl) : ''}
-          />
-        )}
-        <CardFooter
-          className={clsx('flex items-start h-full z-10', {
-            'bg-black/70 group-hover:bg-black/50 transition-background':
-              hasCover,
-            'dark:bg-[#1B1C20]': !hasCover,
-          })}
-        >
-          <div className="flex flex-col gap-1 p-1 overflow-auto w-full justify-between h-full">
-            {/*文章标题摘要*/}
+          <div className="h-40 w-56 xl:w-64 brightness-95 group-hover:brightness-100 transition-all overflow-clip">
             <NextLink href={`/post?slug=${post.slug}`}>
-              <div className="cursor-pointer group">
-                <p
-                  className={clsx(
-                    'font-semibold transition-all group-hover:text-primary',
-                    {
-                      // 如果当前文章有封面，则把文字固定为白色，否则看不清
-                      'text-white': hasCover,
-                    },
-                  )}
-                >
-                  {post.title}
-                </p>
-                <p
-                  className={clsx(
-                    'font-normal text-sm text-foreground/70 line-clamp-2 md:line-clamp-3 xl:line-clamp-4',
-                    {
-                      // 如果当前文章有封面，则把文字固定为白色，否则看不清
-                      'text-white/70': hasCover,
-                    },
-                  )}
-                >
-                  {post.excerpt}
-                </p>
-              </div>
+              <Image
+                src={coverUrl}
+                alt={post.title}
+                className="!h-40 !object-cover group-hover:scale-110"
+                radius="none"
+                isBlurred
+              />
             </NextLink>
+          </div>
+        )}
+        <div className="flex flex-col gap-1 p-4 overflow-auto w-full justify-between h-full">
+          {/*文章标题摘要*/}
+          <NextLink href={`/post?slug=${post.slug}`}>
+            <div className="cursor-pointer group flex flex-col gap-1">
+              <p className="font-semibold transition-colors group-hover:text-primary line-clamp-1">
+                {post.title}
+              </p>
+              <p className="font-normal text-sm text-foreground/70 line-clamp-2 md:line-clamp-3">
+                {post.excerpt}
+              </p>
+            </div>
+          </NextLink>
 
-            {/*文章时间、分类、标签等信息*/}
-            <div className="flex gap-1 justify-between w-full text-tiny mt-1 overflow-hidden">
-              {/*分类标签*/}
-              <div
-                className={clsx(
-                  'flex gap-2 font-semibold overflow-ellipsis line-clamp-1',
-                  {
-                    'text-default-500': !hasCover,
-                    'text-white': hasCover,
-                  },
-                )}
-              >
-                {/*分类*/}
-                {post.category && (
-                  <ClickLink
-                    displayName={'&' + post.category.displayName}
-                    href={`/?category=${post.category.displayName}`}
-                    showOnImgCard={hasCover}
-                  />
-                )}
+          {/*文章时间、分类、标签等信息*/}
+          <div className="flex gap-1 justify-between w-full text-tiny mt-1 overflow-hidden">
+            {/*分类标签*/}
+            <div className="flex gap-2 font-semibold overflow-ellipsis line-clamp-1 text-default-500">
+              {/*分类*/}
+              {post.category && (
+                <ClickLink
+                  displayName={'&' + post.category.displayName}
+                  href={`/?category=${post.category.displayName}`}
+                />
+              )}
 
-                {/*标签*/}
-                {tagContent}
-              </div>
+              {/*标签*/}
+              {tagContent}
+            </div>
 
-              {/*时间*/}
-              <div
-                className={clsx('cursor-default', {
-                  'text-default-500': !hasCover,
-                  'text-white/70': hasCover,
-                })}
-              >
-                <TimeFormatLabel time={post.createTime} />
-              </div>
+            {/*时间*/}
+            <div className="cursor-default text-default-500">
+              <TimeFormatLabel time={post.createTime} />
             </div>
           </div>
-        </CardFooter>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 }

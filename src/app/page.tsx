@@ -51,19 +51,19 @@ export default async function PostPage(props: {
       <div className="flex-grow">
         {/* 文章列表 */}
         {postList && (
-          <ScrollShadow className="p-4 max-h-[calc(100dvh-115px)] md:max-h-[calc(100dvh-80px)] flex flex-col">
+          <div className="p-4 h-full">
             {/*筛选条件显示*/}
             <PostFilterAlert
               tag={tagFilter}
               category={categoryFilter}
               count={postList.totalData}
             />
-            <div className="grid grid-flow-row-dense gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+            <div className="grid grid-flow-row-dense gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
               {postList.data.map((post) => (
                 <PostCard key={post.postId} post={post} />
               ))}
             </div>
-          </ScrollShadow>
+          </div>
         )}
         {/*暂无文章*/}
         {(!postList || postList.totalData <= 0) && (

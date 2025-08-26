@@ -27,11 +27,11 @@ export default function PostInfoHead({ post }: { post: Post }) {
 
   return (
     <div className="mt-6 px-6 w-full">
-      <div className="h-fit relative flex flex-col gap-4">
+      <div className="w-full h-fit relative flex flex-col gap-4">
         {/*封面，如果有*/}
         {cover && (
           <Image
-            className="object-cover shadow-lg blurIn-container"
+            className="w-screen object-cover shadow-lg blurIn-container"
             radius="sm"
             src={getImageRealUrl(cover)}
             alt={post.title}

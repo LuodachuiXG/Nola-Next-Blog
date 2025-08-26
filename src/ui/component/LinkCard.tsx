@@ -27,8 +27,8 @@ export default function LinkCard({ link }: { link: Link }) {
       )}
 
       <a href={link.url} target="_blank">
-        <div className="dark:dark:bg-[#1B1C20] bg-white scaleIn-container shadow-small cursor-pointer w-24 md:w-36 lg:w-44 flex flex-col rounded-xl overflow-hidden">
-          <div className="relative rounded-xl shadow-sm shadow-black/5 overflow-hidden w-24 h-24 md:w-36 md:h-36 lg:w-44 lg:h-44">
+        <div className="dark:dark:bg-[#1B1C20] bg-white scaleIn-container shadow-small cursor-pointer w-24 md:w-36 lg:w-44 flex flex-col rounded-lg overflow-hidden">
+          <div className="relative rounded-none overflow-hidden w-24 h-24 md:w-36 md:h-36 lg:w-44 lg:h-44">
             {/*图片*/}
             {link.logo && !imgError && (
               <Image
@@ -41,7 +41,7 @@ export default function LinkCard({ link }: { link: Link }) {
 
             {/*底字*/}
             {(!link.logo || imgError) && (
-              <div className="absolute top-0 left-0 size-full z-0 text-[3.75rem] md:text-[8rem] font-bold bg-gray-400/10 dark:bg-transparent rounded-xl">
+              <div className="absolute top-0 left-0 size-full z-0 text-[3.75rem] md:text-[8rem] font-bold bg-gray-400/10 dark:bg-transparent rounded-none">
                 <div className=" hidden dark:block dark:opacity-50 absolute -bottom-5 md:-bottom-10 left-2">
                   {firstChar}
                 </div>
@@ -54,7 +54,7 @@ export default function LinkCard({ link }: { link: Link }) {
             {/*hover 时显示的描述*/}
             {link.description && link.description.length > 0 && (
               <div className="absolute top-0 left-0 w-full h-full z-20 p-1 overflow-hidden">
-                <div className="opacity-0 group-hover:opacity-100 transition-opacity max-h-[3.32rem] line-clamp-2 md:max-h-[4.55rem] md:line-clamp-3 lg:max-h-[7.25rem] lg:line-clamp-6 break-words w-full rounded-xl text-sm bg-black/60 p-2 backdrop-blur shadow-small text-white">
+                <div className="opacity-0 group-hover:opacity-100 transition-opacity max-h-[3.32rem] line-clamp-2 md:max-h-[4.55rem] md:line-clamp-3 lg:max-h-[7.25rem] lg:line-clamp-6 break-words w-full rounded-lg text-sm bg-black/60 p-2 backdrop-blur shadow-small text-white">
                   {link.description}
                 </div>
               </div>
