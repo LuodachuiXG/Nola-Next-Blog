@@ -80,7 +80,7 @@ export default async function RootLayout({
                 <Sidebar blogInfo={blogInfo} menuItems={menuItems} />
               </div>
             </aside>
-            <div className="absolute w-full h-full md:w-[calc(100dvw-4rem)] lg:w-[calc(100dvw-18rem)] left-0 md:left-16 lg:left-72 top-0 pt-14 md:pt-0 flex flex-col flex-grow z-0">
+            <div className="absolute w-full h-full md:w-[calc(100%-4rem)] lg:w-[calc(100%-18rem)] left-0 md:left-16 lg:left-72 top-0 pt-14 md:pt-0 flex flex-col flex-grow z-0">
               <main className="flex-grow">{children}</main>
               <footer>
                 <Footer />
