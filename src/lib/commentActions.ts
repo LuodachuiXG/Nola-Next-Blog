@@ -1,7 +1,7 @@
 'use server';
 
 import { apiCommentAddComment } from '@/api/apiComment';
-import { ApiResponse } from '@/models/ApiResponse';
+import { ApiResponse } from '@/models/response/ApiResponse';
 import { Comment } from '@/models/Comment';
 
 /**

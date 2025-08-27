@@ -1,4 +1,4 @@
-import { ApiResponse } from '@/models/ApiResponse';
+import { ApiResponse } from '@/models/response/ApiResponse';
 import { Link } from '@/models/Link';
 import { Pager } from '@/models/Pager';
 

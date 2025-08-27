@@ -13,7 +13,7 @@ import { apiCommentGetComment } from '@/api/apiComment';
 import { Post } from '@/models/Post';
 import { isInPageSizeList } from '@/util/ConstData';
 import { redirect } from 'next/navigation';
-import { ApiResponse } from '@/models/ApiResponse';
+import { ApiResponse } from '@/models/response/ApiResponse';
 import { clsx } from 'clsx';
 import ErrorContainer from '@/ui/component/ErrorContainer';
 import PostCodeHighlight from '@/ui/component/PostCodeHighlight';

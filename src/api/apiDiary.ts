@@ -1,4 +1,4 @@
-import { ApiResponse } from '@/models/ApiResponse';
+import { ApiResponse } from '@/models/response/ApiResponse';
 import { Pager } from '@/models/Pager';
 import { Diary } from '@/models/Diary';
 

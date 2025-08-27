@@ -1,4 +1,4 @@
-import { ApiResponse } from '@/models/ApiResponse';
+import { ApiResponse } from '@/models/response/ApiResponse';
 import { Menu } from '@/models/Menu';
 
 const serverUrl = process.env.SERVER_URL;

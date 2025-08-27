@@ -6,6 +6,7 @@ import { Icon } from 'next/dist/lib/metadata/types/metadata-types';
 import Sidebar from '@/ui/component/Sidebar';
 import { apiMenuGetMenuItem } from '@/api/apiMenu';
 import { Metadata, Viewport } from 'next';
+import Footer from '@/ui/layout/Footer';
 
 export const viewport: Viewport = {
   initialScale: 1,
@@ -54,7 +55,7 @@ export default async function RootLayout({
   // 博客信息响应、菜单项响应
   const [blogInfoRes, menuItemRes] = await Promise.all([
     apiConfigGetBlogInfo(),
-    apiMenuGetMenuItem(),
+    apiMenuGetMenuItem()
   ]);
 
   // 博客信息
@@ -82,14 +83,7 @@ export default async function RootLayout({
             <div className="absolute w-full h-full md:w-[calc(100dvw-4rem)] lg:w-[calc(100dvw-18rem)] left-0 md:left-16 lg:left-72 top-0 pt-14 md:pt-0 flex flex-col flex-grow z-0">
               <main className="flex-grow">{children}</main>
               <footer>
-                <div className="p-4 h-12 flex items-center text-foreground/40 dark:text-white/70 text-tiny">
-                  Powered by
-                  <a href="https://github.com/LuodachuiXG/Nola" target="_blank">
-                    <span className="font-semibold ml-1 italic hover:text-primary transition-colors">
-                      Nola
-                    </span>
-                  </a>
-                </div>
+                <Footer />
               </footer>
             </div>
           </div>
