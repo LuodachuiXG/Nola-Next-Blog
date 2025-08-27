@@ -30,11 +30,11 @@ export default async function Footer({ className }: { className?: string }) {
         'p-4 flex flex-col gap-2 justify-center text-foreground/60 dark:text-white/70 text-tiny bg-white dark:bg-content2',
       )}
     >
-      <div className="flex gap-2">
+      <div className="flex gap-2 items-center flex-wrap">
         {/*在线人数*/}
         <OnlineCounter />
 
-        {/*<Divider orientation="h"/>*/}
+        <Divider className="h-3" orientation="vertical"/>
 
         {/*文章总浏览量*/}
         {overview && (
