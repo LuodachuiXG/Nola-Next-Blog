@@ -7,6 +7,9 @@ import Sidebar from '@/ui/component/Sidebar';
 import { apiMenuGetMenuItem } from '@/api/apiMenu';
 import { Metadata, Viewport } from 'next';
 import Footer from '@/ui/layout/Footer';
+import { apiOverviewGetOverview } from '@/api/apiOverview';
+import { Suspense } from 'react';
+import { Skeleton } from '@heroui/skeleton';
 
 export const viewport: Viewport = {
   initialScale: 1,
@@ -52,7 +55,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // 博客信息响应、菜单项响应
+  // 博客信息响应、菜单项响应、概览数据
   const [blogInfoRes, menuItemRes] = await Promise.all([
     apiConfigGetBlogInfo(),
     apiMenuGetMenuItem()
@@ -83,7 +86,9 @@ export default async function RootLayout({
             <div className="absolute w-full h-full md:w-[calc(100%-4rem)] lg:w-[calc(100%-18rem)] left-0 md:left-16 lg:left-72 top-0 pt-14 md:pt-0 flex flex-col flex-grow z-0">
               <main className="flex-grow">{children}</main>
               <footer>
-                <Footer />
+                <Suspense fallback={<Skeleton className="w-full h-16" />}>
+                  <Footer />
+                </Suspense>
               </footer>
             </div>
           </div>

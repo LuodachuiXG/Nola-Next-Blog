@@ -114,7 +114,7 @@ export default function Navbar({
             showArrow={true}
           >
             <Link
-              className="font-black text-lg text-black dark:text-white cursor-pointer"
+              className="text-lg text-black dark:text-white cursor-pointer"
               href="/"
             >
               <p>{blogInfo.title}</p>

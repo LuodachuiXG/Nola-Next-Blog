@@ -45,7 +45,7 @@ export default function Sidebar({
               placement="right"
             >
               <Link
-                className="font-black text-2xl cursor-pointer hidden lg:block text-black dark:text-white"
+                className="text-2xl cursor-pointer hidden lg:block dark:text-white"
                 href="/"
               >
                 <p>{blogInfo.title}</p>

@@ -1,6 +1,8 @@
 import { clsx } from 'clsx';
 import { apiConfigGetICP } from '@/api/apiConfig';
 import OnlineCounter from '@/ui/component/OnlineCounter';
+import { apiOverviewGetOverview } from '@/api/apiOverview';
+import { Divider } from '@heroui/divider';
 
 /**
  * 页脚
@@ -8,11 +10,18 @@ import OnlineCounter from '@/ui/component/OnlineCounter';
  * @constructor
  */
 export default async function Footer({ className }: { className?: string }) {
-  // ICP 备案信息
-  const [icpRes] = await Promise.all([apiConfigGetICP()]);
+  const [icpRes, overviewRes] = await Promise.all([
+    // ICP 备案信息
+    apiConfigGetICP(),
+    // 概览数据
+    apiOverviewGetOverview()
+  ]);
 
   // ICP 备案信息
   const icp = icpRes.data;
+
+  // 概览数据
+  const overview = overviewRes.data;
 
   return (
     <div
@@ -21,8 +30,19 @@ export default async function Footer({ className }: { className?: string }) {
         'p-4 flex flex-col gap-2 justify-center text-foreground/60 dark:text-white/70 text-tiny bg-white dark:bg-content2',
       )}
     >
-      {/*在线人数*/}
-      <OnlineCounter />
+      <div className="flex gap-2">
+        {/*在线人数*/}
+        <OnlineCounter />
+
+        <Divider orientation="h"/>
+
+        {/*文章总浏览量*/}
+        {overview && (
+          <div>
+            <p>文章总浏览量：{overview.postVisitCount}</p>
+          </div>
+        )}
+      </div>
 
       {/*备案信息*/}
       {icp && (icp.police || icp.icp) && (
