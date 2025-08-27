@@ -38,8 +38,10 @@ export default function Sidebar({
             {/*博客标题*/}
             <Tooltip
               content={
-                blogInfo.title +
-                (blogInfo.subtitle ? ` | ${blogInfo.subtitle}` : '')
+                <p className="text-foreground">
+                  {blogInfo.title +
+                    (blogInfo.subtitle ? ` | ${blogInfo.subtitle}` : '')}
+                </p>
               }
               showArrow={true}
               placement="right"

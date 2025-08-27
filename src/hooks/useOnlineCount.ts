@@ -5,7 +5,10 @@ import { OnlineCountResponse } from '@/models/response/OnlineCountResponse';
  * 获取当前博客在线人数 Hook
  */
 export const useOnlineCount = () => {
+  // 当前人数
   const [onlineCount, setOnlineCount] = useState<number>(0);
+  // 更新时间戳
+  const [updateTime, setUpdateTime] = useState<number>(0);
   const wsRef = useRef<WebSocket | null>(null);
 
   useEffect(() => {
@@ -15,6 +18,7 @@ export const useOnlineCount = () => {
     const serverUrl = process.env.NEXT_PUBLIC_WEBSOCKET_URL;
     if (!serverUrl) {
       setOnlineCount(-1)
+      setUpdateTime(-1)
       console.error('WEBSOCKET_URL is not defined');
       return;
     }
@@ -32,9 +36,11 @@ export const useOnlineCount = () => {
         } else {
           const data: OnlineCountResponse = JSON.parse(event.data);
           setOnlineCount(data.count);
+          setUpdateTime(data.timestamp)
         }
       } catch (error) {
         setOnlineCount(-1)
+        setUpdateTime(-1)
         console.error(`WebSocket 解析消息失败：${error}`);
       }
     };
@@ -46,11 +52,13 @@ export const useOnlineCount = () => {
     ws.onclose = () => {
       console.log('WebSocket 连接已关闭');
       setOnlineCount(-1)
+      setUpdateTime(-1)
     }
 
     ws.onerror = (error) => {
       console.error(`WebSocket 错误：${error}`);
       setOnlineCount(-1)
+      setUpdateTime(-1)
     }
 
     // 页面卸载时关闭连接
@@ -64,5 +72,8 @@ export const useOnlineCount = () => {
       window.removeEventListener('beforeunload', handleBeforeUnload)
     }
   }, []);
-  return onlineCount
+  return {
+    onlineCount: onlineCount,
+    updateTime: updateTime
+  }
 };

@@ -6,8 +6,6 @@ import { isInPageSizeList, PAGE_SIZE_LIST } from '@/util/ConstData';
 import { redirect } from 'next/navigation';
 import ErrorContainer from '@/ui/component/ErrorContainer';
 import PostFilterAlert from '@/ui/component/PostFilterAlert';
-import { apiOverviewGetOverview } from '@/api/apiOverview';
-
 // 文章缓存过期时间（秒）
 export const revalidate = 0;
 
@@ -35,10 +33,9 @@ export default async function PostPage(props: {
     redirect(`/?page=${page}&size=${PAGE_SIZE_LIST[2]}`);
   }
 
-  // 获取文章列表、概览数据
-  const [postRes, overviewRes] = await Promise.all([
+  // 获取文章列表
+  const [postRes] = await Promise.all([
     apiPostGetPosts(page, size, null, null, null, tagFilter, categoryFilter),
-    apiOverviewGetOverview()
   ]);
 
   if (postRes.errMsg) {
@@ -47,9 +44,6 @@ export default async function PostPage(props: {
 
   // 文章列表
   const postList = postRes.data;
-
-  // 概览数据
-  const overview = overviewRes.data;
 
   return (
     <div className="flex flex-col h-full">

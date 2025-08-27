@@ -14,7 +14,7 @@ export default async function Footer({ className }: { className?: string }) {
     // ICP 备案信息
     apiConfigGetICP(),
     // 概览数据
-    apiOverviewGetOverview()
+    apiOverviewGetOverview(),
   ]);
 
   // ICP 备案信息
@@ -30,13 +30,13 @@ export default async function Footer({ className }: { className?: string }) {
         'p-4 flex flex-col gap-2 justify-center text-foreground/60 dark:text-white/70 text-tiny bg-white dark:bg-content2',
       )}
     >
-      <div className="flex gap-2 items-center flex-wrap">
+      <div className="flex gap-2 items-center">
         {/*在线人数*/}
         <OnlineCounter />
 
-        <Divider className="h-3" orientation="vertical"/>
+        <Divider className="h-3" orientation="vertical" />
 
-        {/*文章总浏览量*/}
+        {/*项目数量*/}
         {overview && (
           <div>
             <p>文章总浏览量：{overview.postVisitCount}</p>
@@ -48,9 +48,17 @@ export default async function Footer({ className }: { className?: string }) {
       {icp && (icp.police || icp.icp) && (
         <div className="flex gap-2 line-clamp-1">
           {/*ICP*/}
-          {icp.icp && <a href="https://beiancx.miit.gov.cn/" target="_blank">{icp.icp}</a>}
+          {icp.icp && (
+            <a href="https://beiancx.miit.gov.cn/" target="_blank">
+              {icp.icp}
+            </a>
+          )}
           {/*公安网备*/}
-          {icp.police && <a href="https://beian.mps.gov.cn/" target="_blank">{icp.police}</a>}
+          {icp.police && (
+            <a href="https://beian.mps.gov.cn/" target="_blank">
+              {icp.police}
+            </a>
+          )}
         </div>
       )}
 
