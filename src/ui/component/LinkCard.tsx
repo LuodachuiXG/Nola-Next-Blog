@@ -25,7 +25,7 @@ export default function LinkCard({ link }: { link: Link }) {
       )}
 
       <a href={link.url} target="_blank">
-        <div className="dark:dark:bg-[#1B1C20] bg-white scaleIn-container shadow-small cursor-pointer w-24 md:w-36 lg:w-44 flex flex-col rounded-lg overflow-hidden active:ring-2">
+        <div className="dark:dark:bg-[#1B1C20] bg-white scaleIn-container shadow-small cursor-pointer w-24 md:w-36 lg:w-44 flex flex-col rounded-lg overflow-hidden">
           <div className="relative rounded-none overflow-hidden w-24 h-24 md:w-36 md:h-36 lg:w-44 lg:h-44">
             {/*图片*/}
             {link.logo && !imgError && (
@@ -62,7 +62,7 @@ export default function LinkCard({ link }: { link: Link }) {
 
           {/*链接详情*/}
           <div className="p-1 md:p-2">
-            <p className="line-clamp-1 break-words">{link.displayName}</p>
+            <p className="line-clamp-1 break-words text-foreground">{link.displayName}</p>
           </div>
         </div>
       </a>

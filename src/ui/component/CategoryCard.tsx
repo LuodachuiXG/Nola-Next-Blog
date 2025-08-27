@@ -30,7 +30,7 @@ export default function CategoryCard({ category }: { category: Category }) {
   return (
     <div className="transition-all hover:-translate-y-0.5 group">
       <Card
-        className="scaleIn-container bg-transparent w-24 h-24 md:w-40 md:h-40 cursor-pointer shadow-small rounded-lg active:ring-2"
+        className="scaleIn-container bg-transparent w-24 h-24 md:w-40 md:h-40 cursor-pointer shadow-small rounded-lg"
         as={Link}
         href={`/?category=${category.displayName}`}
         radius="lg"

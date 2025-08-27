@@ -60,7 +60,7 @@ export default function Navbar({
                         }
                       }}
                       className={clsx(
-                        'text-lg hover:text-primary cursor-pointer',
+                        'text-lg hover:text-primary cursor-pointer text-black',
                         {
                           'text-primary': pathname === menu.href,
                         },
@@ -108,13 +108,17 @@ export default function Navbar({
           {/*博客标题*/}
           <Tooltip
             content={
-              blogInfo.title +
-              (blogInfo.subtitle ? ` | ${blogInfo.subtitle}` : '')
+              <p className="text-foreground">
+                {
+                  blogInfo.title +
+                  (blogInfo.subtitle ? ` | ${blogInfo.subtitle}` : '')
+                }
+              </p>
             }
             showArrow={true}
           >
             <Link
-              className="text-lg text-black dark:text-white cursor-pointer"
+              className="text-lg text-foreground cursor-pointer"
               href="/"
             >
               <p>{blogInfo.title}</p>

@@ -186,6 +186,7 @@ function CommentForm({
               )
             }
             disabled={isSuccess || isPending}
+            radius="sm"
           >
             {isSuccess ? '发送成功' : isPending ? '请稍等' : '发送'}
           </Button>
@@ -423,7 +424,7 @@ export function CommentItem({
               <div className="flex gap-2 items-center">
                 {floor && <FloorLink mFloor={floor} />}
                 <a href={mComment.site ?? undefined} target="_blank">
-                  <p id={`comment_${mComment.commentId}`} className="text-sm">
+                  <p id={`comment_${mComment.commentId}`} className="text-sm text-foreground">
                     {mComment.displayName}
                   </p>
                 </a>
@@ -483,7 +484,7 @@ export function CommentItem({
   }
 
   return (
-    <div className="w-full max-h-fit overflow-clip flex flex-col rounded-xl hover:shadow-lg transition-all border-1 border-transparent hover:border-divider dark:hover:border-white/50">
+    <div className="w-full max-h-fit overflow-clip flex flex-col rounded-lg hover:shadow-lg transition-all border-1 border-transparent hover:border-divider dark:hover:border-white/50">
       <Comment mComment={comment} />
 
       {/*子评论列表*/}

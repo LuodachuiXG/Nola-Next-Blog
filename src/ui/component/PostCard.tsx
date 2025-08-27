@@ -62,7 +62,7 @@ export default function PostCard({ post }: { post: Post }) {
           <PinnedIcon className="w-3 h-3 text-white" />
         </div>
       )}
-      <div className="group min-h-40 h-40 max-h-40 flex gap-2 overflow-clip rounded-lg transition-all active:ring-2 shadow-small bg-background dark:bg-content2">
+      <div className="group min-h-40 h-40 max-h-40 flex gap-0 overflow-clip rounded-lg transition-all shadow-small bg-background dark:bg-content2">
         {hasCover && (
           <div className="h-40 w-56 xl:w-64 brightness-95 group-hover:brightness-100 transition-all overflow-clip">
             <NextLink href={`/post?slug=${post.slug}`}>
@@ -80,7 +80,7 @@ export default function PostCard({ post }: { post: Post }) {
           {/*文章标题摘要*/}
           <NextLink href={`/post?slug=${post.slug}`}>
             <div className="cursor-pointer group flex flex-col gap-1">
-              <p className="font-semibold transition-colors group-hover:text-primary line-clamp-1">
+              <p className="font-semibold transition-colors group-hover:text-primary line-clamp-1 text-foreground">
                 {post.title}
               </p>
               <p className="font-normal text-sm text-foreground/70 line-clamp-2 md:line-clamp-3">

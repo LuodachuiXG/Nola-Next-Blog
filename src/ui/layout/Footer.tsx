@@ -34,7 +34,7 @@ export default async function Footer({ className }: { className?: string }) {
         {/*在线人数*/}
         <OnlineCounter />
 
-        <Divider orientation="h"/>
+        {/*<Divider orientation="h"/>*/}
 
         {/*文章总浏览量*/}
         {overview && (

@@ -32,7 +32,7 @@ export default function DiaryCard({ diary }: { diary: Diary }) {
         }}
       >
         <ModalContent>
-          <ModalHeader className="flex flex-col gap-1">
+          <ModalHeader className="flex flex-col gap-1 text-foreground">
             {formatChineseDate(diary.createTime)} · 日记
           </ModalHeader>
           <ModalBody>
@@ -54,7 +54,7 @@ export default function DiaryCard({ diary }: { diary: Diary }) {
 
       {/*日记卡片*/}
       <motion.div
-        className="dark:dark:bg-[#1B1C20] bg-white transition-transform rounded-lg shadow-small w-[calc(100dvw-2rem)] md:w-40 xl:w-80 h-40 cursor-pointer overflow-hidden hover:-translate-y-0.5 active:ring-2"
+        className="dark:dark:bg-[#1B1C20] bg-white transition-transform rounded-lg shadow-small w-[calc(100dvw-2rem)] md:w-40 xl:w-80 h-40 cursor-pointer overflow-hidden hover:-translate-y-0.5"
         onClick={() => setShowDiary(!showDiary)}
       >
         <div className="flex flex-col">

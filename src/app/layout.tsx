@@ -7,7 +7,6 @@ import Sidebar from '@/ui/component/Sidebar';
 import { apiMenuGetMenuItem } from '@/api/apiMenu';
 import { Metadata, Viewport } from 'next';
 import Footer from '@/ui/layout/Footer';
-import { apiOverviewGetOverview } from '@/api/apiOverview';
 import { Suspense } from 'react';
 import { Skeleton } from '@heroui/skeleton';
 

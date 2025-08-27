@@ -12,7 +12,7 @@ export default function TagChip({ tag }: { tag: Tag }) {
     <div className="transition-transform hover:-translate-y-0.5">
       <Chip
         className={clsx(
-          'relative cursor-pointer scaleIn-container shadow-small bg-white dark:dark:bg-[#1B1C20] active:ring-2',
+          'relative cursor-pointer scaleIn-container shadow-small bg-white dark:dark:bg-[#1B1C20]',
           { 'pl-2.5': tag.color },
         )}
         key={tag.tagId}

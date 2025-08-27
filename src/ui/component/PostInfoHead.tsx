@@ -42,7 +42,7 @@ export default function PostInfoHead({ post }: { post: Post }) {
         {/*文章信息*/}
         <div className="flex flex-col gap-4">
           {/*文章标题*/}
-          <p className="text-2xl font-semibold">{post.title}</p>
+          <p className="text-2xl font-semibold text-foreground">{post.title}</p>
 
           {/*文章分类和标签*/}
           {(post.category || post.tags.length > 0) && (
