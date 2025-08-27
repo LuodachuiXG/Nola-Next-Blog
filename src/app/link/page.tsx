@@ -1,6 +1,5 @@
 import { Metadata } from 'next';
 import { apiLinkGetLinks } from '@/api/apiLink';
-import { ScrollShadow } from '@heroui/scroll-shadow';
 import LinkCard from '@/ui/component/LinkCard';
 import ErrorContainer from '@/ui/component/ErrorContainer';
 

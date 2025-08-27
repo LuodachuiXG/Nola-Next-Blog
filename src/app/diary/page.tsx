@@ -3,7 +3,6 @@ import { isInPageSizeList, PAGE_SIZE_LIST } from '@/util/ConstData';
 import { redirect } from 'next/navigation';
 import { stringToNumber } from '@/util/NumberUtil';
 import ErrorContainer from '@/ui/component/ErrorContainer';
-import { ScrollShadow } from '@heroui/scroll-shadow';
 import PaginationContainer from '@/ui/component/PaginationContainer';
 import { apiDiaryGetDiary } from '@/api/apiDiary';
 import DiaryCard from '@/ui/component/DiaryCard';

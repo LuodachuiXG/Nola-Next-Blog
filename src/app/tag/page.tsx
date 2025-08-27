@@ -5,7 +5,6 @@ import PaginationContainer from '@/ui/component/PaginationContainer';
 import { stringToNumber } from '@/util/NumberUtil';
 import { isInPageSizeList, PAGE_SIZE_LIST } from '@/util/ConstData';
 import { redirect } from 'next/navigation';
-import { ScrollShadow } from '@heroui/scroll-shadow';
 import ErrorContainer from '@/ui/component/ErrorContainer';
 
 export const metadata: Metadata = {

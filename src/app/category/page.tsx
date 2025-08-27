@@ -5,7 +5,6 @@ import { isInPageSizeList, PAGE_SIZE_LIST } from '@/util/ConstData';
 import { redirect } from 'next/navigation';
 import { stringToNumber } from '@/util/NumberUtil';
 import CategoryCard from '@/ui/component/CategoryCard';
-import { ScrollShadow } from '@heroui/scroll-shadow';
 import ErrorContainer from '@/ui/component/ErrorContainer';
 
 export const metadata: Metadata = {
