@@ -38,7 +38,7 @@ export default async function LinkPage() {
 
       <div className="flex-grow">
         {linkList ? (
-          <ScrollShadow className="p-4 h-[calc(100dvh-135px)] md:h-[calc(100dvh-100px)]">
+          <div className="p-4">
             <div className="flex gap-4 flex-wrap">
               {/*先显示正常链接*/}
               {linkList.map((link, i) => (
@@ -50,7 +50,7 @@ export default async function LinkPage() {
                 <LinkCard link={link} key={i} />
               ))}
             </div>
-          </ScrollShadow>
+          </div>
         ) : null}
       </div>
     </div>

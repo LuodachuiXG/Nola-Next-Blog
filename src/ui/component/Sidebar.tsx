@@ -25,11 +25,11 @@ export default function Sidebar({
   const pathname = usePathname();
 
   return (
-    <div className="h-dvh md:w-16 lg:w-72 flex flex-col gap-4 lg:p-6 shadow-xl dark:shadow-none">
+    <div className="fixed top-0 left-0 h-dvh md:w-16 lg:w-72 flex flex-col gap-4 lg:p-6 shadow-xl dark:shadow-none z-10 bg-background">
       {blogInfo && (
         <div>
           {/*头像和标题*/}
-          <div className="flex gap-4 items-center md:pt-3 md:pl-3 lg:pt-0 lg:pl-0">
+          <div className="flex gap-4 items-center md:pt-6 md:pl-3 lg:pt-0 lg:pl-0">
             {/*Favicon*/}
             {blogInfo.favicon && (
               <ShadowAvatar src={blogInfo.favicon} alt={blogInfo.title} />
@@ -58,7 +58,7 @@ export default function Sidebar({
       {/*菜单项列表*/}
       <ScrollShadow hideScrollBar>
         {menuItems && (
-          <div className="flex flex-col gap-6 py-6">
+          <div className="flex flex-col gap-6 py-6 md:pt-2">
             {menuItems.map((menu) => (
               <div
                 className="transition-colors no-underline decoration-wavy decoration-primary hover:underline uppercase"
@@ -105,7 +105,7 @@ export default function Sidebar({
       </ScrollShadow>
 
       {/*主题颜色切换按钮*/}
-      <div className="w-full flex justify-center items-end flex-grow">
+      <div className="w-full flex justify-center items-end flex-grow md:pb-4 lg:pb-0">
         <ThemeSwitcher />
       </div>
     </div>

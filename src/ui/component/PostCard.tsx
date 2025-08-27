@@ -1,3 +1,5 @@
+'use client';
+
 import { Post } from '@/models/Post';
 import { Tooltip } from '@heroui/tooltip';
 import NextLink from 'next/link';

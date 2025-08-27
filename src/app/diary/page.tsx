@@ -53,13 +53,13 @@ export default async function DiaryPage(props: {
         </div>
         <div className="flex-grow">
           {dairyList?.data ? (
-            <ScrollShadow className="p-4 max-h-[calc(100dvh-170px)] md:max-h-[calc(100dvh-140px)]">
+            <div className="p-4">
               <div className="flex gap-4 flex-wrap relative">
                 {dairyList.data.map((diary) => (
                   <DiaryCard diary={diary} key={diary.diaryId} />
                 ))}
               </div>
-            </ScrollShadow>
+            </div>
           ) : null}
         </div>
       </div>

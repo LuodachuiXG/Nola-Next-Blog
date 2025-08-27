@@ -12,7 +12,6 @@ import { redirect, usePathname } from 'next/navigation';
 import { useDisclosure } from '@heroui/react';
 import { Link } from '@heroui/link';
 
-
 /**
  * Navbar 在窄屏显示在顶部
  * @param blogInfo 博客信息
@@ -79,11 +78,10 @@ export default function Navbar({
   }
 
   return (
-    <div className="h-14 w-full flex items-center px-4">
+    <div className="fixed top-0 left-0 h-14 w-dvw bg-background/90 dark:bg-background/75 backdrop-blur-2xl flex items-center px-4">
       {menuItems && menuItems.length > 0 && (
         <div>
           <DrawerContainer />
-
           <div className="mr-3">
             <Button
               isIconOnly
@@ -116,7 +114,7 @@ export default function Navbar({
             showArrow={true}
           >
             <Link
-              className="font-black text-xl text-black dark:text-white cursor-pointer"
+              className="font-black text-lg text-black dark:text-white cursor-pointer"
               href="/"
             >
               <p>{blogInfo.title}</p>

@@ -13,11 +13,12 @@ export default function CategoryCard({ category }: { category: Category }) {
   const background = category.cover ? (
     <Image
       alt={category.displayName}
-      className="object-cover w-24 h-24 md:w-40 md:h-40 group-hover:scale-125 group-hover:rotate-2"
+      className="object-cover w-24 h-24 md:w-40 md:h-40 group-hover:scale-110"
       src={getImageRealUrl(category.cover)}
+      radius="none"
     />
   ) : (
-    <div className="relative text-[3.75rem] md:text-[8rem] font-bold  size-full overflow-hidden">
+    <div className="relative text-[3.75rem] md:text-[8rem] font-bold size-full overflow-hidden group-hover:scale-110 transition-transform select-none">
       <div className=" absolute hidden dark:block dark:opacity-50 left-1 bottom-4 md:bottom-10">
         {firstChar}
       </div>
@@ -29,7 +30,7 @@ export default function CategoryCard({ category }: { category: Category }) {
   return (
     <div className="transition-all hover:-translate-y-0.5 group">
       <Card
-        className="scaleIn-container bg-transparent w-24 h-24 md:w-40 md:h-40 cursor-pointer shadow-small rounded-lg"
+        className="scaleIn-container bg-transparent w-24 h-24 md:w-40 md:h-40 cursor-pointer shadow-small rounded-lg active:ring-2"
         as={Link}
         href={`/?category=${category.displayName}`}
         radius="lg"

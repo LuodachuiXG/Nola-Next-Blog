@@ -57,13 +57,13 @@ export default async function CategoryPage(props: {
         </div>
         <div className="flex-grow">
           {categoryList?.data ? (
-            <ScrollShadow className="p-4 max-h-[calc(100dvh-170px)] md:max-h-[calc(100dvh-140px)]">
+            <div className="p-4">
               <div className="flex gap-4 flex-wrap">
                 {categoryList.data.map((category) => (
                   <CategoryCard category={category} key={category.categoryId} />
                 ))}
               </div>
-            </ScrollShadow>
+            </div>
           ) : null}
         </div>
       </div>

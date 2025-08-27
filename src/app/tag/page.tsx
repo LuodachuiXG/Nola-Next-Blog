@@ -56,7 +56,7 @@ export default async function TagPage(props: {
         </div>
         <div className="flex-grow">
           {tagList?.data ? (
-            <ScrollShadow className="p-3 max-h-[calc(100dvh-170px)] md:max-h-[calc(100dvh-140px)]">
+            <div className="p-3">
               <div className="flex gap-4 flex-wrap p-1">
                 {tagList.data.length > 0 ? (
                   tagList.data.map((tag) => (
@@ -66,7 +66,7 @@ export default async function TagPage(props: {
                   <div>暂无标签</div>
                 )}
               </div>
-            </ScrollShadow>
+            </div>
           ) : null}
         </div>
       </div>

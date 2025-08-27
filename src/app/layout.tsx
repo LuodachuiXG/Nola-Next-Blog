@@ -64,25 +64,23 @@ export default async function RootLayout({
 
   return (
     <html lang="zh" suppressHydrationWarning>
-      <body className="antialiased bg-background text-foreground">
+      <body className="w-dvw h-dvh antialiased bg-background text-foreground overflow-clip">
         <Providers>
-          <div className="w-dvw h-dvh flex flex-col md:flex-row overflow-clip relative">
+          <div className="w-dvw h-dvh relative overflow-y-auto scroll-smooth dark:bg-[#18171D] bg-[#F7F9FF]">
             {/*暗色模式时的彩色背景组件*/}
             {/*<BlurColorBackground />*/}
-            <aside className="flex-shrink-0 z-10">
+            <aside className="fixed top-0 left-0 z-10">
               {/*窄屏 NavBar*/}
-              <div className="md:hidden bg-background/90 dark:bg-background/75 backdrop-blur-2xl">
+              <div className="md:hidden">
                 <Navbar blogInfo={blogInfo} menuItems={menuItems} />
               </div>
               {/*宽屏 NavBar*/}
-              <div className="hidden md:block border-r-1 dark:bg-[#1B1C20] dark:border-[#3D3D3F] border-[#E3E8F7]">
+              <div className="hidden md:block">
                 <Sidebar blogInfo={blogInfo} menuItems={menuItems} />
               </div>
             </aside>
-            <div className="absolute w-full h-full md:w-[calc(100dvw-4rem)] lg:w-[calc(100dvw-18rem)] left-0 md:left-16 lg:left-72 top-0 pt-14 md:pt-0 flex flex-col flex-grow z-0 overflow-y-auto scroll-smooth dark:bg-[#18171D] bg-[#F7F9FF]">
-              <main className="flex-grow">
-                {children}
-              </main>
+            <div className="absolute w-full h-full md:w-[calc(100dvw-4rem)] lg:w-[calc(100dvw-18rem)] left-0 md:left-16 lg:left-72 top-0 pt-14 md:pt-0 flex flex-col flex-grow z-0">
+              <main className="flex-grow">{children}</main>
               <footer>
                 <div className="p-4 h-12 flex items-center text-foreground/40 dark:text-white/70 text-tiny">
                   Powered by
