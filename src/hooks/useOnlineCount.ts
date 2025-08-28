@@ -14,7 +14,7 @@ export const useOnlineCount = () => {
   useEffect(() => {
     // 创建 WebSocket 连接
 
-    // 获取服务器地址，删除 http/https
+    // 获取服务器地址
     const serverUrl = process.env.NEXT_PUBLIC_WEBSOCKET_URL;
     if (!serverUrl) {
       setOnlineCount(-1)

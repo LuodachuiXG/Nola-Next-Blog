@@ -29,7 +29,7 @@ export default function PostCard({ post }: { post: Post }) {
       // 只有一个标签
       <ClickLink
         displayName={'#' + post.tags[0].displayName}
-        href={`/?tag=${post.tags[0].displayName}`}
+        href={`/?tag=${encodeURIComponent(post.tags[0].displayName)}`}
       />
     ) : (
       // 有多个标签
@@ -41,7 +41,7 @@ export default function PostCard({ post }: { post: Post }) {
             {post.tags.map((tag) => (
               <ClickLink
                 displayName={'#' + tag.displayName}
-                href={`/?tag=${tag.displayName}`}
+                href={`/?tag=${encodeURIComponent(tag.displayName)}`}
                 key={tag.tagId}
               />
             ))}
@@ -97,7 +97,7 @@ export default function PostCard({ post }: { post: Post }) {
               {post.category && (
                 <ClickLink
                   displayName={'&' + post.category.displayName}
-                  href={`/?category=${post.category.displayName}`}
+                  href={`/?category=${encodeURIComponent(post.category.displayName)}`}
                 />
               )}
 

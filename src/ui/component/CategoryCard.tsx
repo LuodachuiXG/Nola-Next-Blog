@@ -32,7 +32,7 @@ export default function CategoryCard({ category }: { category: Category }) {
       <Card
         className="scaleIn-container bg-transparent w-24 h-24 md:w-40 md:h-40 cursor-pointer shadow-small rounded-lg"
         as={Link}
-        href={`/?category=${category.displayName}`}
+        href={`/?category=${encodeURIComponent(category.displayName)}`}
         radius="lg"
       >
         <CardBody className="relative m-0 p-0 overflow-hidden dark:dark:bg-[#1B1C20] bg-white">

@@ -16,7 +16,7 @@ export default function TimeFormatLabel({
   className?: string;
 }) {
   return (
-    <Tooltip delay={300} content={<span>{formatDate(time, true)}</span>}>
+    <Tooltip delay={300} content={<span className="text-foreground">{formatDate(time, true)}</span>}>
       <span className={clsx(className, 'cursor-default')}>{formatDateDesc(time)}</span>
     </Tooltip>
   );

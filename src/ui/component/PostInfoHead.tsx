@@ -50,7 +50,7 @@ export default function PostInfoHead({ post }: { post: Post }) {
               {post.category && (
                 <ClickLink
                   displayName={'&' + post.category.displayName}
-                  href={`/?category=${post.category.displayName}`}
+                  href={`/?category=${encodeURIComponent(post.category.displayName)}`}
                 />
               )}
 
@@ -59,7 +59,7 @@ export default function PostInfoHead({ post }: { post: Post }) {
                   {post.tags.map((tag) => (
                     <ClickLink
                       displayName={'#' + tag.displayName}
-                      href={`/?tag=${tag.displayName}`}
+                      href={`/?tag=${encodeURIComponent(tag.displayName)}`}
                       key={tag.tagId}
                     />
                   ))}

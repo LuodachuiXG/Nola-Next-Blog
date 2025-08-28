@@ -6,6 +6,7 @@ import { isInPageSizeList, PAGE_SIZE_LIST } from '@/util/ConstData';
 import { redirect } from 'next/navigation';
 import ErrorContainer from '@/ui/component/ErrorContainer';
 import PostFilterAlert from '@/ui/component/PostFilterAlert';
+
 // 文章缓存过期时间（秒）
 export const revalidate = 0;
 

@@ -28,8 +28,8 @@ export async function apiPostGetPosts(
   if (key) url += `&key=${key}`;
   if (tagId) url += `&tagId=${tagId}`;
   if (categoryId) url += `&categoryId=${categoryId}`;
-  if (tag) url += `&tag=${tag}`;
-  if (category) url += `&category=${category}`;
+  if (tag) url += `&tag=${encodeURIComponent(tag)}`;
+  if (category) url += `&category=${encodeURIComponent(category)}`;
   const info = await fetch(url);
   return info.json();
 }
