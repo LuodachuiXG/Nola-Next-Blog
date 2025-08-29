@@ -1,4 +1,4 @@
-import * as Crypto from 'node:crypto';
+import * as Crypto from 'crypto';
 
 /**
  * 根据邮箱地址获取头像
