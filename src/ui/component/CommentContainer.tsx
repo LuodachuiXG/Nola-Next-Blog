@@ -22,6 +22,8 @@ import {
 import { motion, AnimatePresence } from 'motion/react';
 import { clsx } from 'clsx';
 import { Chip } from '@heroui/chip';
+import { Image } from '@heroui/image';
+import { getAvatarUrl } from '@/util/AvatarUtil';
 
 /**
  * 评论容器组件
@@ -254,6 +256,11 @@ function CommentList({
  * 评论头像
  */
 function Avatar({ comment }: { comment: Comment }) {
+  // 头像地址
+  const avatarUrl = getAvatarUrl(comment.email)
+
+  console.log(avatarUrl);
+
   return (
     <a href={comment.site ?? undefined} target="_blank">
       <motion.div
@@ -265,7 +272,15 @@ function Avatar({ comment }: { comment: Comment }) {
           transition: { duration: 0.4, type: 'spring' },
         }}
       >
-        {comment.displayName.at(0)?.toUpperCase() ?? 'A'}
+        {/*设置头像为 QQ 头像*/}
+        {avatarUrl && (
+          <Image src={avatarUrl} alt={comment.displayName} className="rounded-full" />
+        )}
+
+        {/*默认头像*/}
+        {!avatarUrl && (
+          <p>{comment.displayName.at(0)?.toUpperCase() ?? 'A'}</p>
+        )}
       </motion.div>
     </a>
   );

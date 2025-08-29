@@ -25,7 +25,7 @@ export default function Sidebar({
   const pathname = usePathname();
 
   return (
-    <div className="fixed top-0 left-0 h-dvh md:w-16 lg:w-72 flex flex-col gap-4 lg:p-6 shadow-xl dark:shadow-none z-10 bg-background">
+    <div className="fixed top-0 left-0 h-dvh md:w-16 lg:w-72 flex flex-col gap-4 lg:p-6 shadow-xl dark:shadow-none z-10 bg-background dark:bg-content2">
       {blogInfo && (
         <div>
           {/*头像和标题*/}

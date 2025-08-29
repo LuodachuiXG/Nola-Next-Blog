@@ -51,14 +51,14 @@ export default async function PostPage(props: {
       <div className="flex-grow">
         {/* 文章列表 */}
         {postList && (
-          <div className="p-4 h-full">
+          <div className="p-4">
             {/*筛选条件显示*/}
             <PostFilterAlert
               tag={tagFilter}
               category={categoryFilter}
               count={postList.totalData}
             />
-            <div className="grid grid-flow-row-dense gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+            <div className="h-full grid grid-flow-row-dense gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
               {postList.data.map((post) => (
                 <PostCard key={post.postId} post={post} />
               ))}

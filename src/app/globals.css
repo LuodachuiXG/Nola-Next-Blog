@@ -62,14 +62,14 @@ body {
     0% {
         opacity: 0;
         scale: 0.9;
-        transform: skew(-3deg, -3deg);
+        /*transform: skew(-3deg, -3deg);*/
         filter: blur(10px);
     }
 
     100% {
         opacity: 1;
         scale: 1;
-        transform: skew(0deg);
+        /*transform: skew(0deg);*/
         filter: blur(0px);
     }
 }
