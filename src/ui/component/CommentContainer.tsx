@@ -259,12 +259,10 @@ function Avatar({ comment }: { comment: Comment }) {
   // 头像地址
   const avatarUrl = getAvatarUrl(comment.email)
 
-  console.log(avatarUrl);
-
   return (
     <a href={comment.site ?? undefined} target="_blank">
       <motion.div
-        className="bg-primary size-10 rounded-full flex justify-center items-center text-white select-none"
+        className="bg-content2 size-10 rounded-full flex justify-center items-center text-white select-none"
         initial={{ rotate: 0 }}
         whileHover={{
           rotate: 360,
@@ -279,7 +277,7 @@ function Avatar({ comment }: { comment: Comment }) {
 
         {/*默认头像*/}
         {!avatarUrl && (
-          <p>{comment.displayName.at(0)?.toUpperCase() ?? 'A'}</p>
+          <p className="text-foreground">{comment.displayName.at(0)?.toUpperCase() ?? 'A'}</p>
         )}
       </motion.div>
     </a>
@@ -429,7 +427,7 @@ export function CommentItem({
 
     return (
       <div id={elementId}>
-        <div className="w-full flex gap-2 items-start p-2">
+        <div className="w-full flex gap-4 items-start p-2">
           {/*左侧头像*/}
           <Avatar comment={mComment} />
           {/*右侧评论内容及信息*/}
@@ -439,15 +437,16 @@ export function CommentItem({
               <div className="flex gap-2 items-center">
                 {floor && <FloorLink mFloor={floor} />}
                 <a href={mComment.site ?? undefined} target="_blank">
-                  <p id={`comment_${mComment.commentId}`} className="text-sm text-foreground">
+                  <p id={`comment_${mComment.commentId}`} className="text-sm text-foreground/70">
                     {mComment.displayName}
                   </p>
                 </a>
               </div>
               <div className="text-sm text-default-500 flex gap-2">
                 <TimeFormatLabel time={stringToNumber(mComment.createTime)} />
+                {/*回复评论按钮*/}
                 <div
-                  className={clsx('cursor-pointer', {
+                  className={clsx('cursor-pointer, select-none', {
                     'text-primary': showAddComment,
                   })}
                   onClick={() => setShowAddComment(!showAddComment)}
@@ -475,7 +474,7 @@ export function CommentItem({
                 </Chip>
               )}
               <div
-                className={clsx({
+                className={clsx('text-sm', {
                   'indent-[5.5rem]': mComment.replyCommentId,
                 })}
               >
