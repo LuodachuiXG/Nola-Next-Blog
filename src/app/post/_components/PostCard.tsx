@@ -6,6 +6,7 @@ import NextLink from 'next/link';
 import ClickLink from './ClickLink';
 import { PinFilled as PinnedIcon } from '@ricons/carbon';
 import TimeFormatLabel from './TimeFormatLabel';
+import { getImageRealUrl } from '@/util/UrlUtil';
 import { Image } from '@heroui/react';
 
 /**
@@ -16,12 +17,14 @@ export default function PostCard({ post }: { post: Post }) {
   // 当前文章是否有封面图
   const hasCover =
     !!post.cover || (!!post.category?.cover && post.category.unifiedCover);
-  // 封面地址
-  const coverUrl = post.cover
-    ? post.cover
-    : post.category?.cover
-      ? post.category.cover
-      : '';
+  // 封面地址(后端可能返回相对路径,客户端组件里需要补全服务器地址)
+  const coverUrl = getImageRealUrl(
+    post.cover
+      ? post.cover
+      : post.category?.cover
+        ? post.category.cover
+        : undefined,
+  );
 
   // 文章标签内容
   const tagContent =

@@ -59,7 +59,7 @@ export default async function PostPage(props: {
               count={postList.totalData}
             />
             <div className="h-full grid grid-flow-row-dense gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
-              {postList.data.map((post) => (
+              {postList.data?.map((post) => (
                 <PostCard key={post.postId} post={post} />
               ))}
             </div>
