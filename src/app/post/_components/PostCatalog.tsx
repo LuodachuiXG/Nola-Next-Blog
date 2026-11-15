@@ -118,7 +118,7 @@ export function PostCatalog({ headings }: { headings: Array<PostHeading> }) {
       }}
     >
       <motion.div
-        className="m-5 rounded-xl shadow-lx overflow-hidden bg-white dark:bg-[#1B1C20] border-1  border-[#E3E8F7] dark:border-[#3D3D3F]"
+        className="m-5 rounded-xl shadow-xl overflow-hidden bg-white dark:bg-[#1B1C20] border-1  border-[#E3E8F7] dark:border-[#3D3D3F]"
         initial={{
           height: '1rem',
           width: '1rem',
@@ -150,19 +150,14 @@ export function PostCatalog({ headings }: { headings: Array<PostHeading> }) {
                 lineHeight: activeId === heading.text ? '3rem' : '1.95rem',
               }}
             >
+              {/* 颜色用 HeroUI 语义类,随暗色模式切换;内联 rgb 在暗色下对比度不足 */}
               <motion.a
                 href={`#${heading.text}`}
-                className="no-underline"
-                initial={{
-                  fontWeight: '500',
-                }}
-                animate={{
-                  color:
-                    activeId === heading.text
-                      ? 'rgb(47, 109, 230)'
-                      : 'rgb(113, 113, 121)',
-                  fontWeight: activeId === heading.text ? '800' : '500',
-                }}
+                className={`no-underline ${
+                  activeId === heading.text
+                    ? 'text-primary font-extrabold'
+                    : 'text-default-500 font-medium'
+                }`}
               >
                 {heading.text}
               </motion.a>

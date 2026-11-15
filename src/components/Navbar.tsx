@@ -8,7 +8,7 @@ import { Button } from '@heroui/button';
 import { Drawer, DrawerContent } from '@heroui/drawer';
 import { Menu, MenuTarget } from '@/models/Menu';
 import { clsx } from 'clsx';
-import { redirect, usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useDisclosure } from '@heroui/react';
 import { Link } from '@heroui/link';
 
@@ -26,6 +26,7 @@ export default function Navbar({
 }) {
   const pathname = usePathname();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const router = useRouter();
 
   /**
    * 抽屉侧边栏
@@ -55,12 +56,12 @@ export default function Navbar({
                           if (menu.target === MenuTarget.BLANK) {
                             window.open(menu.href);
                           } else {
-                            redirect(menu.href);
+                            router.push(menu.href);
                           }
                         }
                       }}
                       className={clsx(
-                        'text-lg hover:text-primary cursor-pointer text-black',
+                        'text-lg hover:text-primary cursor-pointer text-foreground',
                         {
                           'text-primary': pathname === menu.href,
                         },
