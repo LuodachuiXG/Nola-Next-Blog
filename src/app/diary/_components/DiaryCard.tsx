@@ -3,6 +3,7 @@ import { Diary } from '@/models/Diary';
 import { formatChineseDate, formatDate } from '@/util/DateUtil';
 import { motion } from 'motion/react';
 import { marked } from 'marked';
+import DOMPurify from 'isomorphic-dompurify';
 import { useEffect, useState } from 'react';
 import {
   Modal,
@@ -18,7 +19,8 @@ export default function DiaryCard({ diary }: { diary: Diary }) {
   const [showDiary, setShowDiary] = useState(false);
 
   useEffect(() => {
-    setMd(marked.parse(diary.content).toString());
+    // marked 不做消毒,注入前必须过一遍 DOMPurify 防存储型 XSS
+    setMd(DOMPurify.sanitize(marked.parse(diary.content).toString()));
   }, [diary]);
 
   return (
@@ -54,7 +56,7 @@ export default function DiaryCard({ diary }: { diary: Diary }) {
 
       {/*日记卡片*/}
       <motion.div
-        className="dark:dark:bg-[#1B1C20] bg-white transition-transform rounded-lg shadow-small w-[calc(100dvw-2rem)] md:w-40 xl:w-80 h-40 cursor-pointer overflow-hidden hover:-translate-y-0.5"
+        className="dark:bg-[#1B1C20] bg-white transition-transform rounded-lg shadow-small w-[calc(100dvw-2rem)] md:w-40 xl:w-80 h-40 cursor-pointer overflow-hidden hover:-translate-y-0.5"
         onClick={() => setShowDiary(!showDiary)}
       >
         <div className="flex flex-col">

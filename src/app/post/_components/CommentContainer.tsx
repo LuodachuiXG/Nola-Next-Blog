@@ -253,6 +253,15 @@ function CommentList({
 }
 
 /**
+ * 校验评论者的站点地址，只允许 http(s) 协议，防止 javascript: 等 XSS 向量
+ */
+function safeSiteUrl(site?: string | null): string | undefined {
+  if (!site) return undefined;
+  const url = site.trim();
+  return /^https?:\/\//i.test(url) ? url : undefined;
+}
+
+/**
  * 评论头像
  */
 function Avatar({ comment }: { comment: Comment }) {
@@ -260,7 +269,11 @@ function Avatar({ comment }: { comment: Comment }) {
   const avatarUrl = getAvatarUrl(comment.email)
 
   return (
-    <a href={comment.site ?? undefined} target="_blank">
+    <a
+      href={safeSiteUrl(comment.site)}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
       <motion.div
         className="bg-content2 size-10 rounded-full flex justify-center items-center text-white select-none"
         initial={{ rotate: 0 }}
@@ -348,6 +361,137 @@ function ReplyForm({
 }
 
 /**
+ * 楼层链接（仅出现在子评论上），点击跳转
+ * @param mFloor 显示的楼层
+ * @param href 跳转目标
+ */
+function FloorLink({ mFloor, href }: { mFloor: number; href: string }) {
+  return (
+    <a target="_self" href={href}>
+      <span className="text-primary font-semibold">#{mFloor}</span>
+    </a>
+  );
+}
+
+/**
+ * 单条评论内容（顶层评论和子评论共用）
+ * 必须是模块级组件——之前定义在 CommentItem 内部，每次展开/收起都会重建组件类型，
+ * 导致整个子树重挂载、丢失已输入的回复内容
+ * @param mComment 评论接口
+ * @param post 文章接口
+ * @param floorMap 子评论楼层和评论 ID 的映射
+ * @param floor 评论楼层，用于在二层评论中显示楼层（可空）
+ * @param isChild 当前评论是否是子评论（可空，默认顶层非子评论）
+ */
+function CommentContent({
+  mComment,
+  post,
+  floorMap,
+  floor,
+  isChild,
+}: {
+  mComment: Comment;
+  post: Post;
+  floorMap: Map<number, number>;
+  floor?: number;
+  isChild?: boolean;
+}) {
+  // 是否在当前评论项下面显示添加评论的组件
+  const [showAddComment, setShowAddComment] = useState(false);
+
+  // 当前评论 Element ID（如果当前是子评论，就是父评论的 ID + 楼层，否则就是当前评论的 ID）
+  let elementId = `comment_${mComment.parentCommentId ? mComment.parentCommentId : mComment.commentId}`;
+  if (isChild) {
+    // 当前评论是子评论，再在 ID 后加上楼层
+    elementId += `_${floor}`;
+  }
+
+  // 被回复评论的楼层（被回复的评论可能不在当前页，取不到时降级显示）
+  const replyFloor = mComment.replyCommentId
+    ? floorMap.get(mComment.replyCommentId)
+    : undefined;
+
+  return (
+    <div id={elementId}>
+      <div className="w-full flex gap-4 items-start p-2">
+        {/*左侧头像*/}
+        <Avatar comment={mComment} />
+        {/*右侧评论内容及信息*/}
+        <div className="flex-grow flex flex-col">
+          {/*昵称和时间*/}
+          <div className="flex justify-between items-center">
+            <div className="flex gap-2 items-center">
+              {floor && <FloorLink mFloor={floor} href={`#${elementId}`} />}
+              <a
+                href={safeSiteUrl(mComment.site)}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <p id={`comment_${mComment.commentId}`} className="text-sm text-foreground/70">
+                  {mComment.displayName}
+                </p>
+              </a>
+            </div>
+            <div className="text-sm text-default-500 flex gap-2">
+              <TimeFormatLabel time={stringToNumber(mComment.createTime)} />
+              {/*回复评论按钮*/}
+              <div
+                className={clsx('cursor-pointer, select-none', {
+                  'text-primary': showAddComment,
+                })}
+                onClick={() => setShowAddComment(!showAddComment)}
+              >
+                {post.allowComment && <AddCommentIcon className="size-5" />}
+              </div>
+            </div>
+          </div>
+
+          {/*评论内容*/}
+          <div className="w-full text-base text-foreground break-all flex gap-2 relative">
+            {/*如果当前评论是回复的某一个评论，则显示回复楼层*/}
+            {mComment.replyCommentId && (
+              <Chip size="sm" className="absolute">
+                <div className="flex gap-1 items-center">
+                  <ReplayIcon className="size-3" />
+                  <div>
+                    回复：
+                    {replyFloor !== undefined ? (
+                      <FloorLink
+                        mFloor={replyFloor}
+                        href={`#comment_${mComment.parentCommentId}_${replyFloor}`}
+                      />
+                    ) : (
+                      <span>原评论</span>
+                    )}
+                  </div>
+                </div>
+              </Chip>
+            )}
+            <div
+              className={clsx('text-sm', {
+                'indent-[5.5rem]': mComment.replyCommentId,
+              })}
+            >
+              {mComment.content}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <ReplyForm
+        post={post}
+        showAddComment={showAddComment}
+        parentCommentId={
+          isChild ? mComment.parentCommentId! : mComment.commentId
+        }
+        replyDisplayName={(floor ? `#${floor} ` : '') + mComment.displayName}
+        replyCommentId={isChild ? mComment.commentId : null}
+      />
+    </div>
+  );
+}
+
+/**
  * 评论项
  * @param comment 评论接口
  * @param post 文章接口
@@ -374,132 +518,9 @@ export function CommentItem({
   // 是否显示子评论列表
   const [showChildren, setShowChildren] = useState(false);
 
-  /**
-   * 评论项内容
-   * @param comment 评论接口
-   * @param floor 评论楼层，用于在二层评论中显示楼层（可空）
-   * @param isChild 当前评论是否是子评论（可空，默认顶层非子评论）
-   */
-  function Comment({
-    mComment,
-    floor,
-    isChild,
-  }: {
-    mComment: Comment;
-    floor?: number;
-    isChild?: boolean;
-  }) {
-    // 是否在当前评论项下面显示添加评论的组件
-    const [showAddComment, setShowAddComment] = useState(false);
-
-    // 当前评论 Element ID（如果当前是子评论，就是父评论的 ID + 楼层，否则就是当前评论的 ID）
-    let elementId = `comment_${mComment.parentCommentId ? mComment.parentCommentId : mComment.commentId}`;
-    if (isChild) {
-      // 当前评论是子评论，再在 ID 后加上楼层
-      elementId += `_${floor}`;
-    }
-
-    /**
-     * 楼层链接（仅出现在子评论上），点击跳转
-     * @param mFloor 显示的楼层
-     * @param actualTpFloor 实际要跳转的楼层（可空，默认为当前评论不加加楼层，即跳转父评论）
-     */
-    function FloorLink({
-      mFloor,
-      actualTpFloor,
-    }: {
-      mFloor: number;
-      actualTpFloor?: number | null;
-    }) {
-      return (
-        <a
-          target="_self"
-          href={
-            actualTpFloor
-              ? `#comment_${mComment.parentCommentId}_${actualTpFloor}`
-              : `#${elementId}`
-          }
-        >
-          <span className="text-primary font-semibold">#{mFloor}</span>
-        </a>
-      );
-    }
-
-    return (
-      <div id={elementId}>
-        <div className="w-full flex gap-4 items-start p-2">
-          {/*左侧头像*/}
-          <Avatar comment={mComment} />
-          {/*右侧评论内容及信息*/}
-          <div className="flex-grow flex flex-col">
-            {/*昵称和时间*/}
-            <div className="flex justify-between items-center">
-              <div className="flex gap-2 items-center">
-                {floor && <FloorLink mFloor={floor} />}
-                <a href={mComment.site ?? undefined} target="_blank">
-                  <p id={`comment_${mComment.commentId}`} className="text-sm text-foreground/70">
-                    {mComment.displayName}
-                  </p>
-                </a>
-              </div>
-              <div className="text-sm text-default-500 flex gap-2">
-                <TimeFormatLabel time={stringToNumber(mComment.createTime)} />
-                {/*回复评论按钮*/}
-                <div
-                  className={clsx('cursor-pointer, select-none', {
-                    'text-primary': showAddComment,
-                  })}
-                  onClick={() => setShowAddComment(!showAddComment)}
-                >
-                  {post.allowComment && <AddCommentIcon className="size-5" />}
-                </div>
-              </div>
-            </div>
-
-            {/*评论内容*/}
-            <div className="w-full text-base text-foreground break-all flex gap-2 relative">
-              {/*如果当前评论是回复的某一个评论，则显示回复楼层*/}
-              {mComment.replyCommentId && (
-                <Chip size="sm" className="absolute">
-                  <div className="flex gap-1 items-center">
-                    <ReplayIcon className="size-3" />
-                    <div>
-                      回复：
-                      <FloorLink
-                        mFloor={floorMap.get(mComment.replyCommentId)!}
-                        actualTpFloor={floorMap.get(mComment.replyCommentId)!}
-                      />
-                    </div>
-                  </div>
-                </Chip>
-              )}
-              <div
-                className={clsx('text-sm', {
-                  'indent-[5.5rem]': mComment.replyCommentId,
-                })}
-              >
-                {mComment.content}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <ReplyForm
-          post={post}
-          showAddComment={showAddComment}
-          parentCommentId={
-            isChild ? mComment.parentCommentId! : comment.commentId
-          }
-          replyDisplayName={(floor ? `#${floor} ` : '') + mComment.displayName}
-          replyCommentId={isChild ? mComment.commentId : null}
-        />
-      </div>
-    );
-  }
-
   return (
     <div className="w-full max-h-fit overflow-clip flex flex-col rounded-lg hover:shadow-lg transition-all border-1 border-transparent hover:border-divider dark:hover:border-white/50">
-      <Comment mComment={comment} />
+      <CommentContent mComment={comment} post={post} floorMap={floorMap} />
 
       {/*子评论列表*/}
       <motion.div
@@ -511,11 +532,13 @@ export function CommentItem({
         }}
       >
         {comment.children?.map((child, i) => (
-          <Comment
+          <CommentContent
             mComment={child}
             key={child.commentId}
-            floor={comment!.children!.length - i}
+            floor={comment.children!.length - i}
             isChild
+            post={post}
+            floorMap={floorMap}
           />
         ))}
       </motion.div>

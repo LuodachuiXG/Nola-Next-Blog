@@ -1,4 +1,5 @@
 import { marked, Tokens } from 'marked';
+import DOMPurify from 'isomorphic-dompurify';
 import { PostHeading } from '@/models/PostHeading';
 import { PostCatalog } from './PostCatalog';
 
@@ -26,8 +27,8 @@ export default async function PostPreview({
     }),
   });
 
-  // 将 Markdown 转为 HTML
-  const md = await marked.parse(markdown);
+  // 将 Markdown 转为 HTML,marked 不做消毒,注入前必须过一遍 DOMPurify 防存储型 XSS
+  const md = DOMPurify.sanitize(await marked.parse(markdown));
 
   onHeadings?.(headings);
 
@@ -40,6 +41,16 @@ export default async function PostPreview({
       </div>
     </div>
   );
+}
+
+/**
+ * 表格对齐方式转为 Tailwind 类(DOMPurify 会剥掉 style 属性,不能内联样式)
+ */
+function alignClass(align?: string | null): string {
+  if (align === 'center') return ' text-center';
+  if (align === 'right') return ' text-right';
+  if (align === 'left') return ' text-left';
+  return '';
 }
 
 /**
@@ -69,7 +80,7 @@ function markedRenderer(onFindHeading: (heading: PostHeading) => void) {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-expect-error
             const content = this.parser.parseInline(cell.tokens);
-            return `<th${cell.align ? ` style="text-align:${cell.align}"` : ''}>${content}</th>`;
+            return `<th class="${alignClass(cell.align)}">${content}</th>`;
           })
           .join('');
         headerRow = `<thead><tr>${headerCells}</tr></thead>`;
@@ -82,7 +93,7 @@ function markedRenderer(onFindHeading: (heading: PostHeading) => void) {
               // eslint-disable-next-line @typescript-eslint/ban-ts-comment
               // @ts-expect-error
               const content = this.parser.parseInline(cell.tokens);
-              return `<td${cell.align ? ` style="text-align:${cell.align}"` : ''}>${content}</td>`;
+              return `<td class="${alignClass(cell.align)}">${content}</td>`;
             })
             .join('');
           return `<tr>${cells}</tr>`;

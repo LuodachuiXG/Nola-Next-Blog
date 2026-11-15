@@ -1,8 +1,7 @@
 import { ApiResponse } from '@/models/response/ApiResponse';
 import { Pager } from '@/models/Pager';
 import { Category } from '@/models/Category';
-
-const serverUrl = process.env.SERVER_URL;
+import { apiFetch } from '@/api/apiFetch';
 
 /**
  * 获取分类
@@ -13,7 +12,7 @@ export async function apiCategoryGetCategory(
   page: number,
   size: number
 ): Promise<ApiResponse<Pager<Category>>> {
-  const url = `${serverUrl}/api/category?page=${page}&size=${size}`;
-  const info = await fetch(url);
-  return info.json();
+  return apiFetch<ApiResponse<Pager<Category>>>(
+    `/api/category?page=${page}&size=${size}`
+  );
 }

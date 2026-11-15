@@ -5,7 +5,7 @@ import {
 } from '@/api/apiPost';
 import PostPreview from './_components/PostPreview';
 import { stringToNumber } from '@/util/NumberUtil';
-import { Icon } from 'next/dist/lib/metadata/types/metadata-types';
+import type { Metadata } from 'next';
 import { getImageRealUrl } from '@/util/UrlUtil';
 import PostInfoHead from './_components/PostInfoHead';
 import CommentContainer from './_components/CommentContainer';
@@ -96,7 +96,7 @@ export async function generateMetadata(props: {
               rel: 'icon',
               type: 'image/png',
             },
-          ] as Array<Icon>,
+          ] as NonNullable<Metadata['icons']>,
         };
       } else {
         /* 没封面 */

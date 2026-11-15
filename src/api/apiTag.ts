@@ -1,8 +1,7 @@
 import { ApiResponse } from '@/models/response/ApiResponse';
 import { Tag } from '@/models/Tag';
 import { Pager } from '@/models/Pager';
-
-const serverUrl = process.env.SERVER_URL;
+import { apiFetch } from '@/api/apiFetch';
 
 /**
  * 获取标签
@@ -13,7 +12,5 @@ export async function apiTagGetTag(
   page: number,
   size: number
 ): Promise<ApiResponse<Pager<Tag>>> {
-  const url = `${serverUrl}/api/tag?page=${page}&size=${size}`;
-  const info = await fetch(url);
-  return info.json();
+  return apiFetch<ApiResponse<Pager<Tag>>>(`/api/tag?page=${page}&size=${size}`);
 }

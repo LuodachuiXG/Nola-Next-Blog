@@ -8,7 +8,7 @@ import { ScrollShadow } from '@heroui/scroll-shadow';
 import { PAGE_SIZE_LIST } from '@/util/ConstData';
 import { useOverlayTriggerState } from '@react-stately/overlays';
 import { useEffect, useState } from 'react';
-import { redirect } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 
 /**
  * 分页组件
@@ -28,6 +28,8 @@ export default function PaginationContainer<T>({
   jumpId?: string;
   onChange?: (page: number, size: number) => void;
 }) {
+  const router = useRouter();
+
   // popover 的状态
   const popoverState = useOverlayTriggerState({});
 
@@ -49,26 +51,37 @@ export default function PaginationContainer<T>({
   // 总页数
   const totalPages = Math.ceil(pager.totalData / pager.size);
 
-  if (pager.page > totalPages && totalPages > 0) {
-    // 当前页大于总页数，用户可能从地址栏输入了错误的页码，跳转到第一页
-    change(1, currentPageSize);
+  // 构造带分页参数的路由地址
+  function buildUrl(page: number, size: number): string | null {
+    if (!route) return null;
+    let url = `${route}${route.includes('?') ? '&' : '?'}page=${page}&size=${size}`;
+    if (jumpId) {
+      url += `#${jumpId}`;
+    }
+    return url;
   }
 
   /**
    * 改变事件
    * @param page 当前页
    * @param size 每页大小
+   * @param navigate 导航方式:render 期用 redirect(客户端渲染期受支持),事件里用 router.push
    */
-  function change(page: number, size: number) {
+  function change(
+    page: number,
+    size: number,
+    navigate: (url: string) => void,
+  ) {
     onChange?.(page, size);
-    if (route) {
-      // 跳转路由并附带页码信息
-      let url = `${route}${route.includes('?') ? '&' : '?'}page=${page}&size=${size}`;
-      if (jumpId) {
-        url += `#${jumpId}`;
-      }
-      redirect(url);
+    const url = buildUrl(page, size);
+    if (url) {
+      navigate(url);
     }
+  }
+
+  if (pager.page > totalPages && totalPages > 0) {
+    // 当前页大于总页数，用户可能从地址栏输入了错误的页码，跳转到第一页
+    change(1, currentPageSize, redirect);
   }
 
   return (
@@ -85,7 +98,7 @@ export default function PaginationContainer<T>({
         variant="light"
         onChange={(page) => {
           setCurrentPage(page);
-          change(page, currentPageSize);
+          change(page, currentPageSize, router.push);
         }}
       />
 
@@ -111,7 +124,7 @@ export default function PaginationContainer<T>({
                       // 改变每页大小后，将当前页改为第一页
                       setCurrentPage(1);
                       setCurrentPageSize(size);
-                      change(1, size);
+                      change(1, size, router.push);
                     }}
                   >
                     {size} / 页

@@ -1,8 +1,7 @@
 import { ApiResponse } from '@/models/response/ApiResponse';
 import { Link } from '@/models/Link';
 import { Pager } from '@/models/Pager';
-
-const serverUrl = process.env.SERVER_URL;
+import { apiFetch } from '@/api/apiFetch';
 
 /**
  * 获取友情链接
@@ -13,6 +12,7 @@ export async function apiLinkGetLinks(
   page: number,
   size: number,
 ): Promise<ApiResponse<Pager<Link>>> {
-  const info = await fetch(`${serverUrl}/api/link?page=${page}&size=${size}`);
-  return info.json();
+  return apiFetch<ApiResponse<Pager<Link>>>(
+    `/api/link?page=${page}&size=${size}`
+  );
 }

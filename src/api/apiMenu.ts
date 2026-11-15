@@ -1,7 +1,6 @@
 import { ApiResponse } from '@/models/response/ApiResponse';
 import { Menu } from '@/models/Menu';
-
-const serverUrl = process.env.SERVER_URL;
+import { apiFetch } from '@/api/apiFetch';
 
 /**
  * 获取菜单项
@@ -10,6 +9,5 @@ const serverUrl = process.env.SERVER_URL;
 export async function apiMenuGetMenuItem(
   tree?: boolean
 ): Promise<ApiResponse<Array<Menu>>> {
-  const info = await fetch(`${serverUrl}/api/menu?tree=${tree ?? true}`);
-  return info.json();
+  return apiFetch<ApiResponse<Array<Menu>>>(`/api/menu?tree=${tree ?? true}`);
 }

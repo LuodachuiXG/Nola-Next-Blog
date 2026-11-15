@@ -2,12 +2,12 @@
 import { useRef } from 'react';
 import { motion } from 'motion/react';
 import { Button } from '@heroui/button';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 /**
  * 错误显示容器
  * @param msg
- * @param onReset 按钮点击事件
+ * @param onReset 重试按钮点击事件,不传时按钮变为返回首页
  */
 export default function ErrorContainer({
   msg,
@@ -17,6 +17,7 @@ export default function ErrorContainer({
   onReset?: () => void;
 }) {
   const constraintsRef = useRef(null);
+  const router = useRouter();
 
   return (
     <motion.div
@@ -53,11 +54,12 @@ export default function ErrorContainer({
           if (onReset) {
             onReset();
           } else {
-            redirect('/');
+            // redirect 在客户端事件中不受支持,用 router.push
+            router.push('/');
           }
         }}
       >
-        返回首页
+        {onReset ? '重试' : '返回首页'}
       </Button>
     </motion.div>
   );

@@ -2,7 +2,6 @@ import './globals.css';
 import { Providers } from './providers';
 import Navbar from '@/components/Navbar';
 import { apiConfigGetBlogInfo } from '@/api/apiConfig';
-import { Icon } from 'next/dist/lib/metadata/types/metadata-types';
 import Sidebar from '@/components/Sidebar';
 import { apiMenuGetMenuItem } from '@/api/apiMenu';
 import { Metadata, Viewport } from 'next';
@@ -13,9 +12,6 @@ import { Skeleton } from '@heroui/skeleton';
 export const viewport: Viewport = {
   initialScale: 1,
   width: 'device-width',
-  userScalable: false,
-  maximumScale: 1,
-  minimumScale: 1,
 };
 
 /**
@@ -45,7 +41,7 @@ export async function generateMetadata() {
         rel: 'icon',
         type: 'image/png',
       },
-    ] as Array<Icon>,
+    ] as NonNullable<Metadata['icons']>,
   } as Metadata;
 }
 
@@ -70,8 +66,6 @@ export default async function RootLayout({
       <body className="w-dvw h-dvh antialiased bg-background text-foreground overflow-clip">
         <Providers>
           <div className="w-dvw h-dvh relative overflow-y-auto scroll-smooth dark:bg-[#18171D] bg-[#F7F9FF]">
-            {/*暗色模式时的彩色背景组件*/}
-            {/*<BlurColorBackground />*/}
             <aside className="fixed top-0 left-0 z-10">
               {/*窄屏 NavBar*/}
               <div className="md:hidden">

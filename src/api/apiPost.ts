@@ -2,8 +2,7 @@ import { ApiResponse } from '@/models/response/ApiResponse';
 import { Pager } from '@/models/Pager';
 import { Post } from '@/models/Post';
 import { PostContent } from '@/models/PostContent';
-
-const serverUrl = process.env.SERVER_URL;
+import { apiFetch } from '@/api/apiFetch';
 
 /**
  * 获取所有文章
@@ -24,14 +23,13 @@ export async function apiPostGetPosts(
   tag?: string | null,
   category?: string | null,
 ): Promise<ApiResponse<Pager<Post>>> {
-  let url = `${serverUrl}/api/post?page=${page}&size=${size}`;
-  if (key) url += `&key=${key}`;
-  if (tagId) url += `&tagId=${tagId}`;
-  if (categoryId) url += `&categoryId=${categoryId}`;
-  if (tag) url += `&tag=${encodeURIComponent(tag)}`;
-  if (category) url += `&category=${encodeURIComponent(category)}`;
-  const info = await fetch(url);
-  return info.json();
+  let path = `/api/post?page=${page}&size=${size}`;
+  if (key) path += `&key=${encodeURIComponent(key)}`;
+  if (tagId) path += `&tagId=${tagId}`;
+  if (categoryId) path += `&categoryId=${categoryId}`;
+  if (tag) path += `&tag=${encodeURIComponent(tag)}`;
+  if (category) path += `&category=${encodeURIComponent(category)}`;
+  return apiFetch<ApiResponse<Pager<Post>>>(path);
 }
 
 /**
@@ -41,8 +39,7 @@ export async function apiPostGetPosts(
 export async function apiPostGetPostById(
   postId: number
 ): Promise<ApiResponse<Post>> {
-  const info = await fetch(`${serverUrl}/api/post/${postId}`);
-  return info.json();
+  return apiFetch<ApiResponse<Post>>(`/api/post/${postId}`);
 }
 
 /**
@@ -52,8 +49,7 @@ export async function apiPostGetPostById(
 export async function apiPostGetPostBySlug(
   slug: string
 ): Promise<ApiResponse<Post>> {
-  const info = await fetch(`${serverUrl}/api/post/slug/${slug}`);
-  return info.json();
+  return apiFetch<ApiResponse<Post>>(`/api/post/slug/${slug}`);
 }
 
 /**
@@ -71,18 +67,16 @@ export async function apiPostGetPostContent(
     throw new Error('文章 ID 和文章别名至少提供一个');
   }
 
-  let url = `${serverUrl}/api/post/content`
+  let path = `/api/post/content`
   if (id) {
-    url += `?id=${id}`
+    path += `?id=${id}`
   } else {
-    url += `?slug=${slug}`
+    path += `?slug=${encodeURIComponent(slug!)}`
   }
 
   if (password) {
-    url += `&password=${password}`
+    path += `&password=${encodeURIComponent(password)}`
   }
 
-  const info = await fetch(url);
-  return info.json();
+  return apiFetch<ApiResponse<PostContent>>(path);
 }
-

@@ -1,8 +1,7 @@
 import { ApiResponse } from '@/models/response/ApiResponse';
 import { Pager } from '@/models/Pager';
 import { Comment } from '@/models/Comment';
-
-const serverUrl = process.env.SERVER_URL;
+import { apiFetch } from '@/api/apiFetch';
 
 /**
  * 获取评论
@@ -17,14 +16,13 @@ export async function apiCommentGetComment(
   page: number,
   size: number,
 ): Promise<ApiResponse<Pager<Comment>>> {
-  let url = `${serverUrl}/api/comment?page=${page}&size=${size}`;
+  let path = `/api/comment?page=${page}&size=${size}`;
   if (id) {
-    url += `&id=${id}`;
+    path += `&id=${id}`;
   } else if (slug) {
-    url += `&slug=${slug}`;
+    path += `&slug=${encodeURIComponent(slug)}`;
   }
-  const info = await fetch(url);
-  return info.json();
+  return apiFetch<ApiResponse<Pager<Comment>>>(path);
 }
 
 /**
@@ -47,7 +45,6 @@ export async function apiCommentAddComment(
   parentCommentId: number | null,
   replyCommentId: number | null,
 ): Promise<ApiResponse<Comment>> {
-  const url = `${serverUrl}/api/comment`;
   const data = JSON.stringify({
     postId: postId,
     displayName: displayName,
@@ -57,12 +54,11 @@ export async function apiCommentAddComment(
     parentCommentId: parentCommentId,
     replyCommentId: replyCommentId,
   });
-  const info = await fetch(url, {
+  return apiFetch<ApiResponse<Comment>>('/api/comment', {
     method: 'POST',
     body: data,
     headers: {
       'Content-Type': 'application/json',
     },
   });
-  return info.json();
 }

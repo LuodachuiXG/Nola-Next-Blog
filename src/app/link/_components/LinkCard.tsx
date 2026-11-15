@@ -24,8 +24,8 @@ export default function LinkCard({ link }: { link: Link }) {
         </div>
       )}
 
-      <a href={link.url} target="_blank">
-        <div className="dark:dark:bg-[#1B1C20] bg-white scaleIn-container shadow-small cursor-pointer w-24 md:w-36 lg:w-44 flex flex-col rounded-lg overflow-hidden">
+      <a href={link.url || undefined} target="_blank" rel="noopener noreferrer">
+        <div className="dark:bg-[#1B1C20] bg-white scaleIn-container shadow-small cursor-pointer w-24 md:w-36 lg:w-44 flex flex-col rounded-lg overflow-hidden">
           <div className="relative rounded-none overflow-hidden w-24 h-24 md:w-36 md:h-36 lg:w-44 lg:h-44">
             {/*图片*/}
             {link.logo && !imgError && (

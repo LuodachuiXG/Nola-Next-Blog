@@ -1,8 +1,7 @@
 import { ApiResponse } from '@/models/response/ApiResponse';
 import { Pager } from '@/models/Pager';
 import { Diary } from '@/models/Diary';
-
-const serverUrl = process.env.SERVER_URL;
+import { apiFetch } from '@/api/apiFetch';
 
 /**
  * 获取日记
@@ -13,7 +12,7 @@ export async function apiDiaryGetDiary(
   page: number,
   size: number
 ): Promise<ApiResponse<Pager<Diary>>> {
-  const url = `${serverUrl}/api/diary?page=${page}&size=${size}`;
-  const info = await fetch(url);
-  return info.json();
+  return apiFetch<ApiResponse<Pager<Diary>>>(
+    `/api/diary?page=${page}&size=${size}`
+  );
 }
