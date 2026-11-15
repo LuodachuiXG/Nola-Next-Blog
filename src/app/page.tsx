@@ -1,11 +1,11 @@
-import PostCard from '@/ui/component/PostCard';
+import PostCard from '@/app/post/_components/PostCard';
 import { apiPostGetPosts } from '@/api/apiPost';
-import PaginationContainer from '@/ui/component/PaginationContainer';
+import PaginationContainer from '@/components/PaginationContainer';
 import { stringToNumber } from '@/util/NumberUtil';
 import { isInPageSizeList, PAGE_SIZE_LIST } from '@/util/ConstData';
 import { redirect } from 'next/navigation';
-import ErrorContainer from '@/ui/component/ErrorContainer';
-import PostFilterAlert from '@/ui/component/PostFilterAlert';
+import ErrorContainer from '@/components/ErrorContainer';
+import PostFilterAlert from '@/app/post/_components/PostFilterAlert';
 
 // 文章缓存过期时间（秒）
 export const revalidate = 0;

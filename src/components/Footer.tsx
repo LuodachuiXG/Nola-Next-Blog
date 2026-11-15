@@ -1,6 +1,6 @@
 import { clsx } from 'clsx';
 import { apiConfigGetICP } from '@/api/apiConfig';
-import OnlineCounter from '@/ui/component/OnlineCounter';
+import OnlineCounter from '@/components/OnlineCounter';
 import { apiOverviewGetOverview } from '@/api/apiOverview';
 import { Divider } from '@heroui/divider';
 

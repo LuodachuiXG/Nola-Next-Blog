@@ -3,9 +3,9 @@
 import { Post } from '@/models/Post';
 import { Tooltip } from '@heroui/tooltip';
 import NextLink from 'next/link';
-import ClickLink from '@/ui/component/ClickLink';
+import ClickLink from './ClickLink';
 import { PinFilled as PinnedIcon } from '@ricons/carbon';
-import TimeFormatLabel from '@/ui/component/TimeFormatLabel';
+import TimeFormatLabel from './TimeFormatLabel';
 import { Image } from '@heroui/react';
 
 /**

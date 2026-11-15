@@ -8,9 +8,9 @@ import { commentActionAddComment } from '@/lib/commentActions';
 import { toast } from '@/util/ToastUtil';
 import { Pager } from '@/models/Pager';
 import { redirect } from 'next/navigation';
-import PaginationContainer from '@/ui/component/PaginationContainer';
+import PaginationContainer from '@/components/PaginationContainer';
 import { Comment } from '@/models/Comment';
-import TimeFormatLabel from '@/ui/component/TimeFormatLabel';
+import TimeFormatLabel from './TimeFormatLabel';
 import { stringToNumber } from '@/util/NumberUtil';
 import {
   AddComment as AddCommentIcon,

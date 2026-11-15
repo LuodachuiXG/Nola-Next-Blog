@@ -1,11 +1,11 @@
 import { Metadata } from 'next';
 import { apiTagGetTag } from '@/api/apiTag';
-import TagChip from '@/ui/component/TagChip';
-import PaginationContainer from '@/ui/component/PaginationContainer';
+import TagChip from './_components/TagChip';
+import PaginationContainer from '@/components/PaginationContainer';
 import { stringToNumber } from '@/util/NumberUtil';
 import { isInPageSizeList, PAGE_SIZE_LIST } from '@/util/ConstData';
 import { redirect } from 'next/navigation';
-import ErrorContainer from '@/ui/component/ErrorContainer';
+import ErrorContainer from '@/components/ErrorContainer';
 
 export const metadata: Metadata = {
   title: '标签',

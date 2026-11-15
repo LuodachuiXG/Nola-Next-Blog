@@ -1,11 +1,11 @@
 import { Metadata } from 'next';
 import { apiCategoryGetCategory } from '@/api/apiCategory';
-import PaginationContainer from '@/ui/component/PaginationContainer';
+import PaginationContainer from '@/components/PaginationContainer';
 import { isInPageSizeList, PAGE_SIZE_LIST } from '@/util/ConstData';
 import { redirect } from 'next/navigation';
 import { stringToNumber } from '@/util/NumberUtil';
-import CategoryCard from '@/ui/component/CategoryCard';
-import ErrorContainer from '@/ui/component/ErrorContainer';
+import CategoryCard from './_components/CategoryCard';
+import ErrorContainer from '@/components/ErrorContainer';
 
 export const metadata: Metadata = {
   title: '分类',

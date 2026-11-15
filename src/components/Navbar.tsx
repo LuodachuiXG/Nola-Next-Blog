@@ -1,8 +1,8 @@
 'use client';
 import { BlogInfo } from '@/models/BlogInfo';
 import { Tooltip } from '@heroui/tooltip';
-import { ThemeSwitcher } from '@/ui/component/ThemeSwitcher';
-import ShadowAvatar from '@/ui/component/ShadowAvatar';
+import { ThemeSwitcher } from '@/components/ThemeSwitcher';
+import ShadowAvatar from '@/components/ShadowAvatar';
 import { Menu as MenuIcon } from '@ricons/carbon';
 import { Button } from '@heroui/button';
 import { Drawer, DrawerContent } from '@heroui/drawer';

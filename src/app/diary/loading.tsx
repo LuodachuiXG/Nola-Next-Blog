@@ -1,4 +1,4 @@
-import CardSkeleton from '@/ui/component/CardSkeleton';
+import CardSkeleton from '@/components/CardSkeleton';
 import { ScrollShadow } from '@heroui/scroll-shadow';
 
 export default function Loading() {

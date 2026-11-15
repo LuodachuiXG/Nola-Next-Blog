@@ -1,6 +1,6 @@
 'use client';
 
-import ErrorContainer from '@/ui/component/ErrorContainer';
+import ErrorContainer from '@/components/ErrorContainer';
 import { useEffect } from 'react';
 
 /**

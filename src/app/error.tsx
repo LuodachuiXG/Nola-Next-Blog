@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import ErrorContainer from '@/ui/component/ErrorContainer';
+import ErrorContainer from '@/components/ErrorContainer';
 
 export default function Error({
   error,

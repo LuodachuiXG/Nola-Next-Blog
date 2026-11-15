@@ -1,4 +1,4 @@
-import CardSkeleton from '@/ui/component/CardSkeleton';
+import CardSkeleton from '@/components/CardSkeleton';
 
 /**
  * 文章加载骨架屏

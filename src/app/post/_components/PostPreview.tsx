@@ -1,6 +1,6 @@
 import { marked, Tokens } from 'marked';
 import { PostHeading } from '@/models/PostHeading';
-import { PostCatalog } from '@/ui/component/PostCatalog';
+import { PostCatalog } from './PostCatalog';
 
 /**
  * Markdown 文章内容预览组件

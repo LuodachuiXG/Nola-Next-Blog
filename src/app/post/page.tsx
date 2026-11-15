@@ -3,20 +3,20 @@ import {
   apiPostGetPostBySlug,
   apiPostGetPostContent,
 } from '@/api/apiPost';
-import PostPreview from '@/ui/component/PostPreview';
+import PostPreview from './_components/PostPreview';
 import { stringToNumber } from '@/util/NumberUtil';
 import { Icon } from 'next/dist/lib/metadata/types/metadata-types';
 import { getImageRealUrl } from '@/util/UrlUtil';
-import PostInfoHead from '@/ui/component/PostInfoHead';
-import CommentContainer from '@/ui/component/CommentContainer';
+import PostInfoHead from './_components/PostInfoHead';
+import CommentContainer from './_components/CommentContainer';
 import { apiCommentGetComment } from '@/api/apiComment';
 import { Post } from '@/models/Post';
 import { isInPageSizeList } from '@/util/ConstData';
 import { redirect } from 'next/navigation';
 import { ApiResponse } from '@/models/response/ApiResponse';
 import { clsx } from 'clsx';
-import ErrorContainer from '@/ui/component/ErrorContainer';
-import PostCodeHighlight from '@/ui/component/PostCodeHighlight';
+import ErrorContainer from '@/components/ErrorContainer';
+import PostCodeHighlight from './_components/PostCodeHighlight';
 
 type Props = {
   // 文章 ID

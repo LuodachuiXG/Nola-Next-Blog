@@ -1,12 +1,12 @@
 import './globals.css';
 import { Providers } from './providers';
-import Navbar from '@/ui/component/Navbar';
+import Navbar from '@/components/Navbar';
 import { apiConfigGetBlogInfo } from '@/api/apiConfig';
 import { Icon } from 'next/dist/lib/metadata/types/metadata-types';
-import Sidebar from '@/ui/component/Sidebar';
+import Sidebar from '@/components/Sidebar';
 import { apiMenuGetMenuItem } from '@/api/apiMenu';
 import { Metadata, Viewport } from 'next';
-import Footer from '@/ui/layout/Footer';
+import Footer from '@/components/Footer';
 import { Suspense } from 'react';
 import { Skeleton } from '@heroui/skeleton';
 

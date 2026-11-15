@@ -1,8 +1,8 @@
 import { Post } from '@/models/Post';
 import { Image } from '@heroui/image';
 import { getImageRealUrl } from '@/util/UrlUtil';
-import ClickLink from '@/ui/component/ClickLink';
-import TimeFormatLabel from '@/ui/component/TimeFormatLabel';
+import ClickLink from './ClickLink';
+import TimeFormatLabel from './TimeFormatLabel';
 
 /**
  * 文章信息头组件

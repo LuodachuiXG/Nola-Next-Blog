@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { apiLinkGetLinks } from '@/api/apiLink';
-import LinkCard from '@/ui/component/LinkCard';
-import ErrorContainer from '@/ui/component/ErrorContainer';
+import LinkCard from './_components/LinkCard';
+import ErrorContainer from '@/components/ErrorContainer';
 
 export const metadata: Metadata = {
   title: '友情链接',
