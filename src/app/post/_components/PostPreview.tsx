@@ -9,7 +9,7 @@ import { PostCatalog } from './PostCatalog';
  * @param markdown
  * @param onHeadings 回调当前文章的标题和层级信息
  */
-export default async function PostPreview({
+export default function PostPreview({
   className,
   markdown,
   onHeadings,
@@ -27,8 +27,9 @@ export default async function PostPreview({
     }),
   });
 
-  // 将 Markdown 转为 HTML,marked 不做消毒,注入前必须过一遍 DOMPurify 防存储型 XSS
-  const md = DOMPurify.sanitize(await marked.parse(markdown));
+  // 将 Markdown 转为 HTML(marked 无异步扩展时同步返回,故此处同步解析以便客户端组件复用)
+  // marked 不做消毒,注入前必须过一遍 DOMPurify 防存储型 XSS
+  const md = DOMPurify.sanitize(marked.parse(markdown).toString());
 
   onHeadings?.(headings);
 

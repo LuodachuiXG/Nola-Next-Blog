@@ -3,7 +3,7 @@ import {
   apiPostGetPostBySlug,
   apiPostGetPostContent,
 } from '@/api/apiPost';
-import PostPreview from './_components/PostPreview';
+import PostContentView from './_components/PostContentView';
 import { stringToNumber } from '@/util/NumberUtil';
 import type { Metadata } from 'next';
 import { getImageRealUrl } from '@/util/UrlUtil';
@@ -16,7 +16,7 @@ import { redirect } from 'next/navigation';
 import { ApiResponse } from '@/models/response/ApiResponse';
 import { clsx } from 'clsx';
 import ErrorContainer from '@/components/ErrorContainer';
-import PostCodeHighlight from './_components/PostCodeHighlight';
+import PostContentGate from './_components/PostContentGate';
 
 type Props = {
   // 文章 ID
@@ -165,6 +165,41 @@ export default async function PostPage(props: {
   const content = postContent?.content ?? '';
 
   if (postContentRes.errMsg || !postContent) {
+    // 无法区分"文章不存在"和"加密文章拒绝访问"(两者都返回 409)
+    // 取文章信息确认,加密文章渲染密码闸门由用户解锁
+    const postRes = searchParams?.id
+      ? await apiPostGetPostById(stringToNumber(searchParams.id))
+      : await apiPostGetPostBySlug(searchParams?.slug ?? '');
+    const post = postRes.data;
+
+    if (post?.encrypted) {
+      return (
+        <div className="fadeIn-container flex justify-center">
+          <div className="w-full overflow-x-hidden">
+            <div className="flex flex-col items-center overflow-hidden w-dvw md:w-auto relative">
+              <div className="w-dvw md:max-w-[70ch] lg:max-w-[80ch] 2xl:max-w-[110ch] my-0 md:my-5 rounded-none md:rounded-xl bg-white dark:bg-[#1B1C20] md:border-1 border-[#E3E8F7] dark:border-[#3D3D3F] shadow-lg">
+                {/*文章信息头*/}
+                <PostInfoHead post={post} />
+                {/*加密文章闸门,解锁成功后渲染正文*/}
+                <PostContentGate
+                  id={
+                    searchParams?.id
+                      ? stringToNumber(searchParams.id)
+                      : undefined
+                  }
+                  slug={searchParams?.slug}
+                  post={post}
+                />
+                <PostDivider />
+                {/*评论组件*/}
+                <CommentContainer post={post} commentList={comments} />
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
     return <ErrorContainer msg={postContentRes.errMsg ?? '未知错误'} />;
   }
 
@@ -177,13 +212,7 @@ export default async function PostPage(props: {
               {/*文章信息头*/}
               <PostInfoHead post={postContent.post} />
               {/*文章*/}
-              <article
-                id="article"
-                className="max-w-full md:max-w-[70ch] lg:max-w-[80ch] 2xl:max-w-[110ch] px-5 0 prose md:prose-base dark:prose-invert prose-pre:bg-transparent prose-pre:text-sm md:prose-pre:text-lg prose-code:font-['JetBrains_Mono'] prose-pre:p-0 prose-pre:m-0 prose-pre:mb-5"
-              >
-                <PostCodeHighlight />
-                <PostPreview markdown={content} />
-              </article>
+              <PostContentView content={content} />
 
               <PostDivider />
 

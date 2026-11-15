@@ -80,3 +80,32 @@ export async function apiPostGetPostContent(
 
   return apiFetch<ApiResponse<PostContent>>(path);
 }
+
+/**
+ * 获取文章内容（POST 版）
+ * 用于加密文章：密码放在请求体中传递，避免明文出现在 URL 上
+ * @param id 文章 ID（文章 ID 和文章别名至少提供一个，ID 优先级更高）
+ * @param slug 文章别名（文章 ID 和文章别名至少提供一个，ID 优先级更高）
+ * @param password 文章密码
+ */
+export async function apiPostGetPostContentPost(
+  id: number | undefined,
+  slug: string | undefined,
+  password: string,
+): Promise<ApiResponse<PostContent>> {
+  if (!id && !slug) {
+    throw new Error('文章 ID 和文章别名至少提供一个');
+  }
+
+  return apiFetch<ApiResponse<PostContent>>(`/api/post/content`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      id: id ?? null,
+      slug: slug ?? null,
+      password,
+    }),
+  });
+}
